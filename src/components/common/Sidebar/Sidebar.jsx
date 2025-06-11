@@ -1,9 +1,54 @@
 import React from "react";
 import styles from "./Sidebar.module.scss";
-import { FaBackward, FaBuilding } from "react-icons/fa";
 import emptyUserProfile from "../../../assets/images/user/empty-user-profile.svg";
+import {
+  FaLightbulb,
+  FaBackward,
+  FaBolt,
+  FaBuilding,
+  FaBell,
+  FaHouse,
+  FaBook,
+  FaThumbsUp,
+  FaGraduationCap,
+  FaChessBoard,
+  FaCartShopping,
+  FaRankingStar,
+} from "react-icons/fa6";
+
+function getQuickMenuItems() {
+  return [
+    { icon: <FaLightbulb />, label: "AI 구르미" },
+    { icon: <FaBolt />, label: "빠른 검색" },
+    { icon: <FaBell />, label: "알림" },
+  ];
+}
+
+function getMenuItems() {
+  return [
+    { icon: <FaHouse />, label: "홈" },
+    { icon: <FaBook />, label: "배움일기" },
+    { icon: <FaThumbsUp />, label: "칭찬" },
+    { icon: <FaGraduationCap />, label: "미션" },
+    { icon: <FaChessBoard />, label: "퀘스트" },
+    { icon: <FaCartShopping />, label: "상점" },
+    { icon: <FaRankingStar />, label: "랭킹" },
+  ];
+}
+
+function getMissonGroupItems() {
+  return [
+    {
+      title: "DeepDive 알고리즘 미션 강좌",
+      items: [{ label: "홈" }, { label: "학습계획" }],
+    },
+  ];
+}
 
 function Sidebar() {
+  const quickMenuItems = getQuickMenuItems();
+  const menuItems = getMenuItems();
+  const missionGroupItems = getMissonGroupItems();
   return (
     <div className={styles.sidebar}>
       <div>
@@ -17,37 +62,38 @@ function Sidebar() {
           </div>
         </div>
         <div className={styles.sidebarTitle}>구름톤 딥다이브</div>
+        <hr />
         <div className={styles.menuList}>
           <ul>
-            <li>
-              <hr />
-            </li>
-            <li>AI 구르미</li>
-            <li>빠른 검색</li>
-            <li>알림</li>
-            <li>
-              <hr />
-            </li>
+            {quickMenuItems.map((item, index) => (
+              <li key={index}>
+                {item.icon}
+                <span>{item.label}</span>
+              </li>
+            ))}
           </ul>
+          <hr />
           <ul>
-            <li>홈</li>
-            <li>배움일기</li>
-            <li>칭찬</li>
-            <li>미션</li>
-            <li>퀘스트</li>
-            <li>상점</li>
-            <li>랭킹</li>
-            <li>
-              <hr />
-            </li>
-            <li>
-              <ul>
-                <li>DeepDive 알고리즘 미션 강좌</li>
-                <li>홈</li>
-                <li>학습계획</li>
-              </ul>
-            </li>
+            {menuItems.map((item, index) => (
+              <li key={index}>
+                {item.icon}
+                <span>{item.label}</span>
+              </li>
+            ))}
+            <hr />
           </ul>
+          {missionGroupItems.map((groupItem, index) => (
+            <div key={index} className={styles.missionGroup}>
+              <ul>
+                <li>{groupItem.title}</li>
+                {groupItem.items.map((item, idx) => (
+                  <li key={idx}>
+                    <span>{item.label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
       <div className={styles.userInfo}>
