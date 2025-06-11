@@ -1,0 +1,110 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100%;
+  width: 250px;
+  background-color: #f7f7fa;
+  color: black;
+  padding: 10px;
+
+  justify-content: space-between;
+
+  .sidebarHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 12px;
+      font-weight: bold;
+      color: #aaaaaa;
+
+      &:last-child {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .sidebarTitle {
+    padding: 25px 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .menuList {
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin: 0;
+        padding: 10px 10px;
+        font-size: 14px;
+        transition: background-color 0.3s;
+        border-radius: 3px;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+      }
+    }
+  }
+
+  .userInfo {
+    display: flex;
+    flex-direction: column;
+
+    .userStats {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      margin-bottom: 10px;
+      padding: 5px 0;
+      border: 1px solid #e0e0e0;
+
+      div {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        &:first-child {
+          border-right: 1px solid #e0e0e0;
+        }
+        span {
+          font-size: 16px;
+          color: #666;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .userProfile {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-bottom: 5px;
+      }
+
+      span {
+        font-size: 12px;
+        color: #aaaaaa;
+      }
+    }
+  }
+}
