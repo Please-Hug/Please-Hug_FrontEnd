@@ -15,10 +15,11 @@ import {
   FaCartShopping,
   FaRankingStar,
 } from "react-icons/fa6";
+import logo from "../../../assets/images/logo.png";
 
 function getQuickMenuItems() {
   return [
-    { icon: <FaLightbulb />, label: "AI 구르미" },
+    { icon: <FaLightbulb />, label: "AI 안아줘요" },
     { icon: <FaBolt />, label: "빠른 검색" },
     { icon: <FaBell />, label: "알림" },
   ];
@@ -39,7 +40,7 @@ function getMenuItems() {
 function getMissonGroupItems() {
   return [
     {
-      title: "DeepDive 알고리즘 미션 강좌",
+      title: "Hugton 알고리즘 미션 강좌",
       items: [{ label: "홈" }, { label: "학습계획" }],
     },
   ];
@@ -61,7 +62,10 @@ function Sidebar() {
             <FaBackward />
           </div>
         </div>
-        <div className={styles.sidebarTitle}>구름톤 딥다이브</div>
+        <div className={styles.sidebarTitle}>
+          <img src={logo} alt="Logo" />
+          <span>허그톤 비욘드호라이즌</span>
+        </div>
         <hr />
         <div className={styles.menuList}>
           <ul>
@@ -85,7 +89,7 @@ function Sidebar() {
           {missionGroupItems.map((groupItem, index) => (
             <div key={index} className={styles.missionGroup}>
               <ul>
-                <li>{groupItem.title}</li>
+                <li className={styles.missionGroupTitle}>{groupItem.title}</li>
                 {groupItem.items.map((item, idx) => (
                   <li key={idx}>
                     <span>{item.label}</span>
