@@ -29,9 +29,9 @@ function DashboardPage() {
           <Link to="/settings">설정</Link>
         </li>
       </ul>
-      <div>
-        <div>
-          <div>
+      <div className={styles.dashboardContent}>
+        <div className={styles.dashboardLeft}>
+          <div className={styles.attendanceHeader}>
             <div>
               <h3>(3회차) Spring 기반 백엔드 개발자 성장 과정</h3>
               <span>출결 QR 코드</span>
@@ -44,7 +44,7 @@ function DashboardPage() {
               <Link to="/">학습하기</Link>
             </div>
           </div>
-          <div>
+          <div className={styles.learningPlans}>
             <div>
               <div>
                 <h3>학습 계획</h3>
@@ -66,27 +66,37 @@ function DashboardPage() {
               <li>
                 <FaCaretRight />
                 <span>데이터베이스 및 ORM</span>
-                <span>
-                  <FaCodeBranch /> 9
-                </span>
-                <span>정휘상(백엔드 3회차)</span>
+                <div>
+                  <span>
+                    <FaCodeBranch /> <span>9</span>
+                  </span>
+                </div>
+                <div>
+                  <span>정휘상(백엔드 3회차)</span>
+                </div>
                 <span>없음</span>
                 <img src={emptyUserProfile} alt="정휘상(백엔드 3회차)" />
               </li>
               <li>
                 <FaCaretRight />
                 <span>Spring 프레임워크 고급</span>
-                <span>
-                  <FaCodeBranch /> 14
-                </span>
-                <span>정휘상(백엔드 3회차)</span>
+                <div>
+                  <span>
+                    <FaCodeBranch /> <span>14</span>
+                  </span>
+                </div>
+                <div>
+                  <span>정휘상(백엔드 3회차)</span>
+                </div>
                 <span>없음</span>
-                <img src={emptyUserProfile} alt="정휘상(백엔드 3회차)" />
+                <div>
+                  <img src={emptyUserProfile} alt="정휘상(백엔드 3회차)" />
+                </div>
               </li>
             </ul>
           </div>
-          <div>
-            <div>
+          <div className={styles.recentDiary}>
+            <div className={styles.recentDiaryHeader}>
               <div>
                 <h3>최근 작성한 배움일기</h3>
                 <FaCircleInfo />
@@ -95,7 +105,7 @@ function DashboardPage() {
                 더보기 <FaAngleRight />
               </Link>
             </div>
-            <ul>
+            <ul className={styles.recentDiaryList}>
               <li>
                 <span>hugEDU</span>
                 <h3>(메모) 리눅스 젠킨스 관련 문제 해결</h3>
@@ -104,12 +114,12 @@ function DashboardPage() {
             </ul>
           </div>
         </div>
-        <div>
+        <div className={styles.dashboardRight}>
           <div>
             <div>
               <img src={emptyUserProfile} alt="정휘상(백엔드 3회차)" />
               <div>
-                <h3>정휘상(백엔드 3회차)</h3>
+                <h2>정휘상(백엔드 3회차)</h2>
                 <div>
                   <span>Hugton 알고리즘 미션 강좌</span>
                   <span>
