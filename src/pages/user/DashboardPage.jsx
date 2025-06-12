@@ -1,21 +1,25 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import styles from "./DashboardPage.module.scss";
 
 function DashboardPage() {
   return (
     <div>
-      <h1>
+      <h1 className={styles.dashboardGreeting}>
         정휘상(백엔드 3회차)님,
         <br /> 오늘도 좋은 하루 보내세요!
       </h1>
-      <ul>
+      <ul className={styles.dashboardMenu}>
         <li>
-          <button>홈</button>
+          <Link to="/" className={styles.active}>
+            홈
+          </Link>
         </li>
         <li>
-          <button>활동</button>
+          <Link to="/activity">활동</Link>
         </li>
         <li>
-          <button>설정</button>
+          <Link to="/settings">설정</Link>
         </li>
       </ul>
     </div>
