@@ -31,14 +31,14 @@ function DashboardPage() {
       </ul>
       <div className={styles.dashboardContent}>
         <div className={styles.dashboardLeft}>
-          <div className={styles.attendanceHeader}>
+          <div className={styles.learningHeader}>
             <div>
               <h3>(3회차) Spring 기반 백엔드 개발자 성장 과정</h3>
               <span>출결 QR 코드</span>
             </div>
             <div>
-              <label htmlFor="attendance-progress">68/107</label>
-              <progress id="attendance-progress" value="68" max="107" />
+              <label htmlFor="learning-progress">68/107</label>
+              <progress id="learning-progress" value="68" max="107" />
             </div>
             <div>
               <Link to="/">학습하기</Link>
@@ -115,7 +115,7 @@ function DashboardPage() {
           </div>
         </div>
         <div className={styles.dashboardRight}>
-          <div>
+          <div className={styles.userProfile}>
             <div>
               <img src={emptyUserProfile} alt="정휘상(백엔드 3회차)" />
               <div>
@@ -136,7 +136,7 @@ function DashboardPage() {
               </div>
             </div>
           </div>
-          <div>
+          <div className={styles.attendanceCheck}>
             <div>
               <h3>출석체크</h3>
               <span>연속 출석 2일</span>
