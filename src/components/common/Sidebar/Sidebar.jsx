@@ -3,7 +3,6 @@ import styles from "./Sidebar.module.scss";
 import emptyUserProfile from "../../../assets/images/user/empty-user-profile.svg";
 import {
   FaLightbulb,
-  FaBackward,
   FaBolt,
   FaBuilding,
   FaBell,
@@ -14,6 +13,7 @@ import {
   FaChessBoard,
   FaCartShopping,
   FaRankingStar,
+  FaAnglesLeft,
 } from "react-icons/fa6";
 import logo from "../../../assets/images/logo.png";
 
@@ -59,7 +59,7 @@ function Sidebar() {
             <span>EDUCATION</span>
           </div>
           <div>
-            <FaBackward />
+            <FaAnglesLeft />
           </div>
         </div>
         <div className={styles.sidebarTitle}>
