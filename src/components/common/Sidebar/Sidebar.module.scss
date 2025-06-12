@@ -86,6 +86,9 @@
   .userInfo {
     display: flex;
     flex-direction: column;
+    position: sticky;
+    bottom: 0;
+    background-color: #f7f7fa;
 
     .userStats {
       display: flex;
