@@ -8,6 +8,8 @@ import {
   FaCodeBranch,
 } from "react-icons/fa6";
 import emptyUserProfile from "../../assets/images/user/empty-user-profile.svg";
+import questSuccessIcon from "../../assets/images/daily-quest/quest-success.png";
+import questInprogressIcon from "../../assets/images/daily-quest/quest-inprogress.png";
 
 function DashboardPage() {
   return (
@@ -139,7 +141,7 @@ function DashboardPage() {
           <div className={styles.attendanceCheck}>
             <div>
               <h3>출석체크</h3>
-              <span>연속 출석 2일</span>
+              <span>연속 출석 0일</span>
             </div>
             <table>
               <thead>
@@ -165,28 +167,26 @@ function DashboardPage() {
                 </tr>
               </tbody>
             </table>
-            <button>내일 또 만나요</button>
+            <button>출석체크하기</button>
           </div>
-          <div>
+          <div className={styles.dailyQuest}>
             <div>
               <h3>데일리 퀘스트</h3>
               <Link to="/daily-quest">
                 더보기 <FaAngleRight />
               </Link>
             </div>
+            <div>
+              <p>주간 리워드</p>
+              <div>
+                <span>200포인트</span>
+                <span> / 500포인트</span>
+                <button>획득 완료</button>
+              </div>
+            </div>
             <ul>
               <li>
-                <div>
-                  <p>주간 리워드</p>
-                  <div>
-                    <span>200포인트</span>
-                    <span> / 500포인트</span>
-                    <button>획득 완료</button>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <img src="about:blank" alt="퀘스트 아이콘" />
+                <img src={questInprogressIcon} alt="퀘스트 아이콘" />
                 <div>
                   <span>배움일기 댓글 작성</span>
                   <span>0회 / 1회</span>
@@ -194,7 +194,7 @@ function DashboardPage() {
                 <button>50 포인트</button>
               </li>
               <li>
-                <img src="about:blank" alt="퀘스트 아이콘" />
+                <img src={questInprogressIcon} alt="퀘스트 아이콘" />
                 <div>
                   <span>미션 리워드 받기</span>
                   <span>0회 / 1회</span>
@@ -202,7 +202,7 @@ function DashboardPage() {
                 <button>50 포인트</button>
               </li>
               <li>
-                <img src="about:blank" alt="퀘스트 아이콘" />
+                <img src={questSuccessIcon} alt="퀘스트 아이콘" />
                 <div>
                   <span>태스크 완료</span>
                   <span>0회 / 1회</span>
@@ -210,7 +210,7 @@ function DashboardPage() {
                 <button>50 포인트</button>
               </li>
               <li>
-                <img src="about:blank" alt="퀘스트 아이콘" />
+                <img src={questInprogressIcon} alt="퀘스트 아이콘" />
                 <div>
                   <span>일일 퀘스트 완료</span>
                   <span>0회 / 1회</span>
@@ -218,7 +218,7 @@ function DashboardPage() {
                 <button>50 포인트</button>
               </li>
               <li>
-                <img src="about:blank" alt="퀘스트 아이콘" />
+                <img src={questSuccessIcon} alt="퀘스트 아이콘" />
                 <div>
                   <span>배움일기 좋아요하기</span>
                   <span>0회 / 1회</span>
