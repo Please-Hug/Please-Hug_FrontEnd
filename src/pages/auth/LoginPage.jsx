@@ -6,10 +6,9 @@ import { Link } from "react-router-dom";
 function LoginPage() {
   return (
     <div>
-      <form className={styles.loginForm} action="/login" method="POST">
+      <form action="/login" method="POST">
         <div className={styles.inputGroup}>
           <input
-            className={styles.usernameInput}
             type="text"
             id="username"
             name="username"
@@ -27,7 +26,7 @@ function LoginPage() {
           />
           <FaEyeSlash className={styles.inputIcon} />
         </div>
-        <div className={styles.buttonGroup}>
+        <div>
           <button type="submit">로그인</button>
         </div>
         <div className={styles.footer}>
