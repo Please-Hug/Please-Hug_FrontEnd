@@ -10,6 +10,7 @@ import {
 import emptyUserProfile from "../../assets/images/user/empty-user-profile.svg";
 import questSuccessIcon from "../../assets/images/daily-quest/quest-success.png";
 import questInprogressIcon from "../../assets/images/daily-quest/quest-inprogress.png";
+import DashboardMenu from "../../components/Dashboard/DashboardMenu";
 
 function DashboardPage() {
   return (
@@ -18,19 +19,7 @@ function DashboardPage() {
         정휘상(백엔드 3회차)님,
         <br /> 오늘도 좋은 하루 보내세요!
       </h1>
-      <ul className={styles.dashboardMenu}>
-        <li>
-          <Link to="/" className={styles.active}>
-            홈
-          </Link>
-        </li>
-        <li>
-          <Link to="/activity">활동</Link>
-        </li>
-        <li>
-          <Link to="/settings">설정</Link>
-        </li>
-      </ul>
+      <DashboardMenu />
       <div className={styles.dashboardContent}>
         <div className={styles.dashboardLeft}>
           <div className={styles.learningHeader}>
