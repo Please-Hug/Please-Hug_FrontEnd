@@ -1,0 +1,46 @@
+.learningHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #eefaff;
+  border: 3px solid #87d7ff;
+  border-radius: 10px;
+
+  > div {
+    &:first-child {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      span {
+        font-size: 12px;
+      }
+    }
+    &:nth-child(2) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-left: auto;
+      margin-right: 20px;
+    }
+    &:last-child {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      a {
+        padding: 10px;
+        background-color: #559cff;
+        border-radius: 8px;
+        color: white;
+        font-size: 14px;
+        transition: background-color 0.3s;
+        &:hover {
+          background-color: #3a7bbf;
+        }
+      }
+    }
+  }
+}
