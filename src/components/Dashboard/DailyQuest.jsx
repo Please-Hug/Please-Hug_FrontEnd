@@ -7,6 +7,12 @@ import { FaAngleRight } from "react-icons/fa6";
 import DailyQuestItem from "./DailyQuestItem";
 
 function DailyQuest() {
+  const weeklyReward = {
+    currentPoints: 200,
+    maximumPoints: 500,
+    buttonText: "획득 완료",
+    status: "complete",
+  };
   const quests = [
     {
       id: 1,
@@ -65,9 +71,11 @@ function DailyQuest() {
       <div>
         <p>주간 리워드</p>
         <div>
-          <span>200포인트</span>
-          <span> / 500포인트</span>
-          <button>획득 완료</button>
+          <span>{weeklyReward.currentPoints}포인트</span>
+          <span> / {weeklyReward.maximumPoints}포인트</span>
+          <button className={weeklyReward.status}>
+            {weeklyReward.buttonText}
+          </button>
         </div>
       </div>
       <ul>

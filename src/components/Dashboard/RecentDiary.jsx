@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaCircleInfo, FaAngleRight } from "react-icons/fa6";
 import styles from "./RecentDiary.module.scss";
+import RecentDiaryItem from "./RecentDiaryItem";
 
 function RecentDiary() {
   const recentDiaryData = [
@@ -25,11 +26,7 @@ function RecentDiary() {
       </div>
       <ul className={styles.recentDiaryList}>
         {recentDiaryData.map((diary, index) => (
-          <li key={index}>
-            <span>{diary.category}</span>
-            <h3>{diary.title}</h3>
-            <span>{diary.date}</span>
-          </li>
+          <RecentDiaryItem key={index} diary={diary} />
         ))}
       </ul>
     </div>
