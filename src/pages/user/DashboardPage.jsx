@@ -11,12 +11,20 @@ import UserProfile from "../../components/Dashboard/UserProfile";
 import RecentDiary from "../../components/Dashboard/RecentDiary";
 
 function DashboardPage() {
+  const userInfo = {
+    name: "정휘상(백엔드 3회차)",
+    course: "Hugton 알고리즘 미션 강좌",
+    rank: "11%",
+    level: 17,
+    currentExp: 4721,
+    maxExp: 6274,
+  };
   return (
     <div className={styles.dashboardPage}>
-      <h1 className={styles.dashboardGreeting}>
-        정휘상(백엔드 3회차)님,
-        <br /> 오늘도 좋은 하루 보내세요!
-      </h1>
+      <DashboardGreeting
+        name={userInfo.name}
+        className={styles.dashboardGreeting}
+      />
       <DashboardMenu />
       <div className={styles.dashboardContent}>
         <div className={styles.dashboardLeft}>
@@ -27,12 +35,12 @@ function DashboardPage() {
         <div className={styles.dashboardRight}>
           <UserProfile
             profileImg={emptyUserProfile}
-            username={"정휘상(백엔드 3회차)"}
-            course={"Hugton 알고리즘 미션 강좌"}
-            rank={"11%"}
-            level={17}
-            currentExp={4721}
-            maxExp={6274}
+            username={userInfo.name}
+            course={userInfo.course}
+            rank={userInfo.rank}
+            level={userInfo.level}
+            currentExp={userInfo.currentExp}
+            maxExp={userInfo.maxExp}
           />
           <AttendanceCheck />
           <DailyQuest />
@@ -40,6 +48,10 @@ function DashboardPage() {
       </div>
     </div>
   );
+}
+
+function DashboardGreeting({ name, className }) {
+  return <h2 className={className}>{name}님, 오늘도 화이팅이에요!</h2>;
 }
 
 export default DashboardPage;
