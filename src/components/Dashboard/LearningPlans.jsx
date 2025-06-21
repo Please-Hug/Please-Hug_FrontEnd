@@ -17,7 +17,7 @@ function LearningPlans() {
 
   return (
     <div className={styles.learningPlans}>
-      <div className={styles.plansHeader}>
+      <div>
         <div>
           <h3>학습 계획</h3>
           <span>{plans.length}</span>

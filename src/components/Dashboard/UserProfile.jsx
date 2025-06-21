@@ -12,32 +12,28 @@ function UserProfile({
 }) {
   return (
     <div className={styles.userProfile}>
-      <div className={styles.profileTop}>
+      <div>
         <img src={profileImg} alt={username} />
-        <div className={styles.profileInfo}>
-          <h2 className={styles.username}>{username}</h2>
-          <div className={styles.courseContainer}>
-            <span className={styles.courseName}>{course}</span>
-            <span className={styles.userRank}>
+        <div>
+          <h2>{username}</h2>
+          <div>
+            <span>{course}</span>
+            <span>
               랭킹 <span>{rank}</span>
             </span>
           </div>
         </div>
       </div>
 
-      <div className={styles.progressContainer}>
+      <div>
         <progress
           id="user-experience-progress"
           value={currentExp}
           max={maxExp}
-          className={styles.experienceProgress}
         />
-        <div className={styles.levelInfo}>
-          <span className={styles.userLevel}>LEVEL {level}</span>
-          <label
-            htmlFor="user-experience-progress"
-            className={styles.experienceLabel}
-          >
+        <div>
+          <span>LEVEL {level}</span>
+          <label htmlFor="user-experience-progress">
             {currentExp} / {maxExp}
           </label>
         </div>
