@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function LoginPage() {
   return (
     <div>
-      <form action="/login" method="POST">
+      <form className={styles.loginForm} action="/login" method="POST">
         <div className={styles.inputGroup}>
           <input
             type="text"
