@@ -35,8 +35,8 @@ function LoginPage() {
             <label htmlFor="rememberMe">로그인 상태 유지</label>
           </div>
           <div className={styles.links}>
-            <Link to="/auth/forgot-password">비밀번호 재설정</Link>
-            <Link to="/auth/register">회원가입</Link>
+            <Link to="/reset-password">비밀번호 재설정</Link>
+            <Link to="/register">회원가입</Link>
           </div>
         </div>
       </form>

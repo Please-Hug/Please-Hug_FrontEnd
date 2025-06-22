@@ -7,7 +7,7 @@ function AuthLayout() {
   return (
     <div className={styles.authLayout}>
       <div className={styles.authContent}>
-        <h1 className={styles.logo}>BEYOND HORIZON</h1>
+        <h1 className={styles.logo}>HUG EXP</h1>
         <Outlet />
       </div>
       <Footer />
