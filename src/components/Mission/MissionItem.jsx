@@ -9,10 +9,12 @@ function MissionItem({
   course,
   isDummy = false,
 }) {
-  return (
-    (isDummy && (
+  if (isDummy) {
+    return (
       <li className={[styles.missionItem, styles.emptyCol].join(" ")}></li>
-    )) || (
+    );
+  } else {
+    return (
       <li className={styles.missionItem}>
         <p>{title}</p>
         <div>
@@ -26,8 +28,8 @@ function MissionItem({
           <span>{course}</span>
         </div>
       </li>
-    )
-  );
+    );
+  }
 }
 
 export default MissionItem;
