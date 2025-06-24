@@ -40,61 +40,85 @@ ul.missionTab {
   background-color: #f7f7fa;
   overflow-x: scroll;
   align-items: flex-start;
+}
 
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.missionRow {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+
+  li {
+    flex-basis: 252px;
+    flex-grow: 0;
+    flex-shrink: 0;
     display: flex;
-    gap: 20px;
-    margin-bottom: 10px;
+  }
 
+  &:not(:first-child) {
     li {
-      flex-basis: 252px;
-      flex-grow: 0;
-      flex-shrink: 0;
       display: flex;
-    }
+      flex-direction: column;
+      height: 154px;
+      background-color: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 20px;
+      justify-content: space-between;
+      cursor: pointer;
 
-    &:not(:first-child) {
-      li {
-        display: flex;
-        flex-direction: column;
-        height: 154px;
-        background-color: white;
-        border: 1px solid #e0e0e0;
-        border-radius: 10px;
-        padding: 20px;
-        justify-content: space-between;
+      &.emptyCol {
+        background-color: transparent;
+        border: none;
+        cursor: default;
+      }
 
-        > p {
-          margin: 0;
-          font-size: 14px;
-          color: #333;
+      > p {
+        margin: 0;
+        font-size: 14px;
+        color: #333;
+      }
+
+      > div {
+        &:nth-child(2) {
+          progress {
+            width: 80px;
+            margin-right: 10px;
+            font-size: 16px;
+          }
+
+          span {
+            font-size: 12px;
+            color: #666;
+          }
         }
 
-        > div {
-          &:nth-child(2) {
-            progress {
-              width: 80px;
-              margin-right: 10px;
-              font-size: 16px;
-            }
-
-            span {
-              font-size: 14px;
-            }
-          }
-
-          &:last-child {
-            margin-top: auto;
-            font-size: 12px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-          }
+        &:last-child {
+          margin-top: auto;
+          font-size: 12px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
         }
       }
     }
+  }
+}
+
+.missionLevel {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+  margin-bottom: 10px;
+
+  li {
+    flex-basis: 252px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    display: flex;
   }
 }

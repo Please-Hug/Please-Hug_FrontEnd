@@ -12,7 +12,7 @@ function MissionOverviewPage() {
         <li>&nbsp;</li>
       </ul>
       <div className={styles.missionTabPage}>
-        <ul>
+        <ul className={styles.missionLevel}>
           <li>
             <span>Lv.1</span>
           </li>
@@ -38,7 +38,89 @@ function MissionOverviewPage() {
             <span>Lv.16</span>
           </li>
         </ul>
-        <ul>
+
+        <ul className={styles.missionRow}>
+          <li>
+            <p>오리엔테이션</p>
+            <div>
+              <progress value="2" max="14" />
+              <span>2 / 14</span>
+            </div>
+            <div>
+              <span>쉬움</span>
+              <span>(3회차)백엔드 과정 개인 미션</span>
+            </div>
+          </li>
+          <li>
+            <p>오리엔테이션</p>
+            <div>
+              <progress value="2" max="14" />
+              <span>2 / 14</span>
+            </div>
+            <div>
+              <span>쉬움</span>
+              <span>(3회차)백엔드 과정 개인 미션</span>
+            </div>
+          </li>
+          <li className={styles.emptyCol}></li>
+          <li>
+            <p>오리엔테이션</p>
+            <div>
+              <progress value="2" max="14" />
+              <span>2 / 14</span>
+            </div>
+            <div>
+              <span>쉬움</span>
+              <span>(3회차)백엔드 과정 개인 미션</span>
+            </div>
+          </li>
+          <li>
+            <p>오리엔테이션</p>
+            <div>
+              <progress value="2" max="14" />
+              <span>2 / 14</span>
+            </div>
+            <div>
+              <span>쉬움</span>
+              <span>(3회차)백엔드 과정 개인 미션</span>
+            </div>
+          </li>
+          <li>
+            <p>오리엔테이션</p>
+            <div>
+              <progress value="2" max="14" />
+              <span>2 / 14</span>
+            </div>
+            <div>
+              <span>쉬움</span>
+              <span>(3회차)백엔드 과정 개인 미션</span>
+            </div>
+          </li>
+          <li>
+            <p>오리엔테이션</p>
+            <div>
+              <progress value="2" max="14" />
+              <span>2 / 14</span>
+            </div>
+            <div>
+              <span>쉬움</span>
+              <span>(3회차)백엔드 과정 개인 미션</span>
+            </div>
+          </li>
+          <li>
+            <p>오리엔테이션</p>
+            <div>
+              <progress value="2" max="14" />
+              <span>2 / 14</span>
+            </div>
+            <div>
+              <span>쉬움</span>
+              <span>(3회차)백엔드 과정 개인 미션</span>
+            </div>
+          </li>
+        </ul>
+
+        <ul className={styles.missionRow}>
           <li>
             <p>오리엔테이션</p>
             <div>
@@ -129,98 +211,7 @@ function MissionOverviewPage() {
           </li>
         </ul>
 
-        <ul>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-        </ul>
-
-        <ul>
+        <ul className={styles.missionRow}>
           <li>
             <p>오리엔테이션</p>
             <div>
