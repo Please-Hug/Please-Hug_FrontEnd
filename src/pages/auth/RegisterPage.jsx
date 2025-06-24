@@ -31,7 +31,7 @@ function RegisterPage() {
             type="password"
             id="password-confirmation"
             name="password-confirmation"
-            placeholder="비밀번호"
+            placeholder="비밀번호 확인"
             required
           />
           <FaEyeSlash className={styles.inputIcon} />
