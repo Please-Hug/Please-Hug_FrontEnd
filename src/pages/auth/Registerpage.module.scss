@@ -35,20 +35,6 @@
   font-size: 14px;
 }
 
-.rememberMe {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  align-items: baseline;
-
-  input[type="checkbox"] {
-    width: auto;
-  }
-  label {
-    margin-left: 5px;
-  }
-}
-
 .areYouUser {
   text-align: center;
   width: 100%;
