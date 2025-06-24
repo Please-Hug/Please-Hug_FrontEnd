@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function RegisterPage() {
   return (
     <div>
-      <form className={styles.registerForm} action="/login" method="POST">
+      <form className={styles.registerForm} action="/register" method="POST">
         <div className={styles.inputGroup}>
           <input
             type="text"
