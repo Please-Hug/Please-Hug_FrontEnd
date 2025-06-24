@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import DashboardPage from "../pages/user/DashboardPage";
-import MissionOverviewPage from "../pages/mission/MissionOverviewPage";
+import DashboardPage from "../pages/User/DashboardPage";
+import MissionOverviewPage from "../pages/Mission/MissionOverviewPage";
 // import useAuthStore from "../stores/auth.store";
 
 // 라우트 로더 함수 (데이터 프리페칭)
