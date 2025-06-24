@@ -1,4 +1,4 @@
-.loginForm {
+.registerForm {
   input,
   button {
     width: 100%;
@@ -35,34 +35,20 @@
   font-size: 14px;
 }
 
-.rememberMe {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-
-  input[type="checkbox"] {
-    width: auto;
-  }
-  label {
-    margin-left: 5px;
-  }
-}
-
-.links {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  align-items: baseline;
+.areYouUser {
+  text-align: center;
+  width: 100%;
 
   a {
     text-decoration: none;
+    color: #609ae9;
+    margin-left: 5px;
 
     &:hover {
-      color: #609ae9;
       text-decoration: underline;
     }
-    &:first-child {
-      margin-right: 10px;
+    &:visited {
+      color: #609ae9;
     }
   }
 }
