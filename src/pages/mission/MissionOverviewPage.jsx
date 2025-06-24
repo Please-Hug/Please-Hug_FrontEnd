@@ -1,170 +1,172 @@
 import React from "react";
 import styles from "./MissionOverviewPage.module.scss";
 import MissionItem from "../../components/Mission/MissionItem";
-
 function getMissions() {
-  return [
-    [
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      { isDummy: true },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
+  return {
+    missionLevels: [1, 2, 4, 6, 8, 12, 14, 16],
+    missionRows: [
+      [
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        { isDummy: true },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+      ],
+      [
+        { isDummy: true },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+      ],
+      [
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+        { isDummy: true },
+        {
+          title: "오리엔테이션",
+          progressValue: 2,
+          maxProgress: 14,
+          difficulty: "쉬움",
+          course: "(3회차)백엔드 과정 개인 미션",
+        },
+      ],
     ],
-    [
-      { isDummy: true },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-    ],
-    [
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-      { isDummy: true },
-      {
-        title: "오리엔테이션",
-        progressValue: 2,
-        maxProgress: 14,
-        difficulty: "쉬움",
-        course: "(3회차)백엔드 과정 개인 미션",
-      },
-    ],
-  ];
+  };
 }
 
 function MissionOverviewPage() {
-  const missions = getMissions();
+  const missionData = getMissions();
   return (
     <div>
       <h2>미션</h2>
@@ -176,33 +178,12 @@ function MissionOverviewPage() {
       </ul>
       <div className={styles.missionTabPage}>
         <ul className={styles.missionLevel}>
-          <li>
-            <span>Lv.1</span>
-          </li>
-          <li>
-            <span>Lv.2</span>
-          </li>
-          <li>
-            <span>Lv.4</span>
-          </li>
-          <li>
-            <span>Lv.6</span>
-          </li>
-          <li>
-            <span>Lv.8</span>
-          </li>
-          <li>
-            <span>Lv.12</span>
-          </li>
-          <li>
-            <span>Lv.14</span>
-          </li>
-          <li>
-            <span>Lv.16</span>
-          </li>
+          {missionData.missionLevels.map((level, index) => (
+            <li key={index}>Lv.{level}</li>
+          ))}
         </ul>
 
-        {missions.map((missionRow, rowIndex) => (
+        {missionData.missionRows.map((missionRow, rowIndex) => (
           <ul key={rowIndex} className={styles.missionRow}>
             {missionRow.map((mission, index) => (
               <MissionItem key={index} {...mission} />
