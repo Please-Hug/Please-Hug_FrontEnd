@@ -41,56 +41,18 @@ function MissionOverviewPage() {
         </ul>
 
         <ul className={styles.missionRow}>
-          <MissionItem
-            title={"오리엔테이션"}
-            progressValue={2}
-            maxProgress={14}
-            difficulty={"쉬움"}
-            course={"(3회차)백엔드 과정 개인 미션"}
-          />
-          <MissionItem
-            title={"오리엔테이션"}
-            progressValue={2}
-            maxProgress={14}
-            difficulty={"쉬움"}
-            course={"(3회차)백엔드 과정 개인 미션"}
-          />
-          <MissionItem isDummy={true} />
-          <MissionItem
-            title={"오리엔테이션"}
-            progressValue={2}
-            maxProgress={14}
-            difficulty={"쉬움"}
-            course={"(3회차)백엔드 과정 개인 미션"}
-          />
-          <MissionItem
-            title={"오리엔테이션"}
-            progressValue={2}
-            maxProgress={14}
-            difficulty={"쉬움"}
-            course={"(3회차)백엔드 과정 개인 미션"}
-          />
-          <MissionItem
-            title={"오리엔테이션"}
-            progressValue={2}
-            maxProgress={14}
-            difficulty={"쉬움"}
-            course={"(3회차)백엔드 과정 개인 미션"}
-          />
-          <MissionItem
-            title={"오리엔테이션"}
-            progressValue={2}
-            maxProgress={14}
-            difficulty={"쉬움"}
-            course={"(3회차)백엔드 과정 개인 미션"}
-          />
-          <MissionItem
-            title={"오리엔테이션"}
-            progressValue={2}
-            maxProgress={14}
-            difficulty={"쉬움"}
-            course={"(3회차)백엔드 과정 개인 미션"}
-          />
+          {[
+            { title: "오리엔테이션", progressValue: 2, maxProgress: 14, difficulty: "쉬움", course: "(3회차)백엔드 과정 개인 미션" },
+            { title: "오리엔테이션", progressValue: 2, maxProgress: 14, difficulty: "쉬움", course: "(3회차)백엔드 과정 개인 미션" },
+            { isDummy: true },
+            { title: "오리엔테이션", progressValue: 2, maxProgress: 14, difficulty: "쉬움", course: "(3회차)백엔드 과정 개인 미션" },
+            { title: "오리엔테이션", progressValue: 2, maxProgress: 14, difficulty: "쉬움", course: "(3회차)백엔드 과정 개인 미션" },
+            { title: "오리엔테이션", progressValue: 2, maxProgress: 14, difficulty: "쉬움", course: "(3회차)백엔드 과정 개인 미션" },
+            { title: "오리엔테이션", progressValue: 2, maxProgress: 14, difficulty: "쉬움", course: "(3회차)백엔드 과정 개인 미션" },
+            { title: "오리엔테이션", progressValue: 2, maxProgress: 14, difficulty: "쉬움", course: "(3회차)백엔드 과정 개인 미션" },
+          ].map((mission, index) => (
+            <MissionItem key={index} {...mission} />
+          ))}
         </ul>
 
         <ul className={styles.missionRow}>
