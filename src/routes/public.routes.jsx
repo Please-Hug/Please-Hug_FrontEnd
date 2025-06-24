@@ -1,5 +1,5 @@
 import PublicLayout from "../layouts/PublicLayout";
-import HomePage from "../pages/home/HomePage";
+import HomePage from "../pages/Home/HomePage";
 export default [
   {
     element: <PublicLayout />,

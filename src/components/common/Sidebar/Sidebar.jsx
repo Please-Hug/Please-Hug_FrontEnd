@@ -16,6 +16,7 @@ import {
   FaAnglesLeft,
 } from "react-icons/fa6";
 import logo from "../../../assets/images/logo.png";
+import { useNavigate } from "react-router-dom";
 
 function getQuickMenuItems() {
   return [
@@ -30,7 +31,7 @@ function getMenuItems() {
     { icon: <FaHouse />, label: "홈" },
     { icon: <FaBook />, label: "배움일기" },
     { icon: <FaThumbsUp />, label: "칭찬" },
-    { icon: <FaGraduationCap />, label: "미션" },
+    { icon: <FaGraduationCap />, label: "미션", link: "/missions" },
     { icon: <FaChessBoard />, label: "퀘스트" },
     { icon: <FaCartShopping />, label: "상점" },
     { icon: <FaRankingStar />, label: "랭킹" },
@@ -50,6 +51,7 @@ function Sidebar() {
   const quickMenuItems = getQuickMenuItems();
   const menuItems = getMenuItems();
   const missionGroupItems = getMissonGroupItems();
+  const navigate = useNavigate();
   return (
     <div className={styles.sidebar}>
       <div>
@@ -79,7 +81,12 @@ function Sidebar() {
           <hr />
           <ul>
             {menuItems.map((item, index) => (
-              <li key={index}>
+              <li
+                key={index}
+                onClick={() => {
+                  navigate(item.link || "/");
+                }}
+              >
                 {item.icon}
                 <span>{item.label}</span>
               </li>
