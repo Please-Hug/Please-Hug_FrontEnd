@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./MissionOverviewPage.module.scss";
+import MissionItem from "../../components/Mission/MissionItem";
 
 function MissionOverviewPage() {
   return (
@@ -40,266 +41,174 @@ function MissionOverviewPage() {
         </ul>
 
         <ul className={styles.missionRow}>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li className={styles.emptyCol}></li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem isDummy={true} />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
         </ul>
 
         <ul className={styles.missionRow}>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
         </ul>
 
         <ul className={styles.missionRow}>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
-          <li>
-            <p>오리엔테이션</p>
-            <div>
-              <progress value="2" max="14" />
-              <span>2 / 14</span>
-            </div>
-            <div>
-              <span>쉬움</span>
-              <span>(3회차)백엔드 과정 개인 미션</span>
-            </div>
-          </li>
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
+          <MissionItem
+            title={"오리엔테이션"}
+            progressValue={2}
+            maxProgress={14}
+            difficulty={"쉬움"}
+            course={"(3회차)백엔드 과정 개인 미션"}
+          />
         </ul>
       </div>
     </div>
