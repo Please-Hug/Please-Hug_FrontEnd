@@ -1,0 +1,24 @@
+.praiseContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.praiseContent {
+  display: flex;
+  flex: 1;
+}
+
+.praiseSideBar {
+  flex-basis: 400px;
+}
+
+.praiseBox {
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: normal;
+  }
+}
