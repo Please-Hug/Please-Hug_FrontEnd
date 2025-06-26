@@ -100,7 +100,7 @@ function MissionOverviewPage() {
         </ul>
 
         {Object.keys(missionRows).length === 0 && <div>미션이 없습니다.</div>}
-        {Object.keys(missionRows).map((missionRow, rowIndex) => (
+        {Object.keys(missionRows).map((missionRow) => (
           <ul key={missionRow} className={styles.missionRow}>
             {missionLevels.map((missionCol, index) =>
               missionRows[missionRow][missionCol] ? (
