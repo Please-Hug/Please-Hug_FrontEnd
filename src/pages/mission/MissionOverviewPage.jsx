@@ -15,7 +15,6 @@ function MissionOverviewPage() {
       try {
         const groups = await getMyMissionGroups();
         setMissionGroups(groups.data);
-        console.log("미션 그룹:", groups.data);
       } catch (error) {
         console.error("미션 그룹을 가져오는 데 실패했습니다:", error);
       }
@@ -35,7 +34,6 @@ function MissionOverviewPage() {
     const fetchMissions = async (groupId) => {
       try {
         const groupMissions = await getMissions(groupId);
-        console.log("미션:", groupMissions.data);
         setMissions(groupMissions.data);
       } catch (error) {
         console.error("미션을 가져오는 데 실패했습니다:", error);
@@ -65,8 +63,6 @@ function MissionOverviewPage() {
         }
       }
       missionLevels.sort((a, b) => a - b);
-      console.log("미션 행:", missionRows);
-      console.log("미션 레벨:", missionLevels);
       setMissionRows(missionRows);
       setMissionLevels(missionLevels);
     }
