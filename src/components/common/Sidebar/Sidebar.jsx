@@ -56,6 +56,11 @@ function Sidebar() {
   const navigate = useNavigate();
   const userInfo = useUserStore((state) => state.userInfo);
   const [userMenuToggle, setUserMenuToggle] = useState(false);
+
+  if (!userInfo) {
+    return <div>로딩중...</div>;
+  }
+
   return (
     <div className={styles.sidebar}>
       <div>
@@ -114,10 +119,10 @@ function Sidebar() {
       <div className={styles.userInfo}>
         <div className={styles.userStats}>
           <div>
-            Lv. <span>17</span>
+            Lv. <span>{userInfo.level}</span>
           </div>
           <div>
-            <span>900</span>개
+            <span>{userInfo.currentTotalExp}</span>개
           </div>
         </div>
         <div className={styles.userProfile}>
