@@ -13,6 +13,9 @@ import useUserStore from "../../stores/userStore";
 
 function DashboardPage() {
   const userInfo = useUserStore((state) => state.userInfo);
+  if (!userInfo) {
+    return <div>로딩중...</div>;
+  }
   // const userInfo = {
   //   name: "정휘상(백엔드 3회차)",
   //   course: "Hugton 알고리즘 미션 강좌",
