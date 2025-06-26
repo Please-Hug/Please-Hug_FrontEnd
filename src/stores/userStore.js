@@ -8,7 +8,7 @@ const useUserStore = create((set) => ({
     level: 0,
     currentExp: 0,
     maxExp: 0,
-    profileImg: null,
+    profileImage: null,
   },
   setUserInfo: (userInfo) => set({ userInfo }),
   clearUserInfo: () =>
@@ -20,7 +20,7 @@ const useUserStore = create((set) => ({
         level: 0,
         currentExp: 0,
         maxExp: 0,
-        profileImg: null,
+        profileImage: null,
       },
     }),
 }));
