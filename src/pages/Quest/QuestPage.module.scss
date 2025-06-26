@@ -1,0 +1,67 @@
+.questPageTitle {
+  padding-bottom: 20px;
+}
+
+.alert {
+  display: none;
+}
+
+.questBox {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+}
+
+.cardWeekly {
+  h5 {
+    display: block;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 10px 20px;
+  }
+}
+
+.weeklyReward {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 20px;
+  background-color: #f7f7fa;
+  border-radius: 5px;
+}
+
+.weeklyRewardLabel {
+  font-size: 12px;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.weeklyRewardPoints {
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  font-weight: bold;
+  color: #8c8f9f;
+  .current {
+    margin-right: 5px;
+    color: black;
+  }
+  .total {
+    font-weight: normal;
+  }
+}
+
+progress.progressBar {
+  width: 100%;
+  height: 40px;
+}
+
+.questList {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  //   justify-content: space-around;
+  gap: 20px;
+  overflow-x: scroll;
+  align-items: flex-start;
+}

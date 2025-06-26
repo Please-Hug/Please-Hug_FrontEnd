@@ -1,6 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import DashboardPage from "../pages/user/DashboardPage";
+import DashboardPage from "../pages/User/DashboardPage";
+import MissionOverviewPage from "../pages/Mission/MissionOverviewPage";
+import QuestPage from "../pages/Quest/QuestPage";
 // import useAuthStore from "../stores/auth.store";
 
 // 라우트 로더 함수 (데이터 프리페칭)
@@ -31,6 +33,14 @@ export default [
         element: <DashboardPage />,
         // loader: dashboardLoader, // 데이터 로더
         // errorElement: <DashboardErrorPage />, // 에러 바운더리
+      },
+      {
+        path: "/missions",
+        element: <MissionOverviewPage />,
+      },
+      {
+        path: "/quest",
+        element: <QuestPage />,
       },
       // { path: "/profile", element: <ProfilePage /> },
       // { path: "/settings", element: <SettingsPage /> },
