@@ -22,7 +22,7 @@ function MainLayout() {
       localStorage.clear();
       navigate("/login", { replace: true });
     }
-  }, []);
+  }, [navigate]);
   return (
     <div className={styles.mainLayout}>
       <Sidebar />
