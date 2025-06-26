@@ -18,6 +18,7 @@ import {
 import logo from "../../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import useUserStore from "../../../stores/userStore";
+import SidebarUserMenu from "./SIdeBarUserMenu";
 
 function getQuickMenuItems() {
   return [
@@ -126,15 +127,7 @@ function Sidebar() {
               alt={userInfo?.name || "사용자 프로필"}
               onClick={() => setUserMenuToggle(!userMenuToggle)}
             />
-            {userMenuToggle && (
-              <div className={styles.userMenu}>
-                <ul>
-                  <li onClick={() => navigate("/profile")}>프로필</li>
-                  <li onClick={() => navigate("/settings")}>설정</li>
-                  <li onClick={() => navigate("/logout")}>로그아웃</li>
-                </ul>
-              </div>
-            )}
+            {userMenuToggle && <SidebarUserMenu />}
           </div>
           <span>©hug Inc.</span>
         </div>
