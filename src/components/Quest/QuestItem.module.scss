@@ -1,0 +1,76 @@
+.questCard {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 320px;
+  height: 210px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.questCardContent {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: space-between;
+
+  img {
+    display: block;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+}
+
+.questDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px;
+  width: 100%;
+
+  h6 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .questSubtitle {
+    font-size: 12px;
+    color: #8c8f9f;
+    margin-bottom: 20px;
+  }
+
+  .questProgressText {
+    font-size: 16px;
+    color: #8c8f9f;
+  }
+
+  .current {
+    margin-right: 5px;
+    color: #51a1ff;
+  }
+}
+
+.questButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.questButton {
+  width: 270px;
+  height: 48px;
+  &:disabled {
+    background-color: #e8e8ee;
+    border: none;
+    border-radius: 5px;
+  }
+}
+
+.questBox {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+}
