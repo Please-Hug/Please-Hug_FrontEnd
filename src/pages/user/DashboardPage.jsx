@@ -36,7 +36,7 @@ function DashboardPage() {
         </div>
         <div className={styles.dashboardRight}>
           <UserProfile
-            profileImg={userInfo.profileImg || emptyUserProfile}
+            profileImg={userInfo.profileImage || emptyUserProfile}
             username={userInfo.name}
             course={userInfo.course}
             rank={userInfo.rank}
