@@ -11,9 +11,12 @@ function MainLayout() {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchUserData = async () => {
-      const data = await getUserProfile();
-      console.log("User data fetched:", data);
-      setUserInfo(data.data);
+      try {
+        const data = await getUserProfile();
+        setUserInfo(data.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
     };
     fetchUserData();
   }, [setUserInfo]);
