@@ -9,16 +9,21 @@ import DailyQuest from "../../components/Dashboard/DailyQuest";
 import AttendanceCheck from "../../components/Dashboard/AttendanceCheck";
 import UserProfile from "../../components/Dashboard/UserProfile";
 import RecentDiary from "../../components/Dashboard/RecentDiary";
+import useUserStore from "../../stores/userStore";
 
 function DashboardPage() {
-  const userInfo = {
-    name: "정휘상(백엔드 3회차)",
-    course: "Hugton 알고리즘 미션 강좌",
-    rank: "11%",
-    level: 17,
-    currentExp: 4721,
-    maxExp: 6274,
-  };
+  const userInfo = useUserStore((state) => state.userInfo);
+  if (!userInfo) {
+    return <div>로딩중...</div>;
+  }
+  // const userInfo = {
+  //   name: "정휘상(백엔드 3회차)",
+  //   course: "Hugton 알고리즘 미션 강좌",
+  //   rank: "11%",
+  //   level: 17,
+  //   currentExp: 4721,
+  //   maxExp: 6274,
+  // };
   return (
     <div className={styles.dashboardPage}>
       <DashboardGreeting
@@ -34,7 +39,7 @@ function DashboardPage() {
         </div>
         <div className={styles.dashboardRight}>
           <UserProfile
-            profileImg={emptyUserProfile}
+            profileImg={userInfo.profileImage || emptyUserProfile}
             username={userInfo.name}
             course={userInfo.course}
             rank={userInfo.rank}
