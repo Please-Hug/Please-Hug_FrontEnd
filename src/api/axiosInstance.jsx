@@ -6,7 +6,7 @@ const api = axios.create({
 });
 
 // 인증이 필요한 경로들
-const authRequiredPaths = ["/api/v1"];
+const authRequiredPaths = ["/api/v1/", "/logout"];
 
 // 요청 인터셉터 - accessToken 붙이기
 api.interceptors.request.use(
