@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout";
 import DashboardPage from "../pages/User/DashboardPage";
 import MissionOverviewPage from "../pages/Mission/MissionOverviewPage";
 import QuestPage from "../pages/Quest/QuestPage";
+import LogoutPage from "../pages/User/LogoutPage";
 // import useAuthStore from "../stores/auth.store";
 
 // 라우트 로더 함수 (데이터 프리페칭)
@@ -41,6 +42,10 @@ export default [
       {
         path: "/quest",
         element: <QuestPage />,
+      },
+      {
+        path: "/logout",
+        element: <LogoutPage />,
       },
       // { path: "/profile", element: <ProfilePage /> },
       // { path: "/settings", element: <SettingsPage /> },
