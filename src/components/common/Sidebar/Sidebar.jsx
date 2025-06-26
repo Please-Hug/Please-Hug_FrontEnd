@@ -18,7 +18,7 @@ import {
 import logo from "../../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import useUserStore from "../../../stores/userStore";
-import SidebarUserMenu from "./SIdeBarUserMenu";
+import SidebarUserMenu from "./SidebarUserMenu";
 
 function getQuickMenuItems() {
   return [
