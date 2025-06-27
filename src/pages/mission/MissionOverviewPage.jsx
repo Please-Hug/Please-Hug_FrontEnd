@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./MissionOverviewPage.module.scss";
 import MissionItem from "../../components/Mission/MissionItem";
 import { getMyMissionGroups, getMissions } from "../../api/missionService";
+import { myChallenges } from "../../api/missionService";
 
 function MissionOverviewPage() {
   const [missionGroups, setMissionGroups] = useState([]);
@@ -9,6 +10,7 @@ function MissionOverviewPage() {
   const [activeGroup, setActiveGroup] = useState(null);
   const [missionRows, setMissionRows] = useState({});
   const [missionLevels, setMissionLevels] = useState([]);
+  const [challenges, setChallenges] = useState({});
 
   useEffect(() => {
     const fetchMissionGroups = async () => {
@@ -42,6 +44,28 @@ function MissionOverviewPage() {
 
     if (activeGroup) {
       fetchMissions(activeGroup.id);
+    }
+  }, [activeGroup]);
+
+  useEffect(() => {
+    const fetchMyChallenges = async () => {
+      try {
+        const challenges = await myChallenges(activeGroup.id);
+        const uniqueChallenges = {};
+        challenges.data.forEach((challenge) => {
+          if (!uniqueChallenges[challenge.mission.id]) {
+            uniqueChallenges[challenge.mission.id] = challenge;
+          }
+        });
+        setChallenges(uniqueChallenges);
+        console.log("내 도전 과제:", uniqueChallenges);
+      } catch (error) {
+        console.error("내 도전 과제를 가져오는 데 실패했습니다:", error);
+      }
+    };
+
+    if (activeGroup) {
+      fetchMyChallenges();
     }
   }, [activeGroup]);
 
@@ -112,6 +136,12 @@ function MissionOverviewPage() {
                   difficulty={missionRows[missionRow][missionCol].difficulty}
                   course={activeGroup.name}
                   isDummy={false}
+                  currentState={
+                    challenges[missionRows[missionRow][missionCol].id]
+                      ? challenges[missionRows[missionRow][missionCol].id]
+                          .progress
+                      : null
+                  }
                 />
               ) : (
                 <MissionItem key={index} isDummy={true} />

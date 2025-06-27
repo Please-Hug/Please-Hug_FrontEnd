@@ -12,6 +12,28 @@
   justify-content: space-between;
   cursor: pointer;
 
+  @keyframes glowPulse {
+    0% {
+      box-shadow: 0px 0px 0px 0px #4a91fd;
+    }
+    50% {
+      box-shadow: 0px 0px 10px 1px #4a91fd;
+    }
+    100% {
+      box-shadow: 0px 0px 0px 0px #4a91fd;
+    }
+  }
+
+  &.IN_PROGRESS {
+    border-color: #4a91fd;
+    box-shadow: 0px 0px 20px 0px #4a91fd;
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+
+  &.COMPLETED {
+    border: 2px solid #04a37e;
+  }
+
   &.emptyCol {
     background-color: transparent;
     border: none;
