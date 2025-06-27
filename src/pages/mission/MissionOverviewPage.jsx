@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./MissionOverviewPage.module.scss";
 import MissionItem from "../../components/Mission/MissionItem";
-import {
-  getMyMissionGroups,
-  getMissions,
-  challengeMission,
-} from "../../api/missionService";
+import { getMyMissionGroups, getMissions } from "../../api/missionService";
 import { myChallenges } from "../../api/missionService";
 import SideModal from "../../components/common/SideModal/SideModal";
-import missionStatusMap from "../../utils/missionStatusMap";
-import missionDifficultyMap from "../../utils/missionDifficultyMap";
 import MissionDetailCard from "../../components/Mission/MissionDetailCard";
 
 function MissionOverviewPage() {

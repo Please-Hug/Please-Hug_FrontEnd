@@ -2,9 +2,26 @@ import React from "react";
 import styles from "./MissionDetailCard.module.scss";
 import missionStatusMap from "../../utils/missionStatusMap";
 import missionDifficultyMap from "../../utils/missionDifficultyMap";
+import TaskItem from "./TaskItem";
 import { FaFlag } from "react-icons/fa6";
 
 function MissionDetailCard({ mission, groupName, progress }) {
+  const tasks = [
+    { task: "Notion으로 문서화 작업하기" },
+    { task: "Figma로 UI/UX 디자인하기" },
+    { task: "Jira로 이슈 관리하기" },
+    { task: "GitHub로 코드 관리하기" },
+    { task: "Slack으로 팀원과 소통하기" },
+    { task: "Google Drive로 자료 공유하기" },
+    { task: "Zoom으로 원격 회의하기" },
+    { task: "Google Calendar로 일정 관리하기" },
+    { task: "Google Docs로 문서 작성하기" },
+    { task: "Google Sheets로 데이터 분석하기" },
+    { task: "Google Slides로 프레젠테이션 만들기" },
+    { task: "Google Forms로 설문 조사하기" },
+    { task: "Google Meet로 화상 회의하기" },
+    { task: "Google Chat로 팀원과 대화하기" },
+  ];
   return (
     <div className={styles.missionDetail}>
       {mission && (
@@ -50,21 +67,14 @@ function MissionDetailCard({ mission, groupName, progress }) {
             <p className={styles.missionDetailDescription}>
               {mission.description}
             </p>
-            <ul>
-              <li>Notion으로 문서화 작업하기</li>
-              <li>Figma로 UI/UX 디자인하기</li>
-              <li>Jira로 이슈 관리하기</li>
-              <li>GitHub로 코드 관리하기</li>
-              <li>Slack으로 팀원과 소통하기</li>
-              <li>Google Drive로 자료 공유하기</li>
-              <li>Zoom으로 원격 회의하기</li>
-              <li>Google Calendar로 일정 관리하기</li>
-              <li>Google Docs로 문서 작성하기</li>
-              <li>Google Sheets로 데이터 분석하기</li>
-              <li>Google Slides로 프레젠테이션 만들기</li>
-              <li>Google Forms로 설문 조사하기</li>
-              <li>Google Meet로 화상 회의하기</li>
-              <li>Google Chat로 팀원과 대화하기</li>
+            <h3 className={styles.missionDetailSubtasksTitle}>하위 태스크</h3>
+            <ul className={styles.missionDetailTasks}>
+              {tasks.map((item, index) => (
+                <TaskItem
+                  key={index}
+                  task={{ status: "시작전", name: item.task, score: 2 }}
+                />
+              ))}
             </ul>
           </div>
           <div className={styles.missionDetailActions}>
