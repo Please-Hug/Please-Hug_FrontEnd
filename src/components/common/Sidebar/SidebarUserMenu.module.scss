@@ -1,0 +1,66 @@
+.userMenu {
+  position: absolute;
+  bottom: 60px;
+  left: 20px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  width: 250px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      border-radius: 3px;
+      font-size: 14px;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+
+      &.userInfo {
+        display: flex;
+        flex-direction: row;
+
+        &:hover {
+          background-color: transparent;
+          cursor: default;
+        }
+
+        .userDetails {
+          display: flex;
+          flex-direction: column;
+          .name {
+            font-weight: bold;
+            font-size: 14px;
+            color: #606268;
+          }
+        }
+      }
+    }
+  }
+}
+
+.logoutButton {
+  border-top: 1px solid #e0e0e0;
+  margin-top: auto;
+  color: #606268;
+}

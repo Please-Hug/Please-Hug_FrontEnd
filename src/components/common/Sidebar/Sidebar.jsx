@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Sidebar.module.scss";
 import emptyUserProfile from "../../../assets/images/user/empty-user-profile.svg";
 import {
@@ -17,6 +17,8 @@ import {
 } from "react-icons/fa6";
 import logo from "../../../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
+import useUserStore from "../../../stores/userStore";
+import SidebarUserMenu from "./SidebarUserMenu";
 
 function getQuickMenuItems() {
   return [
@@ -52,6 +54,13 @@ function Sidebar() {
   const menuItems = getMenuItems();
   const missionGroupItems = getMissonGroupItems();
   const navigate = useNavigate();
+  const userInfo = useUserStore((state) => state.userInfo);
+  const [userMenuToggle, setUserMenuToggle] = useState(false);
+
+  if (!userInfo) {
+    return <div>로딩중...</div>;
+  }
+
   return (
     <div className={styles.sidebar}>
       <div>
@@ -110,15 +119,20 @@ function Sidebar() {
       <div className={styles.userInfo}>
         <div className={styles.userStats}>
           <div>
-            Lv. <span>17</span>
+            Lv. <span>{userInfo.level}</span>
           </div>
           <div>
-            <span>900</span>개
+            <span>{userInfo.currentTotalExp}</span>개
           </div>
         </div>
         <div className={styles.userProfile}>
           <div>
-            <img src={emptyUserProfile} alt="정휘상(백엔드 3회차)" />
+            <img
+              src={userInfo?.profileImage || emptyUserProfile}
+              alt={userInfo?.name || "사용자 프로필"}
+              onClick={() => setUserMenuToggle(!userMenuToggle)}
+            />
+            {userMenuToggle && <SidebarUserMenu />}
           </div>
           <span>©hug Inc.</span>
         </div>
