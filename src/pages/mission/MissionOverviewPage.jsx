@@ -58,7 +58,6 @@ function MissionOverviewPage() {
           }
         });
         setChallenges(uniqueChallenges);
-        console.log("내 도전 과제:", uniqueChallenges);
       } catch (error) {
         console.error("내 도전 과제를 가져오는 데 실패했습니다:", error);
       }
