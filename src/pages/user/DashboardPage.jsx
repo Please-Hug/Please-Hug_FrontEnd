@@ -41,11 +41,11 @@ function DashboardPage() {
           <UserProfile
             profileImg={userInfo.profileImage || emptyUserProfile}
             username={userInfo.name}
-            course={userInfo.course}
-            rank={userInfo.rank}
+            course={userInfo.course || "Hugton 알고리즘 미션 강좌"}
+            rank={userInfo.rank || "0%"}
             level={userInfo.level}
-            currentExp={userInfo.currentExp}
-            maxExp={userInfo.maxExp}
+            currentExp={userInfo.currentTotalExp}
+            maxExp={userInfo.nextLevelTotalExp}
           />
           <AttendanceCheck />
           <DailyQuest />
