@@ -26,7 +26,6 @@ function MissionItem({
     ) {
       classByState = "COMPLETED";
     }
-    console.log("classByState", classByState);
   }
 
   if (isDummy) {
