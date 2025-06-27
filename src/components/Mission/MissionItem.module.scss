@@ -12,6 +12,28 @@
   justify-content: space-between;
   cursor: pointer;
 
+  @keyframes glowPulse {
+    0% {
+      box-shadow: 0px 0px 0px 0px #4a91fd;
+    }
+    50% {
+      box-shadow: 0px 0px 10px 1px #4a91fd;
+    }
+    100% {
+      box-shadow: 0px 0px 0px 0px #4a91fd;
+    }
+  }
+
+  &.IN_PROGRESS {
+    border-color: #4a91fd;
+    box-shadow: 0px 0px 20px 0px #4a91fd;
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+
+  &.COMPLETED {
+    border: 2px solid #04a37e;
+  }
+
   &.emptyCol {
     background-color: transparent;
     border: none;
@@ -46,4 +68,32 @@
       justify-content: space-between;
     }
   }
+}
+
+.difficulty {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: #666;
+
+  svg {
+    margin-right: 4px;
+  }
+  &.EASY svg {
+    color: #4caf50;
+  }
+  &.NORMAL svg {
+    color: #5b9cfe;
+  }
+  &.HARD svg {
+    color: #ff9800;
+  }
+}
+
+.course {
+  font-weight: bold;
+  background-color: #f3f4f5;
+  color: #55545c;
+  padding: 2px;
+  margin-left: 10px;
 }
