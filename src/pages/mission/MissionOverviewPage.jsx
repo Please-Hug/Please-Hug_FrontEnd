@@ -146,10 +146,12 @@ function MissionOverviewPage() {
                   }
                   onClick={() => {
                     setIsSideModalOpen(true);
-                    console.log(
-                      "미션 클릭:",
-                      missionRows[missionRow][missionCol]
-                    );
+                    if (process.env.NODE_ENV === "development") {
+                      console.log(
+                        "미션 클릭:",
+                        missionRows[missionRow][missionCol]
+                      );
+                    }
                   }}
                 />
               ) : (
