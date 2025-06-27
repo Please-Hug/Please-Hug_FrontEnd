@@ -6,6 +6,13 @@ import QuestPage from "../pages/Quest/QuestPage";
 import LogoutPage from "../pages/User/LogoutPage";
 import MyInfoPage from "../pages/User/MyInfoPage";
 
+// 배움일기 관련 페이지들
+import StudyDiaryListPage from "../pages/studyDiary/StudyDiaryListPage";
+import StudyDiaryWritePage from "../pages/studyDiary/StudyDiaryWritePage";
+import StudyDiaryViewPage from "../pages/studyDiary/StudyDiaryViewPage";
+import StudyDiaryEditPage from "../pages/studyDiary/StudyDiaryEditPage";
+import MyActivityPage from "../pages/user/MyActivityPage";
+
 export default [
   {
     element: (
@@ -35,6 +42,28 @@ export default [
       {
         path: "/profile",
         element: <MyInfoPage />
+      },
+      // 배움일기 관련 라우트
+      {
+        path: "/study-diary",
+        element: <StudyDiaryListPage />,
+      },
+      {
+        path: "/study-diary/write",
+        element: <StudyDiaryWritePage />,
+      },
+      {
+        path: "/study-diary/:id",
+        element: <StudyDiaryViewPage />,
+      },
+      {
+        path: "/study-diary/edit/:id",
+        element: <StudyDiaryEditPage />,
+      },
+      // 나의 활동 페이지
+      {
+        path: "/my-activity",
+        element: <MyActivityPage />,
       },
       // { path: "/settings", element: <SettingsPage /> },
       // ... 추가 사용자 경로

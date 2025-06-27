@@ -31,8 +31,8 @@ function getQuickMenuItems() {
 
 function getMenuItems() {
   return [
-    { icon: <FaHouse />, label: "홈" },
-    { icon: <FaBook />, label: "배움일기" },
+    { icon: <FaHouse />, label: "홈"},
+    { icon: <FaBook />, label: "배움일기", link: "/study-diary" },
     { icon: <FaThumbsUp />, label: "칭찬" },
     { icon: <FaGraduationCap />, label: "미션", link: "/missions" },
     { icon: <FaChessBoard />, label: "퀘스트", link: "/quest" },
