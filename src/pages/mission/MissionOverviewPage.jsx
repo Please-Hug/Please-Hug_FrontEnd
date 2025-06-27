@@ -5,8 +5,8 @@ import {
   getMyMissionGroups,
   getMissions,
   challengeMission,
+  myChallenges,
 } from "../../api/missionService";
-import { myChallenges } from "../../api/missionService";
 import SideModal from "../../components/common/SideModal/SideModal";
 import MissionDetailCard from "../../components/Mission/MissionDetailCard";
 
