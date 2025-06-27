@@ -9,3 +9,15 @@ export const getUserProfile = async () => {
     throw error;
   }
 };
+
+export const searchUsers = async (keyword = "") => {
+  try{
+    const response = await api.get("/api/v1/users",{
+      params: { keyword },
+    });
+    return response.data.data;
+  } catch (error){
+    console.error("유저 검색 실패:", error);
+    throw [];
+  } 
+};

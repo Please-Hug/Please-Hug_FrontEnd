@@ -32,7 +32,7 @@ function getMenuItems() {
   return [
     { icon: <FaHouse />, label: "홈" },
     { icon: <FaBook />, label: "배움일기" },
-    { icon: <FaThumbsUp />, label: "칭찬" },
+    { icon: <FaThumbsUp />, label: "칭찬", link: "/praises" },
     { icon: <FaGraduationCap />, label: "미션", link: "/missions" },
     { icon: <FaChessBoard />, label: "퀘스트", link: "/quest" },
     { icon: <FaCartShopping />, label: "상점" },
