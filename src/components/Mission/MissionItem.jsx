@@ -34,7 +34,7 @@ function MissionItem({
     );
   } else {
     return (
-      <li className={[styles.missionItem, styles[classByState]].join(" ")}>
+      <li className={[styles.missionItem, classByState ? styles[classByState] : ""].join(" ")}>
         <p>{title}</p>
         <div style={{ display: "none" }}>
           <progress value={progressValue} max={maxProgress} />
