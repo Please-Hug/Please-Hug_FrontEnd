@@ -1,0 +1,203 @@
+.missionDetail {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100vh;
+}
+
+.missionDetailTitle {
+  display: block;
+  font-size: 16px;
+  color: #333;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.missionDetailName {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.missionDetailContent {
+  overflow-y: scroll;
+  flex-direction: column;
+  display: flex;
+  padding: 20px;
+  flex: 1;
+
+  > * {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+  }
+
+  .missionDetailInfo {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.missionDetailLabel {
+  flex-basis: 100px;
+  color: #666;
+}
+
+.missionDetailProgressValue {
+  background-color: #ece6fd;
+  color: #5b2ee0;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 2px 5px;
+  font-size: 12px;
+
+  &.NOT_STARTED {
+    background-color: #e1edff;
+    color: #306bc0;
+  }
+
+  &.IN_PROGRESS {
+    background-color: #e1edff;
+    color: #306bc0;
+  }
+
+  &.ABORTED {
+    background-color: #f44336;
+    color: white;
+  }
+
+  &.COMPLETED {
+    background-color: #e1edff;
+    color: #306bc0;
+  }
+
+  &.IN_FEEDBACK {
+    background-color: #e1edff;
+    color: #306bc0;
+  }
+
+  &.FEEDBACK_COMPLETED {
+    background-color: #d7f0ea;
+    color: #0a614d;
+  }
+
+  &.REWARD_RECEIVED {
+    background-color: #d7f0ea;
+    color: #0a614d;
+  }
+}
+
+.missionDetailActions {
+  margin-top: auto;
+  text-align: right;
+  position: sticky;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 30px;
+  border-top: 1px solid #e0e0e0;
+  z-index: 999;
+  background-color: white;
+}
+
+.missionDetailChallengeButton {
+  padding: 8px 16px;
+  background-color: #609ae9;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.missionDetailMoveButton {
+  padding: 8px 16px;
+  background-color: #f0f6ff;
+  color: #1959b8;
+  border: 1px solid #1959b8;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.missionDetailDifficulty {
+  display: flex;
+  align-items: center;
+  svg {
+    margin-right: 4px;
+  }
+  &.EASY svg {
+    color: #4caf50;
+  }
+  &.NORMAL svg {
+    color: #5b9cfe;
+  }
+  &.HARD svg {
+    color: #ff9800;
+  }
+}
+
+.missionDetailReward {
+  background: linear-gradient(
+    269deg,
+    rgba(126, 217, 231, 0.24) -6.02%,
+    rgba(49, 126, 242, 0.24) 41.95%
+  );
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.missionDetailRewardValue {
+  font-size: 14px;
+
+  strong {
+    font-weight: bold;
+    color: #2672e1;
+  }
+}
+
+.missionDetailDescription {
+  font-size: 14px;
+  color: #333;
+  padding: 20px;
+  line-height: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  min-height: 180px;
+  margin-bottom: 20px;
+}
+
+.missionDetailSubtasksTitle {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.missionDetailTasks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 20px;
+}
