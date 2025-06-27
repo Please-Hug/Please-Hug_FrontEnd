@@ -63,7 +63,6 @@ function MissionOverviewPage() {
         return;
       }
       const challenges = await myChallenges(activeGroup.id);
-      console.log("내 도전 과제:", challenges);
       const uniqueChallenges = {};
       challenges.data.forEach((challenge) => {
         if (!uniqueChallenges[challenge.mission.id]) {
