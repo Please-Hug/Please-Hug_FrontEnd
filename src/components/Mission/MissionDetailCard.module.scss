@@ -112,13 +112,26 @@
   background-color: white;
 }
 
-.missionDetailActionButton {
+.missionDetailChallengeButton {
   padding: 8px 16px;
   background-color: #609ae9;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.missionDetailMoveButton {
+  padding: 8px 16px;
+  background-color: #f0f6ff;
+  color: #1959b8;
+  border: 1px solid #1959b8;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .missionDetailDifficulty {

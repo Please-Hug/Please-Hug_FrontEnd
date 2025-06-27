@@ -5,7 +5,7 @@ import missionDifficultyMap from "../../utils/missionDifficultyMap";
 import TaskItem from "./TaskItem";
 import { FaFlag } from "react-icons/fa6";
 
-function MissionDetailCard({ mission, groupName, progress }) {
+function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
   const tasks = [
     { task: "Notion으로 문서화 작업하기" },
     { task: "Figma로 UI/UX 디자인하기" },
@@ -79,11 +79,16 @@ function MissionDetailCard({ mission, groupName, progress }) {
           </div>
           <div className={styles.missionDetailActions}>
             {!progress ? (
-              <span className={styles.missionDetailActionButton}>
+              <span
+                className={styles.missionDetailChallengeButton}
+                onClick={() => {
+                  onChallenge(mission.id);
+                }}
+              >
                 미션 도전하기
               </span>
             ) : (
-              <button className={styles.missionDetailActionButton}>
+              <button className={styles.missionDetailMoveButton}>
                 학습 계획 이동하기
               </button>
             )}
