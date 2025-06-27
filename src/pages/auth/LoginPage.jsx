@@ -48,7 +48,6 @@ function LoginPage() {
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
 
-            alert("로그인 성공!");
             navigate("/");
         } catch (err) {
             console.error("로그인 실패:", err);
