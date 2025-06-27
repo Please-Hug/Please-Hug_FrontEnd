@@ -10,6 +10,7 @@ function MissionItem({
   course,
   isDummy = false,
   currentState = null,
+  onClick = () => {},
 }) {
   const difficultyMap = {
     EASY: "쉬움",
@@ -34,7 +35,13 @@ function MissionItem({
     );
   } else {
     return (
-      <li className={[styles.missionItem, classByState ? styles[classByState] : ""].join(" ")}>
+      <li
+        className={[
+          styles.missionItem,
+          classByState ? styles[classByState] : "",
+        ].join(" ")}
+        onClick={onClick}
+      >
         <p>{title}</p>
         <div style={{ display: "none" }}>
           <progress value={progressValue} max={maxProgress} />
