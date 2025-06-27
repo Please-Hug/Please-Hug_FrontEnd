@@ -76,9 +76,7 @@ function MissionOverviewPage() {
   }, [activeGroup]);
 
   useEffect(() => {
-    // if (activeGroup) {
     fetchMyChallenges();
-    // }
   }, [fetchMyChallenges]);
 
   useEffect(() => {
