@@ -13,7 +13,7 @@ function MissionOverviewPage() {
   const [missionLevels, setMissionLevels] = useState([]);
   const [challenges, setChallenges] = useState({});
   const [isSideModalOpen, setIsSideModalOpen] = useState(false);
-  const sideModalWidth = 400;
+  const sideModalWidth = 800;
 
   useEffect(() => {
     const fetchMissionGroups = async () => {

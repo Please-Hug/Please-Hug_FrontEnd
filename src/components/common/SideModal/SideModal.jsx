@@ -26,7 +26,7 @@ function SideModal({ isOpen, onClose, width = 300, children }) {
           height: "100vh",
           width: `${width}px`,
           backgroundColor: "#fff",
-          boxShadow: "-2px 0 8px rgba(0, 0, 0, 0.3)",
+          boxShadow: isOpen ? "-2px 0 8px rgba(0, 0, 0, 0.3)" : "none",
           transform: isOpen ? "translateX(0)" : `translateX(${width}px)`,
           transition: "transform 0.3s ease-out",
           zIndex: 1000,
