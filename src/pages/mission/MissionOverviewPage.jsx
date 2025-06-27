@@ -3,6 +3,7 @@ import styles from "./MissionOverviewPage.module.scss";
 import MissionItem from "../../components/Mission/MissionItem";
 import { getMyMissionGroups, getMissions } from "../../api/missionService";
 import { myChallenges } from "../../api/missionService";
+import SideModal from "../../components/common/SideModal/SideModal";
 
 function MissionOverviewPage() {
   const [missionGroups, setMissionGroups] = useState([]);
@@ -11,6 +12,8 @@ function MissionOverviewPage() {
   const [missionRows, setMissionRows] = useState({});
   const [missionLevels, setMissionLevels] = useState([]);
   const [challenges, setChallenges] = useState({});
+  const [isSideModalOpen, setIsSideModalOpen] = useState(false);
+  const sideModalWidth = 400;
 
   useEffect(() => {
     const fetchMissionGroups = async () => {
@@ -141,6 +144,13 @@ function MissionOverviewPage() {
                           .progress
                       : null
                   }
+                  onClick={() => {
+                    setIsSideModalOpen(true);
+                    console.log(
+                      "미션 클릭:",
+                      missionRows[missionRow][missionCol]
+                    );
+                  }}
                 />
               ) : (
                 <MissionItem key={index} isDummy={true} />
@@ -149,6 +159,13 @@ function MissionOverviewPage() {
           </ul>
         ))}
       </div>
+      <SideModal
+        isOpen={isSideModalOpen}
+        onClose={() => setIsSideModalOpen(false)}
+        width={sideModalWidth}
+      >
+        <div className={styles.missionDetail}></div>
+      </SideModal>
     </div>
   );
 }
