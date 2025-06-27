@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./Sidebar.module.scss";
 import emptyUserProfile from "../../../assets/images/user/empty-user-profile.svg";
+import api from "../../../api/axiosInstance.jsx";
 import {
   FaLightbulb,
   FaBolt,
@@ -56,88 +57,106 @@ function Sidebar() {
   const navigate = useNavigate();
   const userInfo = useUserStore((state) => state.userInfo);
   const [userMenuToggle, setUserMenuToggle] = useState(false);
+  const userMenuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setUserMenuToggle(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   if (!userInfo) {
     return <div>로딩중...</div>;
   }
 
   return (
-    <div className={styles.sidebar}>
-      <div>
-        <div className={styles.sidebarHeader}>
-          <div>
-            <FaBuilding />
-            <span>EDUCATION</span>
+      <div className={styles.sidebar}>
+        <div>
+          <div className={styles.sidebarHeader}>
+            <div>
+              <FaBuilding />
+              <span>EDUCATION</span>
+            </div>
+            <div>
+              <FaAnglesLeft />
+            </div>
           </div>
-          <div>
-            <FaAnglesLeft />
+          <div className={styles.sidebarTitle}>
+            <img src={logo} alt="Logo" />
+            <span>허그톤 비욘드호라이즌</span>
           </div>
-        </div>
-        <div className={styles.sidebarTitle}>
-          <img src={logo} alt="Logo" />
-          <span>허그톤 비욘드호라이즌</span>
-        </div>
-        <hr />
-        <div className={styles.menuList}>
-          <ul>
-            {quickMenuItems.map((item, index) => (
-              <li key={index}>
-                {item.icon}
-                <span>{item.label}</span>
-              </li>
-            ))}
-          </ul>
           <hr />
-          <ul>
-            {menuItems.map((item, index) => (
-              <li
-                key={index}
-                onClick={() => {
-                  navigate(item.link || "/");
-                }}
-              >
-                {item.icon}
-                <span>{item.label}</span>
-              </li>
-            ))}
-            <hr />
-          </ul>
-          {missionGroupItems.map((groupItem, index) => (
-            <div key={index} className={styles.missionGroup}>
-              <ul>
-                <li className={styles.missionGroupTitle}>{groupItem.title}</li>
-                {groupItem.items.map((item, idx) => (
-                  <li key={idx}>
+          <div className={styles.menuList}>
+            <ul>
+              {quickMenuItems.map((item, index) => (
+                  <li key={index}>
+                    {item.icon}
                     <span>{item.label}</span>
                   </li>
-                ))}
-              </ul>
+              ))}
+            </ul>
+            <hr />
+            <ul>
+              {menuItems.map((item, index) => (
+                  <li
+                      key={index}
+                      onClick={() => {
+                        navigate(item.link || "/");
+                      }}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </li>
+              ))}
+              <hr />
+            </ul>
+            {missionGroupItems.map((groupItem, index) => (
+                <div key={index} className={styles.missionGroup}>
+                  <ul>
+                    <li className={styles.missionGroupTitle}>{groupItem.title}</li>
+                    {groupItem.items.map((item, idx) => (
+                        <li key={idx}>
+                          <span>{item.label}</span>
+                        </li>
+                    ))}
+                  </ul>
+                </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.userInfo}>
+          <div className={styles.userStats}>
+            <div>
+              Lv. <span>{userInfo.level}</span>
             </div>
-          ))}
+            <div>
+              <span>{userInfo.currentTotalExp}</span>개
+            </div>
+          </div>
+          <div className={styles.userProfile} ref={userMenuRef}>
+            <div>
+              <img
+                  src={
+                    userInfo?.profileImage
+                        ? `${api.defaults.baseURL}${userInfo.profileImage}`
+                        : emptyUserProfile
+                  }
+                  alt={userInfo?.name || "사용자 프로필"}
+                  onClick={() => setUserMenuToggle(!userMenuToggle)}
+              />
+              {userMenuToggle && <SidebarUserMenu />}
+            </div>
+            <span>©hug Inc.</span>
+          </div>
         </div>
       </div>
-      <div className={styles.userInfo}>
-        <div className={styles.userStats}>
-          <div>
-            Lv. <span>{userInfo.level}</span>
-          </div>
-          <div>
-            <span>{userInfo.currentTotalExp}</span>개
-          </div>
-        </div>
-        <div className={styles.userProfile}>
-          <div>
-            <img
-              src={userInfo?.profileImage || emptyUserProfile}
-              alt={userInfo?.name || "사용자 프로필"}
-              onClick={() => setUserMenuToggle(!userMenuToggle)}
-            />
-            {userMenuToggle && <SidebarUserMenu />}
-          </div>
-          <span>©hug Inc.</span>
-        </div>
-      </div>
-    </div>
   );
 }
 

@@ -10,6 +10,7 @@ import AttendanceCheck from "../../components/Dashboard/AttendanceCheck";
 import UserProfile from "../../components/Dashboard/UserProfile";
 import RecentDiary from "../../components/Dashboard/RecentDiary";
 import useUserStore from "../../stores/userStore";
+import api from "../../api/axiosInstance";
 
 function DashboardPage() {
   const userInfo = useUserStore((state) => state.userInfo);
@@ -39,7 +40,11 @@ function DashboardPage() {
         </div>
         <div className={styles.dashboardRight}>
           <UserProfile
-            profileImg={userInfo.profileImage || emptyUserProfile}
+              profileImg={
+                  userInfo.profileImage
+                      ? `${api.defaults.baseURL}${userInfo.profileImage}`
+                      : emptyUserProfile
+              }
             username={userInfo.name}
             course={userInfo.course || "Hugton 알고리즘 미션 강좌"}
             rank={userInfo.rank || "0%"}
