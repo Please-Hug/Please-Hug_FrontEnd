@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./MissionItem.module.scss";
 import { FaFlag } from "react-icons/fa6";
+import missionDifficultyMap from "../../utils/missionDifficultyMap";
 
 function MissionItem({
   title,
@@ -12,11 +13,6 @@ function MissionItem({
   currentState = null,
   onClick = () => {},
 }) {
-  const difficultyMap = {
-    EASY: "쉬움",
-    NORMAL: "보통",
-    HARD: "어려움",
-  };
   let classByState = null;
 
   if (currentState) {
@@ -51,7 +47,7 @@ function MissionItem({
         </div>
         <div>
           <span className={[styles.difficulty, styles[difficulty]].join(" ")}>
-            <FaFlag /> {difficultyMap[difficulty]}
+            <FaFlag /> {missionDifficultyMap[difficulty]}
           </span>
           <span className={styles.course}>{course}</span>
         </div>

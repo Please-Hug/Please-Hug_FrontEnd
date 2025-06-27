@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styles from "./MissionOverviewPage.module.scss";
 import MissionItem from "../../components/Mission/MissionItem";
-import { getMyMissionGroups, getMissions } from "../../api/missionService";
+import {
+  getMyMissionGroups,
+  getMissions,
+  challengeMission,
+} from "../../api/missionService";
 import { myChallenges } from "../../api/missionService";
 import SideModal from "../../components/common/SideModal/SideModal";
+import missionStatusMap from "../../utils/missionStatusMap";
+import missionDifficultyMap from "../../utils/missionDifficultyMap";
+import MissionDetailCard from "../../components/Mission/MissionDetailCard";
 
 function MissionOverviewPage() {
   const [missionGroups, setMissionGroups] = useState([]);
@@ -13,6 +20,7 @@ function MissionOverviewPage() {
   const [missionLevels, setMissionLevels] = useState([]);
   const [challenges, setChallenges] = useState({});
   const [isSideModalOpen, setIsSideModalOpen] = useState(false);
+  const [activeMission, setActiveMission] = useState(null);
   const sideModalWidth = 800;
 
   useEffect(() => {
@@ -69,7 +77,7 @@ function MissionOverviewPage() {
     if (activeGroup) {
       fetchMyChallenges();
     }
-  }, [activeGroup]);
+  }, [activeGroup, activeMission]);
 
   useEffect(() => {
     if (missions.length > 0) {
@@ -146,12 +154,7 @@ function MissionOverviewPage() {
                   }
                   onClick={() => {
                     setIsSideModalOpen(true);
-                    if (process.env.NODE_ENV === "development") {
-                      console.log(
-                        "미션 클릭:",
-                        missionRows[missionRow][missionCol]
-                      );
-                    }
+                    setActiveMission(missionRows[missionRow][missionCol]);
                   }}
                 />
               ) : (
@@ -166,7 +169,11 @@ function MissionOverviewPage() {
         onClose={() => setIsSideModalOpen(false)}
         width={sideModalWidth}
       >
-        <div className={styles.missionDetail}></div>
+        <MissionDetailCard
+          mission={activeMission}
+          groupName={activeGroup.name}
+          progress={challenges[activeMission?.id]?.progress || ""}
+        />
       </SideModal>
     </div>
   );

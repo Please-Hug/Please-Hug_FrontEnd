@@ -33,3 +33,13 @@ export const myChallenges = async (groupId) => {
     throw error;
   }
 };
+
+export const challengeMission = async (missionId) => {
+  try {
+    const response = await api.post(`/api/v1/missions/${missionId}/challenges`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 도전 실패:", error);
+    throw error;
+  }
+};
