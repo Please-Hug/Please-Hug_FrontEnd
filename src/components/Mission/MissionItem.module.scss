@@ -47,3 +47,31 @@
     }
   }
 }
+
+.difficulty {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: #666;
+
+  svg {
+    margin-right: 4px;
+  }
+  &.EASY svg {
+    color: #4caf50;
+  }
+  &.NORMAL svg {
+    color: #5b9cfe;
+  }
+  &.HARD svg {
+    color: #ff9800;
+  }
+}
+
+.course {
+  font-weight: bold;
+  background-color: #f3f4f5;
+  color: #55545c;
+  padding: 2px;
+  margin-left: 10px;
+}

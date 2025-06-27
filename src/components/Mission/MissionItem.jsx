@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./MissionItem.module.scss";
+import { FaFlag } from "react-icons/fa6";
 
 function MissionItem({
   title,
@@ -9,6 +10,11 @@ function MissionItem({
   course,
   isDummy = false,
 }) {
+  const difficultyMap = {
+    EASY: "쉬움",
+    NORMAL: "보통",
+    HARD: "어려움",
+  };
   if (isDummy) {
     return (
       <li className={[styles.missionItem, styles.emptyCol].join(" ")}></li>
@@ -17,15 +23,17 @@ function MissionItem({
     return (
       <li className={styles.missionItem}>
         <p>{title}</p>
-        <div>
+        <div style={{ display: "none" }}>
           <progress value={progressValue} max={maxProgress} />
           <span>
             {progressValue} / {maxProgress}
           </span>
         </div>
         <div>
-          <span>{difficulty}</span>
-          <span>{course}</span>
+          <span className={[styles.difficulty, styles[difficulty]].join(" ")}>
+            <FaFlag /> {difficultyMap[difficulty]}
+          </span>
+          <span className={styles.course}>{course}</span>
         </div>
       </li>
     );
