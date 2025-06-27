@@ -10,6 +10,7 @@
   border-radius: 10px;
   padding: 20px;
   justify-content: space-between;
+  position: relative;
   cursor: pointer;
 
   @keyframes glowPulse {
@@ -96,4 +97,15 @@
   color: #55545c;
   padding: 2px;
   margin-left: 10px;
+}
+
+.checkIcon {
+  display: block;
+  font-size: 25px;
+  color: #04a37e;
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background-color: white;
+  border-radius: 50%;
 }

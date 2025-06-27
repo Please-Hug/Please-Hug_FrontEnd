@@ -172,7 +172,7 @@ function MissionOverviewPage() {
         <MissionDetailCard
           mission={activeMission}
           groupName={activeGroup.name}
-          progress={challenges[activeMission?.id]?.progress || ""}
+          progress={challenges[activeMission?.id]?.progress || null}
         />
       </SideModal>
     </div>

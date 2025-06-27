@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./MissionItem.module.scss";
-import { FaFlag } from "react-icons/fa6";
+import { FaCircleCheck, FaFlag } from "react-icons/fa6";
 import missionDifficultyMap from "../../utils/missionDifficultyMap";
 
 function MissionItem({
@@ -38,6 +38,11 @@ function MissionItem({
         ].join(" ")}
         onClick={onClick}
       >
+        {classByState === "COMPLETED" && (
+          <span className={styles.checkIcon}>
+            <FaCircleCheck />
+          </span>
+        )}
         <p>{title}</p>
         <div style={{ display: "none" }}>
           <progress value={progressValue} max={maxProgress} />
