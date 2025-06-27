@@ -11,15 +11,13 @@ function SideModal({ isOpen, onClose, width = 300, children }) {
           left: 0,
           width: "100vw",
           height: "100vh",
-          backgroundColor: "rgba(0,0,0,0.3)",
+          backgroundColor: "rgba(0,0,0,0.0)",
           opacity: isOpen ? 1 : 0,
           pointerEvents: isOpen ? "auto" : "none",
           transition: "opacity 0.3s",
           zIndex: 999,
         }}
       />
-
-      {/* 모달 */}
       <div
         style={{
           position: "fixed",
