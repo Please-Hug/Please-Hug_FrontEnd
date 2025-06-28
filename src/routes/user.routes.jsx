@@ -9,6 +9,7 @@ import MyInfoPage from "../pages/User/MyInfoPage";
 import ShopPage from "../pages/shop/ShopPage";
 import ShopHistoryPage from "../pages/Shop/ShopHistoryPage";
 import AdminShopPage from "../pages/Shop/AdminShopPage";
+import AdminQuestPage from "../pages/Quest/AdminQuestPage";
 
 export default [
   {
@@ -57,6 +58,10 @@ export default [
         path: "/adminShop",
         element: <AdminShopPage />
       },
+      {
+        path: "/adminQuest",
+        element: <AdminQuestPage />
+      }
       // { path: "/settings", element: <SettingsPage /> },
       // ... 추가 사용자 경로
     ],
