@@ -4,8 +4,7 @@ import missionStateMap from "../../utils/missionStateMap";
 import missionDifficultyMap from "../../utils/missionDifficultyMap";
 import TaskItem from "./TaskItem";
 import { FaFlag } from "react-icons/fa6";
-import { getMissionTasks } from "../../api/missionService";
-import { getMissionMyTasks } from "../../api/missionService";
+import { getMissionTasks, getMissionMyTasks } from "../../api/missionService";
 
 function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
   const [tasks, setTasks] = useState([]);
