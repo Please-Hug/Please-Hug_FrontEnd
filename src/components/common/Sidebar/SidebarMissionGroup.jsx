@@ -1,7 +1,14 @@
 import React from "react";
 import styles from "./SidebarMissionGroup.module.scss";
+import { useNavigate } from "react-router-dom";
 
 function SidebarMissionGroup({ missionGroupItems }) {
+  const navigate = useNavigate();
+
+  const handleItemClick = (missionGroupId, componentType) => {
+    navigate(`/mission-group/${missionGroupId}/${componentType}`);
+  };
+
   return (
     <>
       {missionGroupItems.map((groupItem, index) => (
@@ -28,10 +35,20 @@ function SidebarMissionGroup({ missionGroupItems }) {
               {groupItem.missionGroup.name}
             </li>
             <ul>
-              <li className={styles.missionGroupItem}>
+              <li
+                className={styles.missionGroupItem}
+                onClick={() =>
+                  handleItemClick(groupItem.missionGroup.id, "home")
+                }
+              >
                 <span>홈</span>
               </li>
-              <li className={styles.missionGroupItem}>
+              <li
+                className={styles.missionGroupItem}
+                onClick={() =>
+                  handleItemClick(groupItem.missionGroup.id, "learning-plan")
+                }
+              >
                 <span>학습계획</span>
               </li>
             </ul>
