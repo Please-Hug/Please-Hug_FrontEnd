@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./RegisterPage.module.scss";
+import styles from "./Registerpage.module.scss";
 import { FaEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
