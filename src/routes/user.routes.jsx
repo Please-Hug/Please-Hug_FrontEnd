@@ -5,6 +5,7 @@ import MissionOverviewPage from "../pages/Mission/MissionOverviewPage";
 import QuestPage from "../pages/Quest/QuestPage";
 import LogoutPage from "../pages/User/LogoutPage";
 import PraisePage from "../pages/praise/PraisePage";
+import MyInfoPage from "../pages/User/MyInfoPage";
 
 
 export default [
@@ -34,11 +35,15 @@ export default [
         element: <LogoutPage />,
       },
       {
-      path: "/praises",
-      element: <PraisePage />,
+        path: "/praises",
+        element: <PraisePage />,
       },
 
       // { path: "/profile", element: <ProfilePage /> },
+      {
+        path: "/profile",
+        element: <MyInfoPage />
+      },
       // { path: "/settings", element: <SettingsPage /> },
       // ... 추가 사용자 경로
     ],
