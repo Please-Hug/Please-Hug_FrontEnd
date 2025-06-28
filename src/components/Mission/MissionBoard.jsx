@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import "./MissionBoard.module.scss";
 import styles from "./MissionBoard.module.scss";
 import { myChallenges, changeChallengeState } from "../../api/missionService";
 
