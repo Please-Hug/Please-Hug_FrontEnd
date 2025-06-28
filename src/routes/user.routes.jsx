@@ -9,14 +9,15 @@ import MyInfoPage from "../pages/User/MyInfoPage";
 import ShopPage from "../pages/shop/ShopPage";
 import ShopHistoryPage from "../pages/Shop/ShopHistoryPage";
 import AdminShopPage from "../pages/Shop/AdminShopPage";
+import MissionGroupPage from "../pages/Mission/MissionGroupPage";
 import AdminQuestPage from "../pages/Quest/AdminQuestPage";
 
 export default [
   {
     element: (
-        <MainLayout>
-          <Outlet />
-        </MainLayout>
+      <MainLayout>
+        <Outlet />
+      </MainLayout>
     ),
     children: [
       {
@@ -26,7 +27,7 @@ export default [
         // errorElement: <DashboardErrorPage />, // 에러 바운더리
       },
       {
-        path: "/missions",
+        path: "/mission",
         element: <MissionOverviewPage />,
       },
       {
@@ -44,19 +45,32 @@ export default [
       // { path: "/profile", element: <ProfilePage /> },
       {
         path: "/profile",
-        element: <MyInfoPage />
+        element: <MyInfoPage />,
       },
       {
         path: "/shop",
-        element: <ShopPage />
+        element: <ShopPage />,
       },
       {
         path: "/shopHistory",
-        element: <ShopHistoryPage />
+        element: <ShopHistoryPage />,
       },
       {
         path: "/adminShop",
-        element: <AdminShopPage />
+        element: <AdminShopPage />,
+      },
+      {
+        path: "/mission-group/:missionGroupId",
+        children: [
+          {
+            path: "home",
+            element: <MissionGroupPage componentType="home" />,
+          },
+          {
+            path: "learning-plan",
+            element: <MissionGroupPage componentType="learning-plan" />,
+          },
+        ],
       },
       {
         path: "/adminQuest",

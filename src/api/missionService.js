@@ -73,3 +73,26 @@ export const changeMissionTaskState = async (taskId, state) => {
     throw error;
   }
 };
+
+export const getMissionGroupMembers = async (groupId) => {
+  try {
+    const response = await api.get(`/api/v1/mission-groups/${groupId}/users`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 그룹 멤버 가져오기 실패:", error);
+    throw error;
+  }
+};
+
+export const changeChallengeState = async (challengeId, state) => {
+  try {
+    const response = await api.patch(
+      `/api/v1/challenges/${challengeId}?newProgress=${state}`,
+      "no content"
+    );
+    return response.data;
+  } catch (error) {
+    console.error("챌린지 상태 변경 실패:", error);
+    throw error;
+  }
+};
