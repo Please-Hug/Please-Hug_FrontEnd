@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "./MissionOverviewPage.module.scss";
 import MissionItem from "../../components/Mission/MissionItem";
-import { getMyMissionGroups, getMissions } from "../../api/missionService";
+import {
+  getMyMissionGroups,
+  getMissions,
+  challengeMission,
+  myChallenges,
+} from "../../api/missionService";
+import SideModal from "../../components/common/SideModal/SideModal";
+import MissionDetailCard from "../../components/Mission/MissionDetailCard";
 
 function MissionOverviewPage() {
   const [missionGroups, setMissionGroups] = useState([]);
@@ -9,6 +16,10 @@ function MissionOverviewPage() {
   const [activeGroup, setActiveGroup] = useState(null);
   const [missionRows, setMissionRows] = useState({});
   const [missionLevels, setMissionLevels] = useState([]);
+  const [challenges, setChallenges] = useState({});
+  const [isSideModalOpen, setIsSideModalOpen] = useState(false);
+  const [activeMission, setActiveMission] = useState(null);
+  const sideModalWidth = 800;
 
   useEffect(() => {
     const fetchMissionGroups = async () => {
@@ -45,6 +56,29 @@ function MissionOverviewPage() {
     }
   }, [activeGroup]);
 
+  const fetchMyChallenges = useCallback(async () => {
+    try {
+      if (!activeGroup) {
+        console.warn("활성 그룹이 설정되지 않았습니다.");
+        return;
+      }
+      const challenges = await myChallenges(activeGroup.id);
+      const uniqueChallenges = {};
+      challenges.data.forEach((challenge) => {
+        if (!uniqueChallenges[challenge.mission.id]) {
+          uniqueChallenges[challenge.mission.id] = challenge;
+        }
+      });
+      setChallenges(uniqueChallenges);
+    } catch (error) {
+      console.error("내 도전 과제를 가져오는 데 실패했습니다:", error);
+    }
+  }, [activeGroup]);
+
+  useEffect(() => {
+    fetchMyChallenges();
+  }, [fetchMyChallenges]);
+
   useEffect(() => {
     if (missions.length > 0) {
       const missionRows = {};
@@ -67,6 +101,15 @@ function MissionOverviewPage() {
       setMissionLevels(missionLevels);
     }
   }, [missions]);
+
+  const handleChallenge = async (missionId) => {
+    try {
+      await challengeMission(missionId);
+      await fetchMyChallenges();
+    } catch (error) {
+      console.error("미션 도전 실패:", error);
+    }
+  };
 
   if (!activeGroup) {
     return <div>로딩 중...</div>;
@@ -112,6 +155,16 @@ function MissionOverviewPage() {
                   difficulty={missionRows[missionRow][missionCol].difficulty}
                   course={activeGroup.name}
                   isDummy={false}
+                  currentState={
+                    challenges[missionRows[missionRow][missionCol].id]
+                      ? challenges[missionRows[missionRow][missionCol].id]
+                          .progress
+                      : null
+                  }
+                  onClick={() => {
+                    setActiveMission(missionRows[missionRow][missionCol]);
+                    setIsSideModalOpen(true);
+                  }}
                 />
               ) : (
                 <MissionItem key={index} isDummy={true} />
@@ -120,6 +173,18 @@ function MissionOverviewPage() {
           </ul>
         ))}
       </div>
+      <SideModal
+        isOpen={isSideModalOpen}
+        onClose={() => setIsSideModalOpen(false)}
+        width={sideModalWidth}
+      >
+        <MissionDetailCard
+          mission={activeMission}
+          groupName={activeGroup.name}
+          progress={challenges[activeMission?.id]?.progress || null}
+          onChallenge={handleChallenge}
+        />
+      </SideModal>
     </div>
   );
 }
