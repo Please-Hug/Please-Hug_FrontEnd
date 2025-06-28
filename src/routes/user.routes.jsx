@@ -7,7 +7,6 @@ import LogoutPage from "../pages/User/LogoutPage";
 import PraisePage from "../pages/praise/PraisePage";
 import MyInfoPage from "../pages/User/MyInfoPage";
 
-
 export default [
   {
     element: (
@@ -37,8 +36,9 @@ export default [
       {
         path: "/praises",
         element: <PraisePage />,
+        path: "/shopHistory",
+        element: <ShopHistoryPage />,
       },
-
       // { path: "/profile", element: <ProfilePage /> },
       {
         path: "/profile",
