@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./TabComponent.module.scss";
 
-function TabComponent({ tabs, onTabChange }) {
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+function TabComponent({ tabs, active, onTabChange }) {
+  const [activeTab, setActiveTab] = useState(active || tabs[0]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     onTabChange(tab);
   };
+
+  useEffect(() => {
+    if (active) {
+      setActiveTab(active);
+    }
+  }, [active]);
 
   return (
     <ul className={styles.tabList}>

@@ -38,7 +38,7 @@ function getMenuItems() {
     { icon: <FaThumbsUp />, label: "칭찬", link: "/praises" },
     { icon: <FaGraduationCap />, label: "미션", link: "/mission" },
     { icon: <FaChessBoard />, label: "퀘스트", link: "/quest" },
-    { icon: <FaCartShopping />, label: "상점" },
+    { icon: <FaCartShopping />, label: "상점", link: "/shop" },
     { icon: <FaRankingStar />, label: "랭킹" },
   ];
 }

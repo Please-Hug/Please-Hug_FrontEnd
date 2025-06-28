@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "axios": "^1.10.0",
     "i": "^0.3.7",
     "jwt-decode": "^4.0.0",
