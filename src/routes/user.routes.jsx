@@ -6,14 +6,16 @@ import QuestPage from "../pages/Quest/QuestPage";
 import LogoutPage from "../pages/User/LogoutPage";
 import PraisePage from "../pages/praise/PraisePage";
 import MyInfoPage from "../pages/User/MyInfoPage";
-
+import ShopPage from "../pages/shop/ShopPage";
+import ShopHistoryPage from "../pages/Shop/ShopHistoryPage";
+import AdminShopPage from "../pages/Shop/AdminShopPage";
 
 export default [
   {
     element: (
-      <MainLayout>
-        <Outlet />
-      </MainLayout>
+        <MainLayout>
+          <Outlet />
+        </MainLayout>
     ),
     children: [
       {
@@ -38,11 +40,22 @@ export default [
         path: "/praises",
         element: <PraisePage />,
       },
-
       // { path: "/profile", element: <ProfilePage /> },
       {
         path: "/profile",
         element: <MyInfoPage />
+      },
+      {
+        path: "/shop",
+        element: <ShopPage />
+      },
+      {
+        path: "/shopHistory",
+        element: <ShopHistoryPage />
+      },
+      {
+        path: "/adminShop",
+        element: <AdminShopPage />
       },
       // { path: "/settings", element: <SettingsPage /> },
       // ... 추가 사용자 경로
