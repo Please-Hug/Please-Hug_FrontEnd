@@ -10,6 +10,7 @@ import ShopPage from "../pages/shop/ShopPage";
 import ShopHistoryPage from "../pages/Shop/ShopHistoryPage";
 import AdminShopPage from "../pages/Shop/AdminShopPage";
 import MissionGroupPage from "../pages/Mission/MissionGroupPage";
+import AdminQuestPage from "../pages/Quest/AdminQuestPage";
 
 export default [
   {
@@ -71,6 +72,10 @@ export default [
           },
         ],
       },
+      {
+        path: "/adminQuest",
+        element: <AdminQuestPage />
+      }
       // { path: "/settings", element: <SettingsPage /> },
       // ... 추가 사용자 경로
     ],
