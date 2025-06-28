@@ -11,7 +11,7 @@ export const submitPraise = async ({ receivers, praiseContent, praiseType, onClo
         };
 
         await api.post("/api/v1/praises", payload);
-        onClose();
+    
     } catch (err){
         console.error("칭찬 제출 실패:", err);
     }

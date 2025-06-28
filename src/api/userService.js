@@ -18,6 +18,6 @@ export const searchUsers = async (keyword = "") => {
     return response.data.data;
   } catch (error){
     console.error("유저 검색 실패:", error);
-    throw [];
+    throw error;
   } 
 };

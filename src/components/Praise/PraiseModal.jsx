@@ -17,7 +17,7 @@ function PraiseModal({ onClose }){
     const[ showContentAlert, setShowContentAlert ] = useState(false);
 
     
-    {/* 유저 입력창 포커스 시 전체 유저 보여주기 */}
+    // 유저 입력창 포커스 시 전체 유저 보여주기 
     const handleInputFocus = async () => {
         try {
             const result = await searchUsers("");
@@ -28,7 +28,7 @@ function PraiseModal({ onClose }){
         }
     };
 
-    {/* 입력값 바뀔 때 필터링 */}
+    // 입력값 바뀔 때 필터링 
     const handleInputChange = async (e) => {
         const keyword = e.target.value;
         setReceiverInput(keyword);
@@ -48,7 +48,7 @@ function PraiseModal({ onClose }){
         
     };
 
-    {/* 사용자를 선택했을 때 실행되는 로직 */}
+    // 사용자를 선택했을 때 실행되는 로직 
     const handleUserSelect = (user) => {
         if(!receivers.find((r) => r.username === user.username)){
             setReceivers([...receivers,user]);
@@ -57,7 +57,7 @@ function PraiseModal({ onClose }){
         setShowDropdown(false);
     };
 
-    {/* 칭찬 제출 시 백엔드로 전달 */}
+    // 칭찬 제출 시 백엔드로 전달
     const handleSubmit = async () => {
         if(receivers.length === 0){
             setShowReceiverAlert(true);
@@ -75,9 +75,9 @@ function PraiseModal({ onClose }){
                 receivers,
                 praiseContent,
                 praiseType,
-                onClose,
             }
         );
+        onClose();
         }catch(err){
             console.error("칭찬 제출 실패:",err);
         }
@@ -141,7 +141,7 @@ function PraiseModal({ onClose }){
                     <div className={styles.inputWrapper}>
 
                         {receivers.map((r) => (
-                            <span key={r.username} className={styles.selectTag}>
+                            <span key={r.username} className={styles.selectedTag}>
                                 {r.name}
                                 <button onClick={() => setReceivers(receivers.filter(u => u.username !== r.username))}>✕</button>
                             </span>
@@ -157,33 +157,25 @@ function PraiseModal({ onClose }){
                             placeholder={receivers.length === 0? "구성원 또는 그룹 선택" : ""}
                         
                         />
+
                         {receivers.length > 0 && (
                             <button onClick={handleResetReceivers} className={styles.clearBtn}>⟳</button>
+                        )}
+                        
+                        {/* 드롭다운 추천 유저 리스트 */}
+                        {showDropdown && userList.length > 0 && (
+                            <ul className={styles.dropdown}>
+                                {userList.map((user) =>(
+                                    <li key={user.username} onClick={() => handleUserSelect(user)}>
+                                        <img src={user.profileImage || "/default.png"} width="24" />
+                                        {user.name}
+                                    </li>
+                                ))}
+                            </ul>
                         )}
                     </div>
 
 
-                    {/* 드롭다운 추천 유저 리스트 */}
-                    {showDropdown && userList.length > 0 && (
-                        <ul className={styles.dropdown}>
-                            {userList.map((user) =>(
-                                <li key={user.username} onClick={() => handleUserSelect(user)}>
-                                    <img src={user.profileImage || "/default.png"} width="24" />
-                                    {user.name}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-
-                    {/* 선택된 유저 목록 */}
-                    {/* <ul className={styles.selectReceivers}>
-                        {receivers.map((r,idx) => (
-                            <li key={idx}>
-                                {r.name}
-                                <button onClick={() => setReceivers(receivers.filter(u => u.username !== r.username))}>✕</button>
-                            </li>
-                        ))}
-                    </ul> */}
                     
 
 
@@ -210,7 +202,7 @@ function PraiseModal({ onClose }){
                                 onClick={() => handleTypeSelect("CHEER")}>
                                 응원해요
                             </button>
-                            <span className={styles.tooltip}>격려가 필요하다면 등원을 보내주세요!</span>
+                            <span className={styles.tooltip}>격려가 필요하다면 응원을 보내주세요!</span>
                         </div>
 
                         <div className={styles.tooltipWrapper}>    
