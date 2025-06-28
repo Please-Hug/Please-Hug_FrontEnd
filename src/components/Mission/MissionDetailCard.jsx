@@ -82,9 +82,9 @@ function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
             </p>
             <h3 className={styles.missionDetailSubtasksTitle}>하위 태스크</h3>
             <ul className={styles.missionDetailTasks}>
-              {tasks.map((item, index) => (
+              {tasks.map((item) => (
                 <TaskItem
-                  key={index}
+                  key={item.id}
                   task={{
                     id: item.id,
                     status: myTasks[item.id]?.state || "NOT_STARTED",
