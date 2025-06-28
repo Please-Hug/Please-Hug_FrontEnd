@@ -43,3 +43,33 @@ export const challengeMission = async (missionId) => {
     throw error;
   }
 };
+
+export const getMissionTasks = async (missionId) => {
+  try {
+    const response = await api.get(`/api/v1/missions/${missionId}/tasks`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 작업 가져오기 실패:", error);
+    throw error;
+  }
+};
+
+export const getMissionMyTasks = async (missionId) => {
+  try {
+    const response = await api.get(`/api/v1/missions/${missionId}/my-tasks`);
+    return response.data;
+  } catch (error) {
+    console.error("내 미션 작업 가져오기 실패:", error);
+    throw error;
+  }
+};
+
+export const changeMissionTaskState = async (taskId, state) => {
+  try {
+    const response = await api.post(`/api/v1/mission-tasks/${taskId}/${state}`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 작업 상태 변경 실패:", error);
+    throw error;
+  }
+};
