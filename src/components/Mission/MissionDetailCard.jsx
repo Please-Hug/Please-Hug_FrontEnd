@@ -1,27 +1,41 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "./MissionDetailCard.module.scss";
-import missionStatusMap from "../../utils/missionStatusMap";
+import missionStateMap from "../../utils/missionStateMap";
 import missionDifficultyMap from "../../utils/missionDifficultyMap";
 import TaskItem from "./TaskItem";
 import { FaFlag } from "react-icons/fa6";
+import { getMissionTasks } from "../../api/missionService";
+import { getMissionMyTasks } from "../../api/missionService";
 
 function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
-  const tasks = [
-    { task: "Notion으로 문서화 작업하기" },
-    { task: "Figma로 UI/UX 디자인하기" },
-    { task: "Jira로 이슈 관리하기" },
-    { task: "GitHub로 코드 관리하기" },
-    { task: "Slack으로 팀원과 소통하기" },
-    { task: "Google Drive로 자료 공유하기" },
-    { task: "Zoom으로 원격 회의하기" },
-    { task: "Google Calendar로 일정 관리하기" },
-    { task: "Google Docs로 문서 작성하기" },
-    { task: "Google Sheets로 데이터 분석하기" },
-    { task: "Google Slides로 프레젠테이션 만들기" },
-    { task: "Google Forms로 설문 조사하기" },
-    { task: "Google Meet로 화상 회의하기" },
-    { task: "Google Chat로 팀원과 대화하기" },
-  ];
+  const [tasks, setTasks] = useState([]);
+  const [myTasks, setMyTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      if (mission) {
+        const res = await getMissionTasks(mission.id);
+        setTasks(res.data);
+      }
+    };
+    fetchTasks();
+  }, [mission]);
+
+  const fetchMyTasks = useCallback(async () => {
+    if (mission) {
+      const res = await getMissionMyTasks(mission.id);
+      const taskMap = {};
+      res.data.forEach((task) => {
+        taskMap[task.missionTaskId] = task;
+      });
+      setMyTasks(taskMap);
+    }
+  }, [mission]);
+
+  useEffect(() => {
+    fetchMyTasks();
+  }, [fetchMyTasks]);
+
   return (
     <div className={styles.missionDetail}>
       {mission && (
@@ -40,7 +54,7 @@ function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
                     progress ? styles[progress] : "",
                   ].join(" ")}
                 >
-                  {progress ? missionStatusMap[progress] : "도전 가능"}
+                  {progress ? missionStateMap[progress] : "도전 가능"}
                 </span>
               </li>
               <li>
@@ -72,7 +86,15 @@ function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
               {tasks.map((item, index) => (
                 <TaskItem
                   key={index}
-                  task={{ status: "시작전", name: item.task, score: 2 }}
+                  task={{
+                    id: item.id,
+                    status: myTasks[item.id]?.state || "NOT_STARTED",
+                    name: item.name,
+                    score: item.score,
+                  }}
+                  onStatusChange={() => {
+                    fetchMyTasks();
+                  }}
                 />
               ))}
             </ul>
