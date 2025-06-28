@@ -1,97 +1,46 @@
-import React from "react";
-import questSuccessIcon from "../../assets/images/daily-quest/quest-success.png";
-import questInprogressIcon from "../../assets/images/daily-quest/quest-inprogress.png";
+import React, { useEffect, useState } from "react";
 import styles from "./DailyQuest.module.scss";
 import { Link } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa6";
 import DailyQuestItem from "./DailyQuestItem";
+import apiInstance from "../../api/axiosInstance";
 
 function DailyQuest() {
-  const weeklyReward = {
-    currentPoints: 200,
-    maximumPoints: 500,
-    buttonText: "획득 완료",
-    status: "complete",
+  const [questList, setQuestList] = useState([]);
+
+  const fetchQuests = async () => {
+    try {
+      const response = await apiInstance.get("/api/v1/quest");
+      setQuestList(response.data.data || []);
+    } catch (err) {
+      console.error("퀘스트 불러오기 실패:", err);
+    }
   };
-  const quests = [
-    {
-      id: 1,
-      icon: questInprogressIcon,
-      title: "배움일기 댓글 작성",
-      progress: 0,
-      goal: 1,
-      buttonText: "50 포인트",
-      status: "inprogress",
-    },
-    {
-      id: 2,
-      icon: questInprogressIcon,
-      title: "미션 리워드 받기",
-      progress: 0,
-      goal: 1,
-      buttonText: "50 포인트",
-      status: "inprogress",
-    },
-    {
-      id: 3,
-      icon: questSuccessIcon,
-      title: "태스크 완료",
-      progress: 0,
-      goal: 1,
-      buttonText: "50 포인트",
-      status: "inprogress",
-    },
-    {
-      id: 4,
-      icon: questInprogressIcon,
-      title: "일일 퀘스트 완료",
-      progress: 0,
-      goal: 1,
-      buttonText: "50 포인트",
-      status: "inprogress",
-    },
-    {
-      id: 5,
-      icon: questSuccessIcon,
-      title: "배움일기 좋아요하기",
-      progress: 0,
-      goal: 1,
-      buttonText: "50 포인트",
-      status: "inprogress",
-    },
-  ];
+
+  useEffect(() => {
+    fetchQuests();
+  }, []);
+
   return (
-    <div className={styles.dailyQuest}>
-      <div>
-        <h3>데일리 퀘스트</h3>
-        <Link to="/daily-quest">
-          더보기 <FaAngleRight />
-        </Link>
-      </div>
-      <div>
-        <p>주간 리워드</p>
+      <div className={styles.dailyQuest}>
         <div>
-          <span>{weeklyReward.currentPoints}포인트</span>
-          <span> / {weeklyReward.maximumPoints}포인트</span>
-          <button className={weeklyReward.status}>
-            {weeklyReward.buttonText}
-          </button>
+          <h3>데일리 퀘스트</h3>
+          <Link to="/quest">
+            더보기 <FaAngleRight />
+          </Link>
         </div>
+        <ul>
+          {questList.map((quest) => (
+              <DailyQuestItem
+                  key={quest.userQuestId}
+                  title={quest.questName}
+                  progress={quest.progress}
+                  userQuestId={quest.userQuestId}
+                  onCompleted={fetchQuests}
+              />
+          ))}
+        </ul>
       </div>
-      <ul>
-        {quests.map((quest) => (
-          <DailyQuestItem
-            key={quest.id}
-            icon={quest.icon}
-            title={quest.title}
-            progress={quest.progress}
-            goal={quest.goal}
-            buttonText={quest.buttonText}
-            status={quest.status}
-          />
-        ))}
-      </ul>
-    </div>
   );
 }
 

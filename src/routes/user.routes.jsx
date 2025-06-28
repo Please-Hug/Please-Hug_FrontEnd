@@ -4,7 +4,13 @@ import DashboardPage from "../pages/User/DashboardPage";
 import MissionOverviewPage from "../pages/Mission/MissionOverviewPage";
 import QuestPage from "../pages/Quest/QuestPage";
 import LogoutPage from "../pages/User/LogoutPage";
+import PraisePage from "../pages/praise/PraisePage";
 import MyInfoPage from "../pages/User/MyInfoPage";
+import ShopPage from "../pages/shop/ShopPage";
+import ShopHistoryPage from "../pages/Shop/ShopHistoryPage";
+import AdminShopPage from "../pages/Shop/AdminShopPage";
+import MissionGroupPage from "../pages/Mission/MissionGroupPage";
+import AdminQuestPage from "../pages/Quest/AdminQuestPage";
 
 export default [
   {
@@ -21,7 +27,7 @@ export default [
         // errorElement: <DashboardErrorPage />, // 에러 바운더리
       },
       {
-        path: "/missions",
+        path: "/mission",
         element: <MissionOverviewPage />,
       },
       {
@@ -33,9 +39,43 @@ export default [
         element: <LogoutPage />,
       },
       {
-        path: "/profile",
-        element: <MyInfoPage />
+        path: "/praises",
+        element: <PraisePage />,
       },
+      // { path: "/profile", element: <ProfilePage /> },
+      {
+        path: "/profile",
+        element: <MyInfoPage />,
+      },
+      {
+        path: "/shop",
+        element: <ShopPage />,
+      },
+      {
+        path: "/shopHistory",
+        element: <ShopHistoryPage />,
+      },
+      {
+        path: "/adminShop",
+        element: <AdminShopPage />,
+      },
+      {
+        path: "/mission-group/:missionGroupId",
+        children: [
+          {
+            path: "home",
+            element: <MissionGroupPage componentType="home" />,
+          },
+          {
+            path: "learning-plan",
+            element: <MissionGroupPage componentType="learning-plan" />,
+          },
+        ],
+      },
+      {
+        path: "/adminQuest",
+        element: <AdminQuestPage />
+      }
       // { path: "/settings", element: <SettingsPage /> },
       // ... 추가 사용자 경로
     ],
