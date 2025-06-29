@@ -17,8 +17,12 @@ function StudyDiaryListPage() {
   // 페이지 로드 시 배움일기 목록 가져오기
   useEffect(() => {
     console.log("in useEffect", isSearching, searchKeyword);
-    fetchDiaries();
-  }, [currentPage, isSearching, searchKeyword, sortType]);
+    if (isSearching) {
+      fetchSearchResults();
+    } else {
+      fetchDiaries();
+    }
+  }, [currentPage, isSearching, sortType]);
 
   const fetchDiaries = async () => {
     try {
