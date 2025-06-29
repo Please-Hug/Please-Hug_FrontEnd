@@ -57,13 +57,23 @@ const DateRangePickerModal = ({ onApply, onClose }) => {
                         <input
                             type="text"
                             value={startDate ? format(startDate, "yyyy.MM.dd") : ""}
-                            onChange={(e) => setStartDate(new Date(e.target.value))}
+                            onChange={(e) => {
+                                const date = new Date(e.target.value);
+                                if (!isNaN(date.getTime())){
+                                    setStartDate(date);
+                                }
+                            }}
                         />
                          ~ 
                         <input
                             type="text"
                             value={endDate ? format(endDate, "yyyy.MM.dd") : ""}
-                            onChange={(e) => setEndDate(new Date(e.target.value))}
+                            onChange={(e) => {
+                                const date = new Date(e.target.value);
+                                if (!isNaN(date.getTime())){
+                                    setEndDate(date);
+                                }
+                            }}
                         />
                     </div>
                 </div>

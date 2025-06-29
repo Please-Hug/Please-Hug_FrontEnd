@@ -101,9 +101,9 @@ function PraisePage() {
                 {/* 📝 칭찬 카드 목록 */}
                 <div className={styles.praiseList}>
                     {/* <PraiseCard ... /> 여러 개 들어갈 자리 */}
-                    {praises.map((praise, id) => (
+                    {praises.map((praise) => (
                         <PraiseCard
-                            key={id}
+                            key={praise.id}
                             praiseId={praise.id}
                             senderName={praise.senderName}
                             receivers={praise.receivers}

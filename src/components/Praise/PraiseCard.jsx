@@ -37,10 +37,23 @@ function PraiseCard({
 }) {
 
     const accessToken = localStorage.getItem("accessToken");
-    const decoded = jwtDecode(accessToken);
-    const username = decoded.sub;
+    let username = null;
+    if(accessToken){
+        try{
+            const decoded = jwtDecode(accessToken);
+            username = decoded.sub;
+        } catch(error){
+            console.error("토큰 디코딩 실패:", error);
+        }
+    }
+    
 
     const handleEmojiClick = async (emojiChar) => {
+
+        if(!username){
+            console.log("로그인이 필요합니다.");
+            return;
+        }
         
         const emojiObj = emojis.find((e) => e.emoji === emojiChar);
 
@@ -53,7 +66,6 @@ function PraiseCard({
             if (matchedUserReaction?.id) {
                 await deleteEmojiReaction(praiseId, matchedUserReaction.id);
                 console.log(`${emojiChar} 반응 삭제`);
-                fetchPraises();
             } else {
                 await addEmojiReaction(praiseId, emojiChar);
                 console.log(`${emojiChar} 반응 등록`);

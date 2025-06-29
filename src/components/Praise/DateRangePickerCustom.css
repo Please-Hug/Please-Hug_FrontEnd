@@ -12,19 +12,19 @@
 
 /* 커스텀 네비게이션 위치 정렬 */
 .react-datepicker__navigation {
-  top: 10px; /* 제목과 요일 사이 높이 조정 */
+  top: 10px;
   width: 55px;
   height: 25px;
 }
 
 /* 왼쪽 화살표 */
 .react-datepicker__navigation--previous {
-  left: 8; /* '일'과 정렬되도록 좌측 정렬 */
+  left: 8px;
 }
 
 /* 오른쪽 화살표 */
 .react-datepicker__navigation--next {
-  right: 8; /* '토'와 정렬되도록 우측 정렬 */
+  right: 8px;
 }
 
 
@@ -52,16 +52,16 @@
 /* 요일 줄 전체 (Su, Mo, ...) */
 .react-datepicker__day-names {
   display: grid;
-  grid-template-columns: repeat(7, 36px); /* 요일 개수만큼 균등 분할 */
+  grid-template-columns: repeat(7, 36px);
   justify-content: center;
-  column-gap: 4px; /* 날짜 간격과 맞추기 */
+  column-gap: 4px;
   
-  margin-bottom: -13px;           /* 날짜와의 간격 */
+  margin-bottom: -13px;
 }
 
 /* 요일 각각 (Su, Mo, ...) */
 .react-datepicker__day-name {
-  width: 36px;               /* 날짜칸과 동일한 너비로 맞춤 */
+  width: 36px;
   height: 36px;
   line-height: 36px;
   font-size: 14px;
