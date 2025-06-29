@@ -19,7 +19,7 @@ const ShopHeader = () => {
                 </button>
                 <button
                     className={`${styles.button} ${isHistoryPage ? styles.active : ''}`}
-                    onClick={() => navigate("/shop/shopHistory")}
+                    onClick={() => navigate("/shopHistory")}
                 >
                     구매 현황
                 </button>
