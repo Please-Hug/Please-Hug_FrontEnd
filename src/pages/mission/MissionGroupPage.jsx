@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import TabComponent from "../../components/common/TabComponent/TabComponent";
 import MissionHome from "../../components/Mission/MissionHome";
 import MissionBoard from "../../components/Mission/MissionBoard";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./MissionGroupPage.module.scss";
+import useBreadcrumbStore from "../../stores/breadcrumbStore";
 
 function MissionGroupPage({ componentType }) {
   const navigate = useNavigate();
   const { missionGroupId } = useParams();
-  const tabs = [
-    { id: 1, name: "홈", componentType: "home" },
-    { id: 2, name: "학습계획", componentType: "learning-plan" },
-  ];
+  const tabs = useMemo(
+    () => [
+      { id: 1, name: "홈", componentType: "home" },
+      { id: 2, name: "학습계획", componentType: "learning-plan" },
+    ],
+    []
+  );
+
+  const { setBreadcrumbItems } = useBreadcrumbStore();
+  useEffect(() => {
+    const tab = tabs.find((tab) => tab.componentType === componentType);
+    setBreadcrumbItems([
+      { label: "미션", path: "/mission" },
+      {
+        label: tab.name,
+        path: `/mission-group/${missionGroupId}/${tab.componentType}`,
+      },
+    ]);
+  }, [setBreadcrumbItems, missionGroupId, componentType, tabs]);
+
   return (
     <div className={styles.missionGroupPage}>
       <h2>미션</h2>
