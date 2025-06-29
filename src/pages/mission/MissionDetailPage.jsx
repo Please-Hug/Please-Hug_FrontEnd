@@ -5,11 +5,26 @@ import { FaArrowLeft, FaCircleInfo } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { getMissionDetail } from "../../api/missionService";
 import MissionTask from "../../components/Mission/MissionTask";
+import SideModal from "../../components/common/SideModal/SideModal";
+import MissionFeedbackCard from "../../components/Mission/MissionFeedbackCard";
+import useBreadcrumbStore from "../../stores/breadcrumbStore";
 
 function MissionDetailPage() {
   const { missionId } = useParams();
   const navigate = useNavigate();
   const [missionDetail, setMissionDetail] = useState(null);
+  const [isSideModalOpen, setIsSideModalOpen] = useState(false);
+  const sideModalWidth = 480;
+  const { setBreadcrumbItems } = useBreadcrumbStore();
+  useEffect(() => {
+    setBreadcrumbItems([
+      { label: "미션", path: "/mission" },
+      {
+        label: missionDetail?.name || "미션 상세",
+        path: `/mission/${missionId}`,
+      },
+    ]);
+  }, [missionId, setBreadcrumbItems, missionDetail]);
 
   useEffect(() => {
     const fetchMissionDetail = async () => {
@@ -65,7 +80,10 @@ function MissionDetailPage() {
             <span className={styles.missionDetailCompleteMessage}>
               다 하셨으면, 아래 버튼을 눌러주세요 <FaCircleInfo />
             </span>
-            <button className={styles.missionDetailCompleteButton}>
+            <button
+              className={styles.missionDetailCompleteButton}
+              onClick={() => setIsSideModalOpen(true)}
+            >
               끝내고 피드백하기
             </button>
           </div>
@@ -84,6 +102,13 @@ function MissionDetailPage() {
           </div>
         </div>
       </div>
+      <SideModal
+        isOpen={isSideModalOpen}
+        onClose={() => setIsSideModalOpen(false)}
+        width={sideModalWidth}
+      >
+        <MissionFeedbackCard missionId={missionId} />
+      </SideModal>
     </div>
   );
 }

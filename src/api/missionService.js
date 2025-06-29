@@ -106,3 +106,19 @@ export const getMissionDetail = async (missionId) => {
     throw error;
   }
 };
+
+export const submitChallengeSubmission = async (missionId, formData) => {
+  try {
+    const response = await api.post(
+      `/api/v1/challenges/${missionId}/submissions`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("챌린지 제출 실패:", error);
+    throw error;
+  }
+};

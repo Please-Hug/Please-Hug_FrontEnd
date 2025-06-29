@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./DashboardPage.module.scss";
 import emptyUserProfile from "../../assets/images/user/empty-user-profile.svg";
@@ -11,9 +11,22 @@ import UserProfile from "../../components/Dashboard/UserProfile";
 import RecentDiary from "../../components/Dashboard/RecentDiary";
 import useUserStore from "../../stores/userStore";
 import api from "../../api/axiosInstance";
+import useBreadcrumbStore from "../../stores/breadcrumbStore";
 
 function DashboardPage() {
   const userInfo = useUserStore((state) => state.userInfo);
+  const { setBreadcrumbItems } = useBreadcrumbStore();
+  useEffect(() => {
+    if (userInfo) {
+      setBreadcrumbItems([
+        { label: userInfo.name + "의 대시보드", path: "/" },
+        {
+          label: "홈",
+          path: `/dashboard`,
+        },
+      ]);
+    }
+  }, [setBreadcrumbItems, userInfo]);
   if (!userInfo) {
     return <div>로딩중...</div>;
   }
@@ -40,11 +53,11 @@ function DashboardPage() {
         </div>
         <div className={styles.dashboardRight}>
           <UserProfile
-              profileImg={
-                  userInfo.profileImage
-                      ? `${api.defaults.baseURL}${userInfo.profileImage}`
-                      : emptyUserProfile
-              }
+            profileImg={
+              userInfo.profileImage
+                ? `${api.defaults.baseURL}${userInfo.profileImage}`
+                : emptyUserProfile
+            }
             username={userInfo.name}
             course={userInfo.course || "Hugton 알고리즘 미션 강좌"}
             rank={userInfo.rank || "0%"}
