@@ -10,8 +10,6 @@ function MissionFeedbackCard({ missionId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("comment", comment);
     if (!comment || comment.trim() === "") {
       alert("피드백을 입력하세요.");
       return;
@@ -20,10 +18,10 @@ function MissionFeedbackCard({ missionId }) {
       alert("파일을 선택하세요.");
       return;
     }
-    if (file) {
-      formData.append("file", file);
-      formData.append("fileName", file.name);
-    }
+    const formData = new FormData();
+    formData.append("comment", comment);
+    formData.append("file", file);
+    formData.append("fileName", file.name);
 
     try {
       setLoading(true);

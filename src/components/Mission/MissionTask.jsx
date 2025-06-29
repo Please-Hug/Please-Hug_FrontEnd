@@ -5,13 +5,14 @@ import TaskItem from "./TaskItem";
 
 function MissionTask({ missionId, style }) {
   const [tasks, setTasks] = useState([]);
-  const [myTasks, setMyTasks] = useState([]);
+  const [myTasks, setMyTasks] = useState({});
 
   useEffect(() => {
     const fetchTasks = async () => {
       if (missionId) {
         const res = await getMissionTasks(missionId);
         setTasks(res.data);
+        console.log("미션 작업 목록:", res.data);
       }
     };
     fetchTasks();
@@ -25,6 +26,7 @@ function MissionTask({ missionId, style }) {
         taskMap[task.missionTaskId] = task;
       });
       setMyTasks(taskMap);
+      console.log("내 미션 작업 목록:", taskMap);
     }
   }, [missionId]);
 
