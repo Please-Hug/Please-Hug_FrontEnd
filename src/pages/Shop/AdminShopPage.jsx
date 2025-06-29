@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import apiInstance from "../../api/axiosInstance.jsx";
 
 function AdminShopPage() {
     const [formData, setFormData] = useState({
@@ -34,9 +34,8 @@ function AdminShopPage() {
         data.append("image", formData.image);
 
         try {
-            await axios.post("http://localhost:8080/api/v1/admin/shop", data, {
+            await apiInstance.post("/api/v1/admin/shop", data, {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "multipart/form-data",
                 },
             });
@@ -54,14 +53,8 @@ function AdminShopPage() {
             return;
         }
 
-        const accessToken = localStorage.getItem("accessToken");
-
         try {
-            await axios.delete(`http://localhost:8080/api/v1/admin/shop/${deleteId}`, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+            await apiInstance.delete(`/api/v1/admin/shop/${deleteId}`);
             setMessage(`✅ 상품 ID ${deleteId} 삭제 완료`);
             setDeleteId("");
         } catch (err) {
