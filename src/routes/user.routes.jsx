@@ -1,17 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import DashboardPage from "../pages/User/DashboardPage";
-import MissionOverviewPage from "../pages/Mission/MissionOverviewPage";
+import DashboardPage from "../pages/user/DashboardPage";
+import MissionOverviewPage from "../pages/mission/MissionOverviewPage";
 import QuestPage from "../pages/Quest/QuestPage";
-import LogoutPage from "../pages/User/LogoutPage";
-import MyInfoPage from "../pages/User/MyInfoPage";
+import LogoutPage from "../pages/user/LogoutPage";
+import MyInfoPage from "../pages/user/MyInfoPage";
 
 // 배움일기 관련 페이지들
 import StudyDiaryListPage from "../pages/studyDiary/StudyDiaryListPage";
 import StudyDiaryWritePage from "../pages/studyDiary/StudyDiaryWritePage";
 import StudyDiaryViewPage from "../pages/studyDiary/StudyDiaryViewPage";
 import StudyDiaryEditPage from "../pages/studyDiary/StudyDiaryEditPage";
-import MyActivityPage from "../pages/user/MyActivityPage";
+import MyStudyDiaryActivity from "../pages/studyDiary/MyStudyDiaryActivity";
 
 export default [
   {
@@ -63,7 +63,7 @@ export default [
       // 나의 활동 페이지
       {
         path: "/my-activity",
-        element: <MyActivityPage />,
+        element: <MyStudyDiaryActivity />,
       },
       // { path: "/settings", element: <SettingsPage /> },
       // ... 추가 사용자 경로

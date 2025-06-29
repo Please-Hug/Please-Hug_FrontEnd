@@ -44,7 +44,7 @@ function StudyDiaryWritePage() {
       setLoading(true);
       const response = await createStudyDiary(formData);
       
-      if (response.status === 200) {
+      if (response) {
         alert("배움일기가 성공적으로 작성되었습니다!");
         navigate("/study-diary");
       }

@@ -87,6 +87,17 @@ export const createComment = async (studyDiaryId, content) => {
   }
 };
 
+// 댓글 삭제
+export const deleteComment = async (studyDiaryId, commentId) => {
+  try {
+    const response = await api.delete(`/api/v1/studydiaries/${studyDiaryId}/comments/${commentId}`);
+    return response.data;
+  } catch (error) {
+    console.error("댓글 삭제 실패:", error);
+    throw error;
+  }
+};
+
 // 좋아요 토글
 export const toggleLike = async (studyDiaryId) => {
   try {
@@ -105,6 +116,28 @@ export const getMyActivity = async () => {
     return response.data;
   } catch (error) {
     console.error("나의 활동 조회 실패:", error);
+    throw error;
+  }
+};
+
+// 나의 주간 활동 상황 조회
+export const getMyWeeklyStatus = async () => {
+  try {
+    const response = await api.get("/api/v1/studydiaries/my/weeklyStatus");
+    return response.data;
+  } catch (error) {
+    console.error("나의 주간 활동 상황 조회 실패:", error);
+    throw error;
+  }
+};
+
+// 나의 글 목록 조회
+export const getMyStudyDiaries = async (page = 0, size = 10, sort = "createdAt", direction = "DESC") => {
+  try {
+    const response = await api.get(`/api/v1/studydiaries/my/studyDiaries?page=${page}&size=${size}&sort=${sort}&direction=${direction}`);
+    return response.data;
+  } catch (error) {
+    console.error("나의 글 목록 조회 실패:", error);
     throw error;
   }
 }; 
