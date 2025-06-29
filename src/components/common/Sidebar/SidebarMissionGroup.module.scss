@@ -1,0 +1,51 @@
+.missionGroupTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.missionGroupTitleLetter {
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+  height: 24px;
+  width: 24px;
+  text-align: center;
+  line-height: 24px;
+  margin: -4px;
+  margin-right: 5px;
+  font-size: 9px !important;
+  &.no_0 {
+    background-color: #3498db;
+  }
+  &.no_1 {
+    background-color: #e74c3c;
+  }
+  &.no_2 {
+    background-color: #8e44ad;
+  }
+  &.no_3 {
+    background-color: #f1c40f;
+  }
+  &.no_4 {
+    background-color: #11a2ad;
+  }
+  &.no_5 {
+    background-color: #af254c;
+  }
+  &.no_6 {
+    background-color: #9b59b6;
+  }
+  &.no_7 {
+    background-color: #e67e22;
+  }
+  &.no_8 {
+    background-color: #2ecc71;
+  }
+  &.no_9 {
+    background-color: #181818;
+  }
+}
+
+.missionGroupItem {
+  padding-left: 30px !important;
+}

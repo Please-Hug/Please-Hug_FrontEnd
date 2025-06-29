@@ -13,6 +13,25 @@
   background-color: #f3f4f5;
   border: 1px solid #e0e0e0;
   border-radius: 5px;
+  cursor: pointer;
+
+  &.NOT_STARTED {
+    color: #333;
+    background-color: #f3f4f5;
+    border: 1px solid #e0e0e0;
+  }
+
+  &.IN_PROGRESS {
+    color: #1959b8;
+    background-color: #f0f6ff;
+    border: 1px solid #4890fe;
+  }
+
+  &.COMPLETED {
+    color: #0a614d;
+    background-color: #ebf8f5;
+    border: 1px solid #04a37e;
+  }
 }
 
 .taskName {
