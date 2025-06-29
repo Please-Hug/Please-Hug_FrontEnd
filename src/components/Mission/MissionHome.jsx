@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./MissionHome.module.scss";
 import { getMissionGroupMembers } from "../../api/missionService";
 import emptyUserProfile from "../../assets/images/user/empty-user-profile.svg";
+import BASE_URL from "../../api/baseUrl";
 
 function MissionHome({ groupId }) {
   const [groupMembers, setGroupMembers] = useState([]);
@@ -37,7 +38,13 @@ function MissionHome({ groupId }) {
         <ul className={styles.memberList}>
           {groupMembers.map((member) => (
             <li key={member.username}>
-              <img src={member.profileImage || emptyUserProfile} />
+              <img
+                src={
+                  member.profileImage
+                    ? BASE_URL + member.profileImage
+                    : emptyUserProfile
+                }
+              />
               <span>{member.name || "이름 없음"}</span>
             </li>
           ))}
