@@ -33,7 +33,8 @@ function PraiseCard({
     commentCount,
     type,
     currentUser,
-    fetchPraises
+    fetchPraises,
+    onClick
 }) {
 
     const accessToken = localStorage.getItem("accessToken");
@@ -79,7 +80,7 @@ function PraiseCard({
 
 
     return (
-        <div className={styles.card}>
+        <div className={styles.card} onClick={() => onClick(praiseId)}>
 
         <div className={styles.receiversRow}>
             {receivers.slice(0, 3).map((r, i) => (
@@ -117,7 +118,9 @@ function PraiseCard({
                 <span 
                     key={emoji.emoji} 
                     className={styles.emoji}
-                    onClick={() => handleEmojiClick(emoji.emoji)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleEmojiClick(emoji.emoji)}}
                 >
                     {emoji.emoji} {emoji.count}
                 </span>
@@ -131,7 +134,9 @@ function PraiseCard({
                 <button
                     key={emoji}
                     className={styles.reactionButton}
-                    onClick={() => currentUser && handleEmojiClick(emoji)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        currentUser && handleEmojiClick(emoji)}}
                     disabled={!currentUser}
                 >
                     {emoji}
