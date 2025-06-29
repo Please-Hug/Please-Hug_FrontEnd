@@ -1,0 +1,129 @@
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.receiversRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.receiverItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profileImage {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.receiverName {
+  font-weight: 500;
+}
+
+.type {
+  font-size: 12px;
+  color: gray;
+  margin-left: 4px;
+}
+
+.extra {
+  font-size: 14px;
+  color: gray;
+  align-self: center;
+}
+
+.senderRow {
+  margin-bottom: 6px;
+}
+
+.senderText {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.date {
+  font-size: 12px;
+  color: gray;
+}
+
+.content {
+  font-size: 15px;
+  margin: 10px 0;
+  white-space: pre-wrap;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #555;
+}
+
+.emojiList {
+  display: flex;
+  gap: 8px;
+}
+
+.emoji {
+  display: flex;
+  align-items: center;
+}
+
+.typeBadge {
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-block;
+  margin-left: 8px;
+}
+
+/* 각 타입별 색상 지정 */
+.thanks {
+  background-color: #e0f3f9; /* 연하늘 */
+  color: #3a8ca8;
+}
+
+.cheer {
+  background-color: #f4e3fc; /* 연보라 */
+  color: #a044d0;
+}
+
+.recognize {
+  background-color: #ece6fc; /* 연한 퍼플 */
+  color: #5b3cc4;
+}
+
+.reactionBar {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+}
+
+.reactionButton {
+  font-size: 18px;
+  background-color: #f3f3f3;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reactionButton:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.1);
+}
