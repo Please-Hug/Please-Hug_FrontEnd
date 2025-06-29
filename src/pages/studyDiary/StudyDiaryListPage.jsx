@@ -120,7 +120,7 @@ function StudyDiaryListPage() {
       setLoading(true);
       const response = await searchStudyDiaries(searchKeyword, currentPage, 10);
       
-      if (response.status === 200 && response.data) {
+      if (response && response.data) {
         setDiaries(response.data.content || []);
         setTotalPages(response.data.totalPages || 0);
       }

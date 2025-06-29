@@ -24,7 +24,7 @@ function StudyDiaryEditPage() {
       setLoading(true);
       const response = await getStudyDiary(id);
       
-      if (response.status === 200 && response.data) {
+      if (response && response.data) {
         const data = response.data;
         setFormData({
           title: data.title,
@@ -102,7 +102,7 @@ function StudyDiaryEditPage() {
       setSubmitting(true);
       const response = await updateStudyDiary(id, formData);
       
-      if (response.status === 200) {
+      if (response) {
         alert("배움일기가 성공적으로 수정되었습니다!");
         navigate(`/study-diary/${id}`);
       }

@@ -1,47 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyActivity } from "../../api/studyDiaryService";
+import { getMyWeeklyStatus, getMyStudyDiaries } from "../../api/studyDiaryService";
 import styles from "./MyStudyDiaryActivity.module.scss";
 
 function MyStudyDiaryActivity() {
   const navigate = useNavigate();
   const [myDiaries, setMyDiaries] = useState([]);
+  const [weeklyStatus, setWeeklyStatus] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("나의 활동");
 
   useEffect(() => {
-    fetchMyActivity();
+    fetchData();
   }, []);
 
-  const fetchMyActivity = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await getMyActivity();
-      setMyDiaries(response.data.myDiaries || []);
+      
+      // 두 API를 병렬로 호출
+      const [weeklyResponse, diariesResponse] = await Promise.all([
+        getMyWeeklyStatus(),
+        getMyStudyDiaries(0, 20) // 페이지 0, 사이즈 20으로 조회
+      ]);
+
+      // 주간 활동 상황 데이터 설정
+      setWeeklyStatus(weeklyResponse.data || null);
+      
+      // 배움일기 목록 데이터 설정 - data가 직접 배열임
+      setMyDiaries(diariesResponse.data || []);
     } catch (error) {
-      console.error("나의 활동 조회 실패:", error);
-      // 임시 더미 데이터 - 사용자의 배움일기만
-      const myDummyData = [
-        {
-          id: 1,
-          title: "배움일기 테스트",
-          content: "오늘 학습한 내용",
-          createdAt: "1분 전",
-          userName: "현재 사용자",
-          likeNum: 0,
-          commentNum: 0,
-        },
-        {
-          id: 2,
-          title: "백엔드 3차시 - 1일차",
-          content: "앞으로 한걸자",
-          createdAt: "4월 전",
-          userName: "현재 사용자",
-          likeNum: 0,
-          commentNum: 0,
-        }
-      ];
-      setMyDiaries(myDummyData);
+      console.error("데이터 조회 실패:", error);
+      // 에러 발생 시 기본값 설정
+      setWeeklyStatus(null);
+      setMyDiaries([]);
     } finally {
       setLoading(false);
     }
@@ -75,24 +67,60 @@ function MyStudyDiaryActivity() {
   const getWeekDates = () => {
     const today = new Date();
     const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay()); // 일요일부터 시작
+    // 월요일부터 시작하도록 변경 (getDay()는 일요일=0, 월요일=1 반환)
+    const dayOfWeek = today.getDay();
+    const daysFromMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // 일요일이면 6, 나머지는 -1
+    startOfWeek.setDate(today.getDate() - daysFromMonday);
     
     const weekDates = [];
-    const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+    const dayNames = ['월', '화', '수', '목', '금', '토', '일']; // 월요일부터 시작
+    const apiDayNames = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     
     for (let i = 0; i < 7; i++) {
       const date = new Date(startOfWeek);
       date.setDate(startOfWeek.getDate() + i);
       
+      // weeklyStatus 데이터에서 해당 요일의 작성 여부 확인
+      let hasEntry = false;
+      if (weeklyStatus) {
+        hasEntry = weeklyStatus[apiDayNames[i]] || false;
+      }
+      
       weekDates.push({
         dayName: dayNames[i],
         date: date.getDate(),
         isToday: date.toDateString() === today.toDateString(),
-        hasEntry: i === 0 || i === 6 // 예시: 일요일과 토요일에 배움일기 작성
+        hasEntry: hasEntry
       });
     }
     
     return weekDates;
+  };
+
+  // 통계 정보 계산
+  const getStats = () => {
+    if (!weeklyStatus) {
+      return {
+        todayCount: 0,
+        weeklyRate: 0,
+        goal: 1
+      };
+    }
+
+    const todayCount = weeklyStatus.todayStudyDiaryNum || 0;
+    
+    // 7일 작성률 계산 (true인 요일 개수 / 7 * 100)
+    const dayFields = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    const completedDays = dayFields.filter(day => weeklyStatus[day]).length;
+    const weeklyRate = Math.round((completedDays / 7) * 100);
+    
+    const goal = 7; // 주 7일 목표
+
+    return {
+      todayCount,
+      weeklyRate,
+      goal
+    };
   };
 
   if (loading) {
@@ -162,15 +190,15 @@ function MyStudyDiaryActivity() {
             <div className={styles.statsInfo}>
               <div className={styles.statItem}>
                 <div className={styles.statLabel}>오늘 배움일기</div>
-                <div className={styles.statValue}>1개</div>
+                <div className={styles.statValue}>{getStats().todayCount}개</div>
               </div>
               <div className={styles.statItem}>
                 <div className={styles.statLabel}>7일 작성률</div>
-                <div className={styles.statValue}>14%</div>
+                <div className={styles.statValue}>{getStats().weeklyRate}%</div>
               </div>
               <div className={styles.statItem}>
                 <div className={styles.statLabel}>목표</div>
-                <div className={styles.statValue}>1개</div>
+                <div className={styles.statValue}>{getStats().goal}개</div>
               </div>
             </div>
 
@@ -224,11 +252,20 @@ function MyStudyDiaryActivity() {
                     </div>
                     <div className={styles.cardFooter}>
                       <div className={styles.cardStats}>
-                        <span className={styles.likes}>❤️ {diary.likeNum || 0}</span>
-                        <span className={styles.comments}>💬 {diary.commentNum || 0}</span>
+                        <span className={styles.likes}>❤️ {diary.likeCount || diary.likeNum || 0}</span>
+                        <span className={styles.comments}>💬 {diary.commentCount || diary.commentNum || 0}</span>
                       </div>
                       <div className={styles.cardMeta}>
-                        <span className={styles.date}>{diary.createdAt}</span>
+                        <span className={styles.date}>
+                          {diary.createdAt ? 
+                            new Date(diary.createdAt).toLocaleDateString('ko-KR', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            }) : 
+                            diary.createdAt
+                          }
+                        </span>
                       </div>
                     </div>
                   </div>

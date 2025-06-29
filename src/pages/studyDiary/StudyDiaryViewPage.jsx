@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getStudyDiary, deleteStudyDiary, createComment, toggleLike } from "../../api/studyDiaryService";
+import { getStudyDiary, deleteStudyDiary, createComment, deleteComment, toggleLike } from "../../api/studyDiaryService";
 import styles from "./StudyDiaryViewPage.module.scss";
 
 function StudyDiaryViewPage() {
@@ -20,8 +20,8 @@ function StudyDiaryViewPage() {
     try {
       setLoading(true);
       const response = await getStudyDiary(id);
-      
-      if (response.status === 200 && response.data) {
+      console.log("in fetchDiary", response);
+      if (response.data) {
         setDiary(response.data);
       }
     } catch (error) {
@@ -96,11 +96,9 @@ function StudyDiaryViewPage() {
       setIsTogglingLike(true);
       const response = await toggleLike(id);
       
-      if (response.status === 200) {
-        setDiary(prev => ({
-          ...prev,
-          likeNum: response.data
-        }));
+      if (response) {
+        // 서버에서 최신 데이터를 다시 불러와서 페이지 새로고침
+        await fetchDiary();
       }
     } catch (error) {
       console.error("좋아요 토글 실패:", error);
@@ -124,17 +122,49 @@ function StudyDiaryViewPage() {
       setIsSubmittingComment(true);
       const response = await createComment(id, commentContent);
       
-      if (response.status === 200) {
-        // 댓글 등록 후 페이지 새로고침 또는 댓글 목록 업데이트
+      if (response) {
+        console.log("in handleCommentSubmit", response);
+        // 댓글 등록 후 서버에서 최신 데이터를 다시 불러와서 페이지 새로고침
         setCommentContent("");
-        fetchDiary(); // 전체 데이터 다시 불러오기
-        alert("댓글이 등록되었습니다.");
+        await fetchDiary();
       }
     } catch (error) {
       console.error("댓글 등록 실패:", error);
       alert("댓글 등록에 실패했습니다.");
     } finally {
       setIsSubmittingComment(false);
+    }
+  };
+
+  const handleCommentDelete = async (commentId) => {
+    if (!window.confirm("정말 이 댓글을 삭제하시겠습니까?")) return;
+    
+    try {
+      const response = await deleteComment(id, commentId);
+      
+      if (response) {
+        alert("댓글이 삭제되었습니다.");
+        // 댓글 삭제 후 서버에서 최신 데이터를 다시 불러와서 페이지 새로고침
+        await fetchDiary();
+      }
+    } catch (error) {
+      console.error("댓글 삭제 실패:", error);
+      
+      // 상태 코드별 에러 처리
+      const status = error.response?.status;
+      switch (status) {
+        case 401:
+          alert("로그인이 필요합니다.");
+          break;
+        case 403:
+          alert("댓글을 삭제할 권한이 없습니다.");
+          break;
+        case 404:
+          alert("댓글을 찾을 수 없습니다.");
+          break;
+        default:
+          alert("댓글 삭제에 실패했습니다.");
+      }
     }
   };
 
@@ -227,10 +257,19 @@ function StudyDiaryViewPage() {
               diary.commentList.map((comment) => (
                 <div key={comment.id} className={styles.commentItem}>
                   <div className={styles.commentHeader}>
-                    <span className={styles.commentAuthor}>{comment.userName}</span>
-                    <span className={styles.commentDate}>
-                      {new Date(comment.createdAt).toLocaleDateString('ko-KR')}
-                    </span>
+                    <div className={styles.commentInfo}>
+                      <span className={styles.commentAuthor}>{comment.userName}</span>
+                      <span className={styles.commentDate}>
+                        {new Date(comment.createdAt).toLocaleDateString('ko-KR')}
+                      </span>
+                    </div>
+                    <button
+                      className={styles.deleteCommentButton}
+                      onClick={() => handleCommentDelete(comment.id)}
+                      title="댓글 삭제"
+                    >
+                      ✕
+                    </button>
                   </div>
                   <p className={styles.commentContent}>{comment.content}</p>
                 </div>
