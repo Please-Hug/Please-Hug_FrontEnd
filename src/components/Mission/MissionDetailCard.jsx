@@ -5,10 +5,12 @@ import missionDifficultyMap from "../../utils/missionDifficultyMap";
 import TaskItem from "./TaskItem";
 import { FaFlag } from "react-icons/fa6";
 import { getMissionTasks, getMissionMyTasks } from "../../api/missionService";
+import { useNavigate } from "react-router-dom";
 
 function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
   const [tasks, setTasks] = useState([]);
   const [myTasks, setMyTasks] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -109,7 +111,12 @@ function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
                 미션 도전하기
               </span>
             ) : (
-              <button className={styles.missionDetailMoveButton}>
+              <button
+                className={styles.missionDetailMoveButton}
+                onClick={() => {
+                  navigate(`/mission/${mission.id}`);
+                }}
+              >
                 학습 계획 이동하기
               </button>
             )}

@@ -11,6 +11,7 @@ import ShopHistoryPage from "../pages/Shop/ShopHistoryPage";
 import AdminShopPage from "../pages/Shop/AdminShopPage";
 import MissionGroupPage from "../pages/Mission/MissionGroupPage";
 import AdminQuestPage from "../pages/Quest/AdminQuestPage";
+import MissionDetailPage from "../pages/Mission/MissionDetailPage";
 
 export default [
   {
@@ -28,7 +29,16 @@ export default [
       },
       {
         path: "/mission",
-        element: <MissionOverviewPage />,
+        children: [
+          {
+            index: true,
+            element: <MissionOverviewPage />,
+          },
+          {
+            path: ":missionId",
+            element: <MissionDetailPage />,
+          },
+        ],
       },
       {
         path: "/quest",
@@ -74,8 +84,8 @@ export default [
       },
       {
         path: "/adminQuest",
-        element: <AdminQuestPage />
-      }
+        element: <AdminQuestPage />,
+      },
       // { path: "/settings", element: <SettingsPage /> },
       // ... 추가 사용자 경로
     ],
