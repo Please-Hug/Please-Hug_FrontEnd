@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import styles from "./ShopHeader.module.scss";
 
 const ShopHeader = () => {
     const location = useLocation();
@@ -7,40 +8,24 @@ const ShopHeader = () => {
     const isHistoryPage = location.pathname.includes("shopHistory");
 
     return (
-        <>
+        <div className={styles.shopHeader}>
             <h1>상점</h1>
-            <div style={{ marginBottom: "1.5rem", display: "flex", gap: "1rem" }}>
+            <div className={styles.buttonContainer}>
                 <button
-                    style={{
-                        ...buttonStyle,
-                        backgroundColor: isHistoryPage ? "#f0f0f0" : "#007bff",
-                        color: isHistoryPage ? "#000" : "#fff",
-                    }}
+                    className={`${styles.button} ${!isHistoryPage ? styles.active : ''}`}
                     onClick={() => navigate("/shop")}
                 >
                     상품 목록
                 </button>
                 <button
-                    style={{
-                        ...buttonStyle,
-                        backgroundColor: isHistoryPage ? "#007bff" : "#f0f0f0",
-                        color: isHistoryPage ? "#fff" : "#000",
-                    }}
-                    onClick={() => navigate("/shop/shopHistory")}
+                    className={`${styles.button} ${isHistoryPage ? styles.active : ''}`}
+                    onClick={() => navigate("/shopHistory")}
                 >
                     구매 현황
                 </button>
             </div>
-        </>
+        </div>
     );
-};
-
-const buttonStyle = {
-    padding: "0.5rem 1rem",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontSize: "1rem",
 };
 
 export default ShopHeader;

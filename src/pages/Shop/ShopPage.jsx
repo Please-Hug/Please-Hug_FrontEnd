@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import apiInstance from "../../api/axiosInstance.jsx";
 import ProductCard from "../../components/Shop/ProductCard";
 import { useNavigate, useLocation } from "react-router-dom";
+import styles from "./ShopPage.module.scss";
 
 function ShopPage() {
     const [products, setProducts] = useState([]);
@@ -14,11 +15,7 @@ function ShopPage() {
 
     const fetchShopItems = async () => {
         try {
-            const accessToken = localStorage.getItem("accessToken");
-
-            const response = await axios.get("http://localhost:8080/api/v1/shop", {
-                headers: { Authorization: `Bearer ${accessToken}` },
-            });
+            const response = await apiInstance.get("/api/v1/shop");
 
             const items = response.data?.data;
             setProducts(Array.isArray(items) ? items : []);
@@ -37,34 +34,27 @@ function ShopPage() {
     }, []);
 
     return (
-        <div style={{ padding: "2rem" }}>
+        <div className={styles.container}>
             <h1>상점</h1>
 
-            {/* 상단 버튼 */}
-            <div style={{ marginBottom: "1.5rem", display: "flex", gap: "1rem" }}>
+            <div className={styles.buttonContainer}>
                 <button
-                    style={{
-                        ...buttonStyle,
-                        backgroundColor: isShopPage ? "#d0f0ff" : "#f0f0f0",
-                    }}
+                    className={`${styles.button} ${isShopPage ? styles.active : ''}`}
                     onClick={() => navigate("/shop")}
                 >
                     상품 목록
                 </button>
                 <button
-                    style={{
-                        ...buttonStyle,
-                        backgroundColor: !isShopPage ? "#d0f0ff" : "#f0f0f0",
-                    }}
+                    className={`${styles.button} ${!isShopPage ? styles.active : ''}`}
                     onClick={() => navigate("/shopHistory")}
                 >
                     구매 현황
                 </button>
             </div>
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className={styles.error}>{error}</p>}
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+            <div className={styles.productList}>
                 {products.length === 0 ? (
                     <p>상품이 없습니다.</p>
                 ) : (
@@ -81,13 +71,5 @@ function ShopPage() {
         </div>
     );
 }
-
-const buttonStyle = {
-    padding: "0.5rem 1rem",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontSize: "1rem",
-};
 
 export default ShopPage;

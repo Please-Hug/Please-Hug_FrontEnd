@@ -96,3 +96,29 @@ export const changeChallengeState = async (challengeId, state) => {
     throw error;
   }
 };
+
+export const getMissionDetail = async (missionId) => {
+  try {
+    const response = await api.get(`/api/v1/missions/${missionId}`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 상세 정보 가져오기 실패:", error);
+    throw error;
+  }
+};
+
+export const submitChallengeSubmission = async (missionId, formData) => {
+  try {
+    const response = await api.post(
+      `/api/v1/challenges/${missionId}/submissions`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("챌린지 제출 실패:", error);
+    throw error;
+  }
+};
