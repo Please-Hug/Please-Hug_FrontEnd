@@ -6,12 +6,14 @@ import DateRangePickerModal from "../../components/Praise/DateRangePickerModal";
 import PraiseCard from "../../components/Praise/PraiseCard";
 import { getPraises } from "../../api/praiseService";
 import { getCurrentUser } from "../../api/userService";
+import PraiseDetailModal from "../../components/Praise/PraiseDetailModal";
 
 
 function PraisePage() {
 
     const [ isModalOpen, setIsModalOpen ] = useState(false);
     const [ isDateModalOpen, setIsDateModalOpen ] = useState(false);
+    const [ isDetailOpen, setIsDetailOpen ] = useState(false);
 
     const [ startDate, setStartDate ] = useState(null);
     const [ endDate, setEndDate ] = useState(null);
@@ -24,6 +26,16 @@ function PraisePage() {
 
     const [ currentUser, setCurrentUser ] = useState(null);
 
+    const [ selectedPraise, setSelectedPraise ] = useState(null);
+
+    // 칭찬 상세조회
+    const [ selectedPraiseId, setSelectedPraiseId ] = useState(null);
+
+
+
+    const handleCardClick = (id) => {
+        setSelectedPraiseId(id);
+    };
 
 
     const handleDateRangeApply = async ({ start, end, label }) => {
@@ -114,8 +126,19 @@ function PraisePage() {
                             type={praise.type}
                             currentUser={currentUser}
                             fetchPraises={fetchPraises}
+                            onClick={() => handleCardClick(praise.id)}
                         />
                     ))}
+
+                    {selectedPraiseId && (
+                        <PraiseDetailModal
+                            isOpen={!!selectedPraiseId}
+                            onClose={() => setSelectedPraiseId(null)}
+                            praiseId={selectedPraiseId}
+                            currentUser={currentUser}
+                            fetchPraise={fetchPraises}
+                        />
+                    )}
                 </div>
             </div>    
 

@@ -1,3 +1,4 @@
+import { th } from "date-fns/locale";
 import api from "./axiosInstance";
 
 
@@ -73,3 +74,50 @@ export const deleteEmojiReaction = async (praiseId, emojiId) => {
         throw err;
     }
 };
+
+// 칭찬 상세조회
+export const getPraiseDetail = async (praiseId) => {
+    try{
+        const response = await api.get(`/api/v1/praises/${praiseId}`);
+        return response.data.data;
+    } catch (error){
+        console.error("칭찬 상세 조회 실패:", error);
+        throw error;
+    }
+};
+
+// 댓글 작성
+export const postComment = async (praiseId, content) => {
+    try{
+        const response = await api.post(`/api/v1/praises/${praiseId}/comments`, {
+            content: content
+        });
+        return response.data.data;
+    } catch (error){
+        console.error("댓글 작성 실패:", error);
+        throw error;
+    }
+};
+
+// 댓글에 반응 작성
+export const addCommentEmojiReaction = async (praiseId, commentId, emoji) => {
+    try{
+        const response = await api.post(`/api/v1/praises/${praiseId}/comments/${commentId}/emojis`, {
+            emoji,
+        });
+        return response.data.data;
+    } catch(error){
+        console.error("댓글 이모지 반응 등록 실패:", error);
+        throw error;
+    }
+};
+
+// 댓글에 반응 삭제
+export const deleteCommentEmojiReaction = async (praiseId,commentId,emojiId) => {
+    try{
+        await api.delete(`/api/v1/praises/${praiseId}/comments/${commentId}/emojis/${emojiId}`);
+    } catch (error){
+        console.error("댓글 이모지 반응 삭제 실패:",error);
+        throw error;
+    }
+}
