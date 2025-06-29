@@ -57,12 +57,6 @@
   white-space: nowrap;
 }
 
-.profileImage {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  object-fit: cover;
-}
 
 .receiverName {
   font-size: 14px;

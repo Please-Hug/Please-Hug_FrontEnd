@@ -118,6 +118,6 @@ export const deleteCommentEmojiReaction = async (praiseId,commentId,emojiId) => 
         await api.delete(`/api/v1/praises/${praiseId}/comments/${commentId}/emojis/${emojiId}`);
     } catch (error){
         console.error("댓글 이모지 반응 삭제 실패:",error);
-        throw err;
+        throw error;
     }
 }
