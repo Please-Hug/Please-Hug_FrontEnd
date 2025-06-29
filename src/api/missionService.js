@@ -96,3 +96,13 @@ export const changeChallengeState = async (challengeId, state) => {
     throw error;
   }
 };
+
+export const getMissionDetail = async (missionId) => {
+  try {
+    const response = await api.get(`/api/v1/missions/${missionId}`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 상세 정보 가져오기 실패:", error);
+    throw error;
+  }
+};
