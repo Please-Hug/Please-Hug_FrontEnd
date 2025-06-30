@@ -1,0 +1,179 @@
+/*
+    GPT로 작성된 코드입니다.
+    최고임 굿
+   ===========================
+   COLOR & TYPOGRAPHY SYSTEM
+   =========================== */
+:root {
+  /* brand palette */
+  --clr-primary: #4f46e5; /* main indigo */
+  --clr-primary-hover: #4338ca;
+  --clr-primary-active: #3730a3;
+
+  /* neutrals */
+  --clr-bg: #ffffff;
+  --clr-surface: #f9fafb;
+  --clr-border: #e5e7eb;
+  --clr-text: #111827;
+  --clr-muted: #6b7280;
+
+  /* shadow */
+  --elevation-1: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-bg: #0e0f11;
+    --clr-surface: #1b1c1f;
+    --clr-border: #27272a;
+    --clr-text: #f3f4f6;
+    --clr-muted: #9ca3af;
+    --elevation-1: 0 4px 12px rgba(0, 0, 0, 0.55);
+  }
+}
+
+/* ===========================
+   MODAL WRAPPER
+   =========================== */
+.missionFeedbackModal {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* 요소 간 간격 */
+  width: 480px;
+  max-width: 90vw; /* 작은 화면 대응 */
+  background: var(--clr-surface);
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: var(--elevation-1);
+  box-sizing: border-box;
+  color: var(--clr-text);
+  height: 100%;
+}
+
+/* ===========================
+   HEADER & BODY COPY
+   =========================== */
+.missionFeedbackContent h3 {
+  margin: 0 0 6px 0;
+  font-size: 1.25rem; /* 20px */
+  font-weight: 700;
+}
+
+.missionFeedbackContent p {
+  margin: 0 0 14px 0;
+  color: var(--clr-muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+/* ===========================
+   TEXTAREA
+   =========================== */
+.missionFeedbackTextarea {
+  width: 100%;
+  min-height: 140px;
+  resize: vertical;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  color: var(--clr-text);
+  background: var(--clr-bg);
+  border: 1px solid var(--clr-border);
+  border-radius: 8px;
+  line-height: 1.5;
+  transition: border-color 0.15s;
+}
+
+.missionFeedbackTextarea::placeholder {
+  color: var(--clr-muted);
+}
+
+.missionFeedbackTextarea:focus {
+  outline: none;
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--clr-primary) 50%, transparent);
+}
+
+/* ===========================
+   FILE INPUT
+   =========================== */
+.missionFeedbackFileInputContainer {
+  position: relative;
+}
+
+/* 실제 input 가리기 */
+.missionFeedbackFileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* 커스텀 라벨처럼 보이게 */
+.missionFeedbackFileInputContainer::before {
+  content: "파일 선택";
+  display: inline-block;
+  padding: 9px 16px;
+  background: var(--clr-bg);
+  border: 1px solid var(--clr-border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.missionFeedbackFileInputContainer:hover::before {
+  background: color-mix(in srgb, var(--clr-border) 30%, var(--clr-bg));
+}
+
+.missionFeedbackFileInputContainer:active::before {
+  background: color-mix(in srgb, var(--clr-border) 50%, var(--clr-bg));
+}
+
+/* ===========================
+   SUBMIT BUTTON
+   =========================== */
+.missionFeedbackButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.missionFeedbackSubmitButton {
+  appearance: none;
+  border: none;
+  background: var(--clr-primary);
+  color: #fff;
+  padding: 10px 22px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.05s;
+}
+
+.missionFeedbackSubmitButton:hover {
+  background: var(--clr-primary-hover);
+}
+
+.missionFeedbackSubmitButton:active {
+  background: var(--clr-primary-active);
+  transform: translateY(1px);
+}
+
+.missionFeedbackSubmitButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ===========================
+   SMALL-SCREEN TWEAKS
+   =========================== */
+@media (max-width: 480px) {
+  .missionFeedbackModal {
+    padding: 20px 22px;
+  }
+  .missionFeedbackTextarea {
+    min-height: 120px;
+  }
+}

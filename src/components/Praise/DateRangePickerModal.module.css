@@ -1,0 +1,100 @@
+/* DateRangePickerModal.module.css - 레이아웃 재구성 */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 24px 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  width: fit-content;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dateInputs {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.dateInputs input {
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  width: 160px;
+  text-align: center;
+}
+
+.body {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+
+/* 왼쪽 퀵 버튼 */
+.quickMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 120px;
+  border-right: 1px solid #e0e0e0;
+  padding-right: 16px;
+}
+
+.quickMenu button:hover {
+  background-color: #e0e0e0;
+}
+
+.calendarSection {
+  flex-grow: 1;
+  padding-left: 8px;
+  max-width: 320px; 
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.cancelBtn {
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  color: #333;
+}
+
+.applyBtn {
+  background-color: #4e6ef2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 500;
+}
+

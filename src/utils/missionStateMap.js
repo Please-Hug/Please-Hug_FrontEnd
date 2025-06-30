@@ -1,4 +1,4 @@
-const missionStatusMap = {
+const missionStateMap = {
   NOT_STARTED: "시작전",
   IN_PROGRESS: "진행중",
   ABORTED: "중단됨",
@@ -8,4 +8,4 @@ const missionStatusMap = {
   REWARD_RECEIVED: "보상 수령 완료",
 };
 
-export default missionStatusMap;
+export default missionStateMap;

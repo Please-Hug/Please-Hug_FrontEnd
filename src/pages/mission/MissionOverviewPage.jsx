@@ -9,6 +9,8 @@ import {
 } from "../../api/missionService";
 import SideModal from "../../components/common/SideModal/SideModal";
 import MissionDetailCard from "../../components/Mission/MissionDetailCard";
+import TabComponent from "../../components/common/TabComponent/TabComponent";
+import useBreadcrumbStore from "../../stores/breadcrumbStore";
 
 function MissionOverviewPage() {
   const [missionGroups, setMissionGroups] = useState([]);
@@ -20,12 +22,23 @@ function MissionOverviewPage() {
   const [isSideModalOpen, setIsSideModalOpen] = useState(false);
   const [activeMission, setActiveMission] = useState(null);
   const sideModalWidth = 800;
+  const { setBreadcrumbItems } = useBreadcrumbStore();
+  useEffect(() => {
+    setBreadcrumbItems([{ label: "미션", path: "/mission" }]);
+  }, [setBreadcrumbItems]);
 
   useEffect(() => {
     const fetchMissionGroups = async () => {
       try {
         const groups = await getMyMissionGroups();
-        setMissionGroups(groups.data);
+        const newGroups = [];
+        groups.data.forEach((group) => {
+          newGroups.push({
+            ...group,
+            name: group.missionGroup.name,
+          });
+        });
+        setMissionGroups(newGroups);
       } catch (error) {
         console.error("미션 그룹을 가져오는 데 실패했습니다:", error);
       }
@@ -118,23 +131,12 @@ function MissionOverviewPage() {
   return (
     <div>
       <h2>미션</h2>
-      <ul className={styles.missionTab}>
-        {/* MissionTab */}
-        {missionGroups.map((group) => (
-          <li
-            key={group.missionGroup.id}
-            className={
-              group.missionGroup.id === activeGroup.id ? styles.active : ""
-            }
-            onClick={() => {
-              setActiveGroup(group.missionGroup);
-            }}
-          >
-            {group.missionGroup.name}
-          </li>
-        ))}
-        <li>&nbsp;</li>
-      </ul>
+      <TabComponent
+        tabs={missionGroups}
+        onTabChange={(item) => {
+          setActiveGroup(item.missionGroup);
+        }}
+      />
       <div className={styles.missionTabPage}>
         <ul className={styles.missionLevel}>
           {missionLevels.map((level, index) => (

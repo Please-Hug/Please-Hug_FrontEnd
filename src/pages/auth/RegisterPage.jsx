@@ -3,6 +3,7 @@ import styles from "./Registerpage.module.scss";
 import { FaEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import BASE_URL from "../../api/baseUrl";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -52,16 +53,16 @@ function RegisterPage() {
 
     try {
       const response = await axios.post(
-          "http://localhost:8080/api/register",
-          {
-            username: form.username.trim(),
-            password: form.password,
-            name: form.name.trim(),
-            phoneNumber: form.phoneNumber,
-          },
-          {
-            withCredentials: true,
-          }
+        BASE_URL + "/api/register",
+        {
+          username: form.username.trim(),
+          password: form.password,
+          name: form.name.trim(),
+          phoneNumber: form.phoneNumber,
+        },
+        {
+          withCredentials: true,
+        }
       );
 
       const { accessToken, refreshToken } = response.data.data;
@@ -72,83 +73,81 @@ function RegisterPage() {
       navigate("/");
     } catch (err) {
       console.error("회원가입 오류:", err);
-      alert(
-          err.response?.data?.message || "회원가입 중 오류가 발생했습니다."
-      );
+      alert(err.response?.data?.message || "회원가입 중 오류가 발생했습니다.");
     }
   };
 
   return (
-      <div>
-        <form className={styles.registerForm} onSubmit={handleSubmit}>
-          <div className={styles.inputGroup}>
-            <input
-                type="text"
-                name="username"
-                placeholder="이메일 또는 아이디"
-                value={form.username}
-                onChange={handleChange}
-                required
-            />
-          </div>
+    <div>
+      <form className={styles.registerForm} onSubmit={handleSubmit}>
+        <div className={styles.inputGroup}>
+          <input
+            type="text"
+            name="username"
+            placeholder="이메일 또는 아이디"
+            value={form.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-          <div className={styles.inputGroup}>
-            <input
-                type="password"
-                name="password"
-                placeholder="비밀번호"
-                value={form.password}
-                onChange={handleChange}
-                required
-            />
-            <FaEyeSlash className={styles.inputIcon} />
-          </div>
+        <div className={styles.inputGroup}>
+          <input
+            type="password"
+            name="password"
+            placeholder="비밀번호"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+          <FaEyeSlash className={styles.inputIcon} />
+        </div>
 
-          <div className={styles.inputGroup}>
-            <input
-                type="password"
-                name="confirmPassword"
-                placeholder="비밀번호 확인"
-                value={form.confirmPassword}
-                onChange={handleChange}
-                required
-            />
-            <FaEyeSlash className={styles.inputIcon} />
-          </div>
+        <div className={styles.inputGroup}>
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="비밀번호 확인"
+            value={form.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+          <FaEyeSlash className={styles.inputIcon} />
+        </div>
 
-          <div className={styles.inputGroup}>
-            <input
-                type="text"
-                name="name"
-                placeholder="이름 (2-32자)"
-                value={form.name}
-                onChange={handleChange}
-                required
-            />
-          </div>
+        <div className={styles.inputGroup}>
+          <input
+            type="text"
+            name="name"
+            placeholder="이름 (2-32자)"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-          <div className={styles.inputGroup}>
-            <input
-                type="text"
-                name="phoneNumber"
-                placeholder="휴대폰 번호 (010-1234-5678)"
-                value={form.phoneNumber}
-                onChange={handleChange}
-                required
-            />
-          </div>
+        <div className={styles.inputGroup}>
+          <input
+            type="text"
+            name="phoneNumber"
+            placeholder="휴대폰 번호 (010-1234-5678)"
+            value={form.phoneNumber}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-          <div>
-            <button type="submit">회원가입</button>
-          </div>
+        <div>
+          <button type="submit">회원가입</button>
+        </div>
 
-          <div className={styles.footer}>
-            <div className={styles.areYouUser}>
-              이미 계정이 있으세요? <Link to="/login">로그인</Link>
-            </div>
+        <div className={styles.footer}>
+          <div className={styles.areYouUser}>
+            이미 계정이 있으세요? <Link to="/login">로그인</Link>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
+    </div>
   );
 }
 

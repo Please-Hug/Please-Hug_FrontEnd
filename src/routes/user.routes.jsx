@@ -3,15 +3,22 @@ import MainLayout from "../layouts/MainLayout";
 import DashboardPage from "../pages/user/DashboardPage";
 import MissionOverviewPage from "../pages/mission/MissionOverviewPage";
 import QuestPage from "../pages/Quest/QuestPage";
-import LogoutPage from "../pages/user/LogoutPage";
-import MyInfoPage from "../pages/user/MyInfoPage";
 
-// 배움일기 관련 페이지들
 import StudyDiaryListPage from "../pages/studyDiary/StudyDiaryListPage";
 import StudyDiaryWritePage from "../pages/studyDiary/StudyDiaryWritePage";
 import StudyDiaryViewPage from "../pages/studyDiary/StudyDiaryViewPage";
 import StudyDiaryEditPage from "../pages/studyDiary/StudyDiaryEditPage";
 import MyStudyDiaryActivity from "../pages/studyDiary/MyStudyDiaryActivity";
+
+import LogoutPage from "../pages/User/LogoutPage";
+import PraisePage from "../pages/praise/PraisePage";
+import MyInfoPage from "../pages/User/MyInfoPage";
+import ShopPage from "../pages/shop/ShopPage";
+import ShopHistoryPage from "../pages/Shop/ShopHistoryPage";
+import AdminShopPage from "../pages/Shop/AdminShopPage";
+import MissionGroupPage from "../pages/Mission/MissionGroupPage";
+import AdminQuestPage from "../pages/Quest/AdminQuestPage";
+import MissionDetailPage from "../pages/Mission/MissionDetailPage";
 
 export default [
   {
@@ -28,8 +35,17 @@ export default [
         // errorElement: <DashboardErrorPage />, // 에러 바운더리
       },
       {
-        path: "/missions",
-        element: <MissionOverviewPage />,
+        path: "/mission",
+        children: [
+          {
+            index: true,
+            element: <MissionOverviewPage />,
+          },
+          {
+            path: ":missionId",
+            element: <MissionDetailPage />,
+          },
+        ],
       },
       {
         path: "/quest",
@@ -40,8 +56,42 @@ export default [
         element: <LogoutPage />,
       },
       {
+        path: "/praises",
+        element: <PraisePage />,
+      },
+      // { path: "/profile", element: <ProfilePage /> },
+      {
         path: "/profile",
-        element: <MyInfoPage />
+        element: <MyInfoPage />,
+      },
+      {
+        path: "/shop",
+        element: <ShopPage />,
+      },
+      {
+        path: "/shopHistory",
+        element: <ShopHistoryPage />,
+      },
+      {
+        path: "/adminShop",
+        element: <AdminShopPage />,
+      },
+      {
+        path: "/mission-group/:missionGroupId",
+        children: [
+          {
+            path: "home",
+            element: <MissionGroupPage componentType="home" />,
+          },
+          {
+            path: "learning-plan",
+            element: <MissionGroupPage componentType="learning-plan" />,
+          },
+        ],
+      },
+      {
+        path: "/adminQuest",
+        element: <AdminQuestPage />,
       },
       // 배움일기 관련 라우트
       {

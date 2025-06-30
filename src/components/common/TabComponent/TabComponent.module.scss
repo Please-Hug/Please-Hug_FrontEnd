@@ -1,0 +1,33 @@
+ul.tabList {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 20px;
+
+  li {
+    text-align: center;
+    font-size: 16px;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: #e0e0e0 2px solid;
+
+    &.active {
+      color: #609ae9;
+      border-bottom-color: #609ae9;
+    }
+
+    &:hover {
+      border-bottom-color: #609ae9;
+    }
+
+    &:last-child {
+      flex: 1;
+      cursor: default;
+      &:hover {
+        border-bottom-color: #e0e0e0;
+      }
+    }
+  }
+}

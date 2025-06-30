@@ -43,3 +43,82 @@ export const challengeMission = async (missionId) => {
     throw error;
   }
 };
+
+export const getMissionTasks = async (missionId) => {
+  try {
+    const response = await api.get(`/api/v1/missions/${missionId}/tasks`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 작업 가져오기 실패:", error);
+    throw error;
+  }
+};
+
+export const getMissionMyTasks = async (missionId) => {
+  try {
+    const response = await api.get(`/api/v1/missions/${missionId}/my-tasks`);
+    return response.data;
+  } catch (error) {
+    console.error("내 미션 작업 가져오기 실패:", error);
+    throw error;
+  }
+};
+
+export const changeMissionTaskState = async (taskId, state) => {
+  try {
+    const response = await api.post(`/api/v1/mission-tasks/${taskId}/${state}`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 작업 상태 변경 실패:", error);
+    throw error;
+  }
+};
+
+export const getMissionGroupMembers = async (groupId) => {
+  try {
+    const response = await api.get(`/api/v1/mission-groups/${groupId}/users`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 그룹 멤버 가져오기 실패:", error);
+    throw error;
+  }
+};
+
+export const changeChallengeState = async (challengeId, state) => {
+  try {
+    const response = await api.patch(
+      `/api/v1/challenges/${challengeId}?newProgress=${state}`,
+      "no content"
+    );
+    return response.data;
+  } catch (error) {
+    console.error("챌린지 상태 변경 실패:", error);
+    throw error;
+  }
+};
+
+export const getMissionDetail = async (missionId) => {
+  try {
+    const response = await api.get(`/api/v1/missions/${missionId}`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 상세 정보 가져오기 실패:", error);
+    throw error;
+  }
+};
+
+export const submitChallengeSubmission = async (missionId, formData) => {
+  try {
+    const response = await api.post(
+      `/api/v1/challenges/${missionId}/submissions`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("챌린지 제출 실패:", error);
+    throw error;
+  }
+};
