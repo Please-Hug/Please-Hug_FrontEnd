@@ -9,6 +9,8 @@ import { getCurrentUser } from "../../api/userService";
 import PraiseDetailModal from "../../components/Praise/PraiseDetailModal";
 import { getPopularPraises } from "../../api/praiseService";
 import PopularPraiseList from "../../components/Praise/PopularPraiseList";
+import PraiseRatioChart from "../../components/Praise/PraiseRatioChart";
+import RecentPraiseSenders from "../../components/Praise/RecentPraiseSenders";
 
 
 function PraisePage() {
@@ -197,14 +199,14 @@ function PraisePage() {
                 </div>
 
                 <div className={styles.sidebarSection}>
-                    <h4>내가 받은 칭찬 비율</h4>
                     {/* 비율 막대 그래프 등 */}
-
+                    <PraiseRatioChart />
+                    
                 </div>
 
                 <div className={styles.sidebarSection}>
-                    <h4>최근 나에게 칭찬을 보낸 동료들</h4>
                     {/* 유저 리스트 */}
+                    <RecentPraiseSenders />
 
                 </div>
             </div>

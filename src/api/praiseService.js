@@ -132,4 +132,26 @@ export const deleteCommentEmojiReaction = async (praiseId,commentId,emojiChar) =
         console.error("댓글 이모지 반응 삭제 실패:",error);
         throw error;
     }
-}
+};
+
+// 내가 받은 칭찬 비율
+export const getPraiseRatio = async () => {
+    try{
+        const response = await api.get("/api/v1/praises/me/ratio");
+        return response.data.data;
+    } catch (error){
+        console.error("칭찬 비율 불러오기 실패", error);
+        throw error;
+    }
+};
+
+// 최근 칭찬 보낸 유저 조회 함수
+export const getRecentSenders = async () => {
+    try{
+        const response = await api.get("/api/v1/praises/recent-senders");
+        return response.data.data;
+    } catch (error) {
+        console.error("최근 칭찬 보낸 유저 조회 실패:", error);
+        throw error;
+    }
+};
