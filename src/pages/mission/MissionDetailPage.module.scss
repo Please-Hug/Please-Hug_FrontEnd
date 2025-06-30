@@ -86,6 +86,11 @@
   &:hover {
     background: linear-gradient(269deg, #6dc8d7 -23.17%, #2f6edc 97.23%);
   }
+
+  &:disabled {
+    background: #b0c4de;
+    cursor: not-allowed;
+  }
 }
 
 .missionDetailInfoList {

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./MissionDetailPage.module.scss";
 import { FaArrowLeft, FaCircleInfo } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { getChallenge } from "../../api/missionService";
+import { getChallenge, getReward } from "../../api/missionService";
 import MissionTask from "../../components/Mission/MissionTask";
 import SideModal from "../../components/common/SideModal/SideModal";
 import MissionFeedbackCard from "../../components/Mission/MissionFeedbackCard";
@@ -18,6 +18,17 @@ function MissionDetailPage() {
   const [isSideModalOpen, setIsSideModalOpen] = useState(false);
   const sideModalWidth = 480;
   const { setBreadcrumbItems } = useBreadcrumbStore();
+
+  const fetchMyMission = useCallback(async () => {
+    try {
+      const data = await getChallenge(missionId);
+      setMyMission(data.data);
+      setMissionDetail(data.data.mission);
+    } catch (error) {
+      console.error("내 미션 정보 가져오기 실패:", error);
+    }
+  }, [missionId]);
+
   useEffect(() => {
     setBreadcrumbItems([
       { label: "미션", path: "/mission" },
@@ -29,18 +40,8 @@ function MissionDetailPage() {
   }, [missionId, setBreadcrumbItems, missionDetail]);
 
   useEffect(() => {
-    const fetchMyMission = async () => {
-      try {
-        const data = await getChallenge(missionId);
-        console.log("내 미션 정보:", data.data);
-        setMyMission(data.data);
-        setMissionDetail(data.data.mission);
-      } catch (error) {
-        console.error("내 미션 정보 가져오기 실패:", error);
-      }
-    };
     fetchMyMission();
-  }, [missionId]);
+  }, [fetchMyMission]);
 
   const handleBackButtonClick = () => {
     navigate(-1);
@@ -82,12 +83,32 @@ function MissionDetailPage() {
             <span className={styles.missionDetailCompleteMessage}>
               다 하셨으면, 아래 버튼을 눌러주세요 <FaCircleInfo />
             </span>
-            <button
-              className={styles.missionDetailCompleteButton}
-              onClick={() => setIsSideModalOpen(true)}
-            >
-              끝내고 피드백하기
-            </button>
+            {myMission?.progress === "IN_FEEDBACK" ? (
+              <button className={styles.missionDetailCompleteButton} disabled>
+                피드백 중
+              </button>
+            ) : myMission?.progress === "FEEDBACK_COMPLETED" ? (
+              <button
+                className={styles.missionDetailCompleteButton}
+                onClick={async () => {
+                  await getReward(myMission.id);
+                  await fetchMyMission();
+                }}
+              >
+                리워드 받기
+              </button>
+            ) : myMission?.progress === "REWARD_RECEIVED" ? (
+              <button className={styles.missionDetailCompleteButton} disabled>
+                리워드 수령 완료
+              </button>
+            ) : (
+              <button
+                className={styles.missionDetailCompleteButton}
+                onClick={() => setIsSideModalOpen(true)}
+              >
+                끝내고 피드백하기
+              </button>
+            )}
           </div>
           <div className={styles.missionDetailCard}>
             <h4>기본 정보</h4>

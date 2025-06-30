@@ -132,3 +132,15 @@ export const getChallenge = async (missionId) => {
     throw error;
   }
 };
+
+export const getReward = async (userMissionId) => {
+  try {
+    const response = await api.post(
+      `/api/v1/submissions/${userMissionId}/reward`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("보상 받기 실패:", error);
+    throw error;
+  }
+};
