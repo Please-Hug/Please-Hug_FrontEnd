@@ -3,7 +3,7 @@ import { getMissionTasks, getMissionMyTasks } from "../../api/missionService";
 import styles from "./MissionTask.module.scss";
 import TaskItem from "./TaskItem";
 
-function MissionTask({ missionId, style }) {
+function MissionTask({ missionId, style, onTaskLoaded }) {
   const [tasks, setTasks] = useState([]);
   const [myTasks, setMyTasks] = useState({});
 
@@ -12,10 +12,13 @@ function MissionTask({ missionId, style }) {
       if (missionId) {
         const res = await getMissionTasks(missionId);
         setTasks(res.data);
+        if (onTaskLoaded) {
+          onTaskLoaded(res.data);
+        }
       }
     };
     fetchTasks();
-  }, [missionId]);
+  }, [missionId, onTaskLoaded]);
 
   const fetchMyTasks = useCallback(async () => {
     if (missionId) {
