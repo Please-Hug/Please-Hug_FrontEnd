@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./MissionFeedbackCard.module.scss";
 import { submitChallengeSubmission } from "../../api/missionService";
 
-function MissionFeedbackCard({ missionId }) {
+function MissionFeedbackCard({ myMission, onFeedbackSubmitted }) {
   const [comment, setComment] = useState("");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ function MissionFeedbackCard({ missionId }) {
 
     try {
       setLoading(true);
-      const res = await submitChallengeSubmission(missionId, formData);
+      const res = await submitChallengeSubmission(myMission.id, formData);
       alert(res.message);
       // 성공 시 UI 처리 (모달 닫기, 메시지 띄우기 등)
     } catch (err) {
@@ -34,6 +34,8 @@ function MissionFeedbackCard({ missionId }) {
     } finally {
       setLoading(false);
     }
+
+    onFeedbackSubmitted();
   };
 
   return (

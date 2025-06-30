@@ -144,3 +144,13 @@ export const getReward = async (userMissionId) => {
     throw error;
   }
 };
+
+export const getMissionFeedback = async (userMissionId) => {
+  try {
+    const response = await api.get(`/api/v1/submissions/${userMissionId}`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 피드백 가져오기 실패:", error);
+    throw error;
+  }
+};

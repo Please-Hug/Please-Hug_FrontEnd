@@ -142,7 +142,7 @@ function MissionBoard({ groupId }) {
                         {...prov.draggableProps}
                         {...prov.dragHandleProps}
                         onClick={() => {
-                          navigate(`/mission/${task.id}`);
+                          navigate(`/mission/${task.mission.id}`);
                         }}
                       >
                         {task.mission.name}

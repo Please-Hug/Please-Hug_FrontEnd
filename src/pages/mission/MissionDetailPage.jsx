@@ -3,7 +3,11 @@ import { useParams } from "react-router-dom";
 import styles from "./MissionDetailPage.module.scss";
 import { FaArrowLeft, FaCircleInfo } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { getChallenge, getReward } from "../../api/missionService";
+import {
+  getChallenge,
+  getReward,
+  getMissionFeedback,
+} from "../../api/missionService";
 import MissionTask from "../../components/Mission/MissionTask";
 import SideModal from "../../components/common/SideModal/SideModal";
 import MissionFeedbackCard from "../../components/Mission/MissionFeedbackCard";
@@ -11,10 +15,11 @@ import useBreadcrumbStore from "../../stores/breadcrumbStore";
 import missionStateMap from "../../utils/missionStateMap";
 
 function MissionDetailPage() {
-  const { missionId } = useParams();
   const navigate = useNavigate();
+  const { missionId } = useParams();
   const [missionDetail, setMissionDetail] = useState(null);
   const [myMission, setMyMission] = useState(null);
+  const [feedback, setFeedback] = useState(null);
   const [isSideModalOpen, setIsSideModalOpen] = useState(false);
   const sideModalWidth = 480;
   const { setBreadcrumbItems } = useBreadcrumbStore();
@@ -38,6 +43,26 @@ function MissionDetailPage() {
       },
     ]);
   }, [missionId, setBreadcrumbItems, missionDetail]);
+
+  useEffect(() => {
+    const fetchFeedback = async () => {
+      try {
+        if (!myMission) return;
+        if (
+          myMission.progress !== "FEEDBACK_COMPLETED" &&
+          myMission.progress !== "REWARD_RECEIVED"
+        )
+          return; // 피드백이 완료되지 않은 경우
+
+        const data = await getMissionFeedback(myMission?.id);
+        console.log("피드백 데이터:", data);
+        setFeedback(data.data);
+      } catch (error) {
+        console.error("미션 피드백 가져오기 실패:", error);
+      }
+    };
+    fetchFeedback();
+  }, [myMission]);
 
   useEffect(() => {
     fetchMyMission();
@@ -70,6 +95,14 @@ function MissionDetailPage() {
               {missionDetail.description}
             </p>
           </div>
+          {feedback && (
+            <div className={styles.missionDetailCard}>
+              <h4>강사 피드백</h4>
+              <p className={styles.missionDetailDescription}>
+                {feedback.feedback || "아직 피드백이 없습니다."}
+              </p>
+            </div>
+          )}
           <div className={styles.missionDetailCard}>
             <h4>태스크</h4>
             <MissionTask
@@ -132,7 +165,13 @@ function MissionDetailPage() {
         onClose={() => setIsSideModalOpen(false)}
         width={sideModalWidth}
       >
-        <MissionFeedbackCard missionId={missionId} />
+        <MissionFeedbackCard
+          myMission={myMission}
+          onFeedbackSubmitted={async () => {
+            setIsSideModalOpen(false);
+            await fetchMyMission();
+          }}
+        />
       </SideModal>
     </div>
   );
