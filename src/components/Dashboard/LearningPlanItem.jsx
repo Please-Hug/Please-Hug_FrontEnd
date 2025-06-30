@@ -6,7 +6,7 @@ import BASE_URL from "../../api/baseUrl";
 
 function LearningPlanItem({ title, missionId, manager, statusLabel }) {
   const [isTaskOpen, setIsTaskOpen] = useState(false);
-  const [tasks, setTasks] = useState([]);
+  const [taskCount, setTaskCount] = useState(0);
 
   return (
     <>
@@ -15,7 +15,7 @@ function LearningPlanItem({ title, missionId, manager, statusLabel }) {
         <span>{title}</span>
         <div>
           <span>
-            <FaCodeBranch /> <span>{tasks}</span>
+            <FaCodeBranch /> <span>{taskCount}</span>
           </span>
         </div>
         <div>
@@ -31,9 +31,8 @@ function LearningPlanItem({ title, missionId, manager, statusLabel }) {
         <MissionTask
           missionId={missionId}
           style={{ width: "100%", border: "none", padding: "0" }}
-          onTaskLoaded={async (tasks) => {
-            // setTasks(tasks);
-            setTasks(tasks);
+          onTaskLoaded={async (taskCount) => {
+            setTaskCount(taskCount);
           }}
         />
       </li>
