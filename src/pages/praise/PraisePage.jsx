@@ -7,6 +7,8 @@ import PraiseCard from "../../components/Praise/PraiseCard";
 import { getPraises } from "../../api/praiseService";
 import { getCurrentUser } from "../../api/userService";
 import PraiseDetailModal from "../../components/Praise/PraiseDetailModal";
+import { getPopularPraises } from "../../api/praiseService";
+import PopularPraiseList from "../../components/Praise/PopularPraiseList";
 
 
 function PraisePage() {
@@ -30,6 +32,8 @@ function PraisePage() {
 
     // 칭찬 상세조회
     const [ selectedPraiseId, setSelectedPraiseId ] = useState(null);
+
+    const[ popularList, setPopularList ] = useState([]);
 
 
 
@@ -78,6 +82,21 @@ function PraisePage() {
         };
         fetchCurrentUser();
     }, []);
+
+    useEffect(() => {
+
+        if(!startDate || !endDate) return;
+
+        const fetchPopular = async () => {
+            try {
+                const result = await getPopularPraises(startDate, endDate);
+                setPopularList(result);
+            } catch (error) {
+                console.error("인기 칭찬 글 불러오기 실패:", error);
+            }
+        };
+        fetchPopular();
+    }, [startDate, endDate]);
 
   return (
 
@@ -169,8 +188,11 @@ function PraisePage() {
 
                 
                 <div className={styles.sidebarSection}>
-                    <h4>반응 좋은 칭찬 글</h4>
                     {/* 인기 칭찬 카드 */}
+                    <PopularPraiseList 
+                        praises={popularList} 
+                        onCardClick={(id) => setSelectedPraiseId(id)}
+                    />
 
                 </div>
 

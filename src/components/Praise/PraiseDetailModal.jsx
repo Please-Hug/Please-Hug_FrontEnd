@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./PraiseDetailModal.module.css";
 import { getPraiseDetail } from "../../api/praiseService";
 import { postComment } from "../../api/praiseService";
-import { addEmojiReaction, deleteEmojiReaction, addCommentEmojiReaction, deleteCommentEmojiReaction } from "../../api/praiseService";
+import { addEmojiReaction, deleteEmojiReaction, addCommentEmojiReaction, deleteCommentEmojiReaction, deleteComment } from "../../api/praiseService";
 import { jwtDecode } from "jwt-decode";
 
 
@@ -25,6 +25,9 @@ function PraiseDetailModal({ isOpen, onClose, praiseId, currentUser, fetchPraise
                 comments: [...prev.comments, newComment],
             }));
             setCommentInput("");
+
+            const updated = await getPraiseDetail(praiseId);
+            setDetail(updated);
         }catch(error){
             alert("댓글 작성 중 오류가 발생했습니다.");
         }
@@ -98,7 +101,7 @@ function PraiseDetailModal({ isOpen, onClose, praiseId, currentUser, fetchPraise
 
         try {
             if (matched?.id) {
-                await deleteCommentEmojiReaction(praiseId, commentId, matched.id);
+                await deleteCommentEmojiReaction(praiseId, commentId, emojiChar);
                 console.log(`댓글 ${commentId} - ${emojiChar} 반응 삭제`);
             } else {
                 await addCommentEmojiReaction(praiseId, commentId, emojiChar);
@@ -112,6 +115,16 @@ function PraiseDetailModal({ isOpen, onClose, praiseId, currentUser, fetchPraise
         }
     };
 
+    const handleDeleteComment = async (commentId) =>{
+        try{
+            await deleteComment(commentId);
+            const updated = await getPraiseDetail(praiseId);
+            setDetail(updated);
+        }catch(err){
+            console.error("댓글 삭제 실패:", err);
+        }
+    };
+
 
 
     useEffect(() => {
@@ -121,6 +134,10 @@ function PraiseDetailModal({ isOpen, onClose, praiseId, currentUser, fetchPraise
     }, [isOpen, praiseId]);
 
     if (!isOpen) return null;
+
+    useEffect(() => {
+        console.log(detail);
+    }, [detail]);
 
     return (
         <>
@@ -162,9 +179,9 @@ function PraiseDetailModal({ isOpen, onClose, praiseId, currentUser, fetchPraise
                         </div>
 
                         <div className={styles.emojiList}>
-                            {detail.emojiReactions.map((emojiObj) => (
+                            {detail.emojiReactions.map((emojiObj,index) => (
                                 <span
-                                    key={emojiObj.emoji}
+                                    key={`${emojiObj.emoji}-${emojiObj.count}-${index}`}
                                     className={styles.emoji}
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -245,6 +262,20 @@ function PraiseDetailModal({ isOpen, onClose, praiseId, currentUser, fetchPraise
                                                 </button>
                                             ))}
                                         </div>
+                                        
+                                        
+                                        {comment.commenterUsername === username && (
+                                            <div className={styles.commentDeleteWrapper}>
+                                                <button
+                                                    className={styles.deleteButton}
+                                                    onClick={() => handleDeleteComment(comment.id)}
+                                                >
+                                                    ✕
+                                                </button>
+                                            </div>
+                                        )}
+                                        
+
                                     </div>
                                 </div>
 
