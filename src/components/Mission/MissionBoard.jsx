@@ -52,7 +52,16 @@ function MissionBoard({ groupId }) {
   const onDragEnd = ({ source, destination }) => {
     //draggableId
     if (!destination) return; // 밖으로 놓기 → 무시
-    if (destination.droppableId === "FEEDBACK_DONE") return;
+    if (
+      destination.droppableId === "FEEDBACK_DONE" ||
+      destination.droppableId === "IN_FEEDBACK"
+    )
+      return;
+    if (
+      source.droppableId === "FEEDBACK_DONE" ||
+      source.droppableId === "IN_FEEDBACK"
+    )
+      return;
     if (
       source.droppableId === destination.droppableId &&
       source.index === destination.index

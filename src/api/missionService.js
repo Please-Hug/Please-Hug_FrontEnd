@@ -122,3 +122,13 @@ export const submitChallengeSubmission = async (missionId, formData) => {
     throw error;
   }
 };
+
+export const getChallenge = async (missionId) => {
+  try {
+    const response = await api.get(`/api/v1/missions/${missionId}/challenges`);
+    return response.data;
+  } catch (error) {
+    console.error("챌린지 정보 가져오기 실패:", error);
+    throw error;
+  }
+};

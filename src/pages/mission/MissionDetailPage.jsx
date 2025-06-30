@@ -3,16 +3,18 @@ import { useParams } from "react-router-dom";
 import styles from "./MissionDetailPage.module.scss";
 import { FaArrowLeft, FaCircleInfo } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { getMissionDetail } from "../../api/missionService";
+import { getChallenge } from "../../api/missionService";
 import MissionTask from "../../components/Mission/MissionTask";
 import SideModal from "../../components/common/SideModal/SideModal";
 import MissionFeedbackCard from "../../components/Mission/MissionFeedbackCard";
 import useBreadcrumbStore from "../../stores/breadcrumbStore";
+import missionStateMap from "../../utils/missionStateMap";
 
 function MissionDetailPage() {
   const { missionId } = useParams();
   const navigate = useNavigate();
   const [missionDetail, setMissionDetail] = useState(null);
+  const [myMission, setMyMission] = useState(null);
   const [isSideModalOpen, setIsSideModalOpen] = useState(false);
   const sideModalWidth = 480;
   const { setBreadcrumbItems } = useBreadcrumbStore();
@@ -27,17 +29,17 @@ function MissionDetailPage() {
   }, [missionId, setBreadcrumbItems, missionDetail]);
 
   useEffect(() => {
-    const fetchMissionDetail = async () => {
+    const fetchMyMission = async () => {
       try {
-        const data = await getMissionDetail(missionId);
-        console.log("미션 상세 정보:", data);
-        setMissionDetail(data.data);
+        const data = await getChallenge(missionId);
+        console.log("내 미션 정보:", data.data);
+        setMyMission(data.data);
+        setMissionDetail(data.data.mission);
       } catch (error) {
-        console.error("미션 상세 정보 가져오기 실패:", error);
+        console.error("내 미션 정보 가져오기 실패:", error);
       }
     };
-
-    fetchMissionDetail();
+    fetchMyMission();
   }, [missionId]);
 
   const handleBackButtonClick = () => {
@@ -92,7 +94,9 @@ function MissionDetailPage() {
             <ul className={styles.missionDetailInfoList}>
               <li>
                 <span className={styles.missionDetailLabel}>진행 상태</span>
-                <span className={styles.missionDetailValue}>진행중</span>
+                <span className={styles.missionDetailValue}>
+                  {missionStateMap[myMission.progress]}
+                </span>
               </li>
               <li>
                 <span className={styles.missionDetailLabel}>리더</span>
