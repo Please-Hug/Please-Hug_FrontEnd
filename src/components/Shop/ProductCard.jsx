@@ -3,10 +3,12 @@ import { jwtDecode } from "jwt-decode";
 import useUserStore from "../../stores/userStore";
 import apiInstance from "../../api/axiosInstance.jsx";
 import styles from "./ProductCard.module.scss";
+import GiftModal from "./GiftModal.jsx";
 
 const ProductCard = ({ product, onPurchaseSuccess }) => {
     const { id, name, brand, imageUrl, available, price, quantity } = product;
     const [imageSrc, setImageSrc] = useState("/default-product.png");
+    const [showGiftModal, setShowGiftModal] = useState(false);
 
     const userInfo = useUserStore((state) => state.userInfo);
     const userPoint = userInfo?.point ?? 0;
@@ -67,7 +69,7 @@ const ProductCard = ({ product, onPurchaseSuccess }) => {
 
                 {isAffordable && available ? (
                     <div className={styles.buttonContainer}>
-                        <button onClick={() => alert("선물 기능은 유지")} className={styles.button}>
+                        <button onClick={() => setShowGiftModal(true)} className={styles.button}>
                             🎁 선물
                         </button>
                         <button onClick={handlePurchase} className={styles.button}>
@@ -80,6 +82,17 @@ const ProductCard = ({ product, onPurchaseSuccess }) => {
                     </div>
                 )}
             </div>
+
+            {showGiftModal && (
+                <GiftModal
+                    product={product}
+                    onClose={() => setShowGiftModal(false)}
+                    onSuccess={() => {
+                        setShowGiftModal(false);
+                        if (onPurchaseSuccess) onPurchaseSuccess();
+                    }}
+                />
+            )}
         </div>
     );
 };
