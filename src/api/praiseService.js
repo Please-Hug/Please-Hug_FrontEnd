@@ -99,6 +99,18 @@ export const postComment = async (praiseId, content) => {
     }
 };
 
+// 댓글 삭제
+export const deleteComment = async (commentId) => {
+    try{
+        const response = await api.delete(`/api/v1/praises/comments/${commentId}`);
+        return response.data;
+    } catch(error){
+        console.error("댓글 삭제 실패", error);
+        throw error;
+    }
+};
+
+
 // 댓글에 반응 작성
 export const addCommentEmojiReaction = async (praiseId, commentId, emoji) => {
     try{
@@ -113,9 +125,9 @@ export const addCommentEmojiReaction = async (praiseId, commentId, emoji) => {
 };
 
 // 댓글에 반응 삭제
-export const deleteCommentEmojiReaction = async (praiseId,commentId,emojiId) => {
+export const deleteCommentEmojiReaction = async (praiseId,commentId,emojiChar) => {
     try{
-        await api.delete(`/api/v1/praises/${praiseId}/comments/${commentId}/emojis/${emojiId}`);
+        await api.delete(`/api/v1/praises/${praiseId}/comments/${commentId}/emojis/${emojiChar}`);
     } catch (error){
         console.error("댓글 이모지 반응 삭제 실패:",error);
         throw error;

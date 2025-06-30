@@ -173,10 +173,10 @@
 
 .commentRight {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* ← 이거 추가 */
   align-items: flex-end;
-  gap: 8px;
-  min-width: 120px;
+  gap: 6px;
+  margin-top: 4px;
 }
 
 /* 작성자 이름과 프로필을 나란히 정렬 */
@@ -292,5 +292,26 @@
   border-radius: 12px;
   font-size: 13px;
   cursor: default;
+}
+
+.commentDeleteWrapper {
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+.deleteButton:hover {
+  color: #d9534f; /* 붉은 강조 */
 }
 
