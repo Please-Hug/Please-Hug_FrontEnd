@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getStudyDiaries, searchStudyDiaries } from "../../api/studyDiaryService";
+import { getStudyDiaries, searchStudyDiaries, getTodayPopularStudyDiaries } from "../../api/studyDiaryService";
 import styles from "./StudyDiaryListPage.module.scss";
 
 function StudyDiaryListPage() {
@@ -27,7 +27,16 @@ function StudyDiaryListPage() {
   const fetchDiaries = async () => {
     try {
       setLoading(true);
-      const response = await getStudyDiaries(currentPage, 10, "createdAt");
+      let response;
+      
+      if (sortType === "인기") {
+        // 인기 정렬일 때는 오늘 인기 배움일기 API 호출
+        response = await getTodayPopularStudyDiaries(currentPage, 10, "likeCount", "DESC");
+      } else {
+        // 최신 정렬일 때는 기존 API 호출
+        response = await getStudyDiaries(currentPage, 10, "createdAt");
+      }
+      
       console.log("in fetchDiaries", response);
       if (response.data) {
         setDiaries(response.data.content || []);

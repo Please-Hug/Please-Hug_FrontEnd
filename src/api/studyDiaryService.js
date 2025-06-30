@@ -76,6 +76,17 @@ export const searchStudyDiaries = async (keyword, page = 0, size = 10) => {
   }
 };
 
+// 오늘 하루 인기 배움일기 조회
+export const getTodayPopularStudyDiaries = async (page = 0, size = 10, sort = "likeCount", direction = "DESC") => {
+  try {
+    const response = await api.get(`/api/v1/studydiaries/today/popular?page=${page}&size=${size}&sort=${sort}&direction=${direction}`);
+    return response.data;
+  } catch (error) {
+    console.error("오늘 인기 배움일기 조회 실패:", error);
+    throw error;
+  }
+};
+
 // 댓글 등록
 export const createComment = async (studyDiaryId, content) => {
   try {
