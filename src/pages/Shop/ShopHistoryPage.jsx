@@ -21,7 +21,28 @@ function ShopHistoryPage() {
             }
 
             const response = await apiInstance.get(url);
-            setOrders(response.data?.data || []);
+            const orders = response.data?.data || [];
+
+            const processedOrders = await Promise.all(
+                orders.map(async (order) => {
+                    if (!order.imageUrl) {
+                        return { ...order, imageSrc: "/default-product.png" };
+                    }
+
+                    try {
+                        const res = await apiInstance.get(order.imageUrl, {
+                            responseType: "blob",
+                        });
+                        const objectUrl = URL.createObjectURL(res.data);
+                        return { ...order, imageSrc: objectUrl };
+                    } catch (err) {
+                        console.error("이미지 로드 실패:", err);
+                        return { ...order, imageSrc: "/default-product.png" };
+                    }
+                })
+            );
+
+            setOrders(processedOrders);
         } catch (err) {
             console.error("구매 내역 요청 실패:", err);
             setError("구매 내역을 불러오지 못했습니다.");
@@ -84,38 +105,38 @@ function ShopHistoryPage() {
             ) : (
                 <table className={styles.table}>
                     <thead>
-                    <tr>
-                        <th>이미지</th>
-                        <th>브랜드</th>
-                        <th>상품명</th>
-                        <th>포인트</th>
-                        <th>수령자 번호</th>
-                        <th>주문 시간</th>
-                        <th>재발송</th>
-                    </tr>
+                        <tr>
+                            <th>이미지</th>
+                            <th>브랜드</th>
+                            <th>상품명</th>
+                            <th>포인트</th>
+                            <th>수령자 번호</th>
+                            <th>주문 시간</th>
+                            <th>재발송</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {orders.map((order, idx) => (
-                        <tr key={idx}>
-                            <td>
-                                <img
-                                    src={order.imageUrl ? `${order.imageUrl}` : "/default-product.png"}
-                                    alt={order.name}
-                                    className={styles.productImage}
-                                />
-                            </td>
-                            <td>{order.brand}</td>
-                            <td>{order.name}</td>
-                            <td>{order.price}</td>
-                            <td>{order.receiverPhoneNumber}</td>
-                            <td>{new Date(order.orderTime).toLocaleString("ko-KR")}</td>
-                            <td>
-                                <button className={styles.button} onClick={() => handleResend(order)}>
-                                    📦 재발송
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                        {orders.map((order, idx) => (
+                            <tr key={idx}>
+                                <td>
+                                    <img
+                                        src={order.imageSrc}
+                                        alt={order.name}
+                                        className={styles.productImage}
+                                    />
+                                </td>
+                                <td>{order.brand}</td>
+                                <td>{order.name}</td>
+                                <td>{order.price}</td>
+                                <td>{order.receiverPhoneNumber}</td>
+                                <td>{new Date(order.orderTime).toLocaleString("ko-KR")}</td>
+                                <td>
+                                    <button className={styles.button} onClick={() => handleResend(order)}>
+                                        📦 재발송
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             )}
