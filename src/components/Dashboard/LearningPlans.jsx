@@ -68,9 +68,9 @@ function LearningPlans() {
         </select>
       </div>
       <ul>
-        {challenges.map((challenge, index) => (
+        {challenges.map((challenge) => (
           <LearningPlanItem
-            key={index}
+            key={challenge.mission.id}
             title={challenge.mission.name}
             missionId={challenge.mission.id}
             manager={challenge.user}
