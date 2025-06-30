@@ -10,15 +10,15 @@ import StudyDiaryViewPage from "../pages/studyDiary/StudyDiaryViewPage";
 import StudyDiaryEditPage from "../pages/studyDiary/StudyDiaryEditPage";
 import MyStudyDiaryActivity from "../pages/studyDiary/MyStudyDiaryActivity";
 
-import LogoutPage from "../pages/User/LogoutPage";
+import LogoutPage from "../pages/user/LogoutPage";
 import PraisePage from "../pages/praise/PraisePage";
-import MyInfoPage from "../pages/User/MyInfoPage";
-import ShopPage from "../pages/shop/ShopPage";
+import MyInfoPage from "../pages/user/MyInfoPage";
+import ShopPage from "../pages/Shop/ShopPage";
 import ShopHistoryPage from "../pages/Shop/ShopHistoryPage";
 import AdminShopPage from "../pages/Shop/AdminShopPage";
-import MissionGroupPage from "../pages/Mission/MissionGroupPage";
+import MissionGroupPage from "../pages/mission/MissionGroupPage";
 import AdminQuestPage from "../pages/Quest/AdminQuestPage";
-import MissionDetailPage from "../pages/Mission/MissionDetailPage";
+import MissionDetailPage from "../pages/mission/MissionDetailPage";
 
 export default [
   {
