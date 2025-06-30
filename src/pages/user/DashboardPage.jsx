@@ -9,6 +9,9 @@ import DailyQuest from "../../components/Dashboard/DailyQuest";
 import AttendanceCheck from "../../components/Dashboard/AttendanceCheck";
 import UserProfile from "../../components/Dashboard/UserProfile";
 import RecentDiary from "../../components/Dashboard/RecentDiary";
+import BookmarkModal   from "../../components/Dashboard/BookmarkModal";
+import BookmarkList    from "../../components/Dashboard/BookmarkList";
+import useBookmarkModal from "../../hooks/useBookmarkModal";
 import useUserStore from "../../stores/userStore";
 import api from "../../api/axiosInstance";
 import useBreadcrumbStore from "../../stores/breadcrumbStore";
@@ -16,6 +19,9 @@ import useBreadcrumbStore from "../../stores/breadcrumbStore";
 function DashboardPage() {
   const userInfo = useUserStore((state) => state.userInfo);
   const { setBreadcrumbItems } = useBreadcrumbStore();
+  const { isModalOpen, openModal, closeModal, handleCreate } = useBookmarkModal(); // 북마크 모달 훅
+  console.log("💡 isModalOpen?", isModalOpen);
+
   useEffect(() => {
     if (userInfo) {
       setBreadcrumbItems([
@@ -45,6 +51,14 @@ function DashboardPage() {
         className={styles.dashboardGreeting}
       />
       <DashboardMenu />
+
+      {/* — 북마크 섹션 시작 — */}
+      <div className={styles.bookmarkSection}>
+        <button type="button" className={styles.bookmarkAddButton} onClick={openModal}>📌 북마크 추가</button>
+        <BookmarkList />
+      </div>
+      {/* — 북마크 섹션 끝 — */}
+      
       <div className={styles.dashboardContent}>
         <div className={styles.dashboardLeft}>
           <RecentLearning />
@@ -69,6 +83,14 @@ function DashboardPage() {
           <DailyQuest />
         </div>
       </div>
+
+      {/* — 북마크 추가 모달 — */}
+      <BookmarkModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onCreate={handleCreate}
+      />
+
     </div>
   );
 }
