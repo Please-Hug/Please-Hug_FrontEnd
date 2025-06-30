@@ -44,6 +44,8 @@
     margin: 0;
     display: flex;
     flex-direction: column;
+    max-height: 300px;
+    overflow-y: scroll;
 
     li {
       padding: 10px;
