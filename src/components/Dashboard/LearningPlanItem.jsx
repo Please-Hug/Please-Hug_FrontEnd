@@ -23,7 +23,11 @@ function LearningPlanItem({ title, missionId, manager, statusLabel }) {
         </div>
         <span>{statusLabel}</span>
         <img
-          src={BASE_URL + manager.profileImage || emptyUserProfile}
+          src={
+            manager.profileImage
+              ? BASE_URL + manager.profileImage
+              : emptyUserProfile
+          }
           alt={manager.name}
         />
       </li>
