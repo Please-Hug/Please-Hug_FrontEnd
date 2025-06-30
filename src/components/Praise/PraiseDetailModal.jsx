@@ -6,6 +6,8 @@ import { getPraiseDetail } from "../../api/praiseService";
 import { postComment } from "../../api/praiseService";
 import { addEmojiReaction, deleteEmojiReaction, addCommentEmojiReaction, deleteCommentEmojiReaction, deleteComment } from "../../api/praiseService";
 import { jwtDecode } from "jwt-decode";
+import BASE_URL from "../../api/baseUrl";
+import defaultImage from "../../assets/images/user/empty-user-profile.svg";
 
 
 function PraiseDetailModal({ isOpen, onClose, praiseId, currentUser, fetchPraises }) {
@@ -154,7 +156,7 @@ function PraiseDetailModal({ isOpen, onClose, praiseId, currentUser, fetchPraise
                         <div className={styles.receiversRow}>
                             {detail.receivers.map((r) => (
                                 <div key={r.id} className={styles.receiverItem}>
-                                    <img src={r.profileImage} alt="프로필" className={styles.profileImage} />
+                                    <img src={ r.profileImage ? BASE_URL + r.profileImage : defaultImage} alt="프로필" className={styles.profileImage} />
                                     <span className={styles.receiverName}>{r.name}</span>
                                 </div>
                             ))}
@@ -229,7 +231,7 @@ function PraiseDetailModal({ isOpen, onClose, praiseId, currentUser, fetchPraise
                                 <div key={comment.id} className={styles.commentItem}>
                                     <div className={styles.commentLeft}>
                                         <div className={styles.commentProfileWrapper}>
-                                            <img src={comment.commentProfile} alt="프로필" className={styles.profileImage} />
+                                            <img src={comment.commentProfile ? BASE_URL + comment.commentProfile : defaultImage} alt="프로필" className={styles.profileImage} />
                                             <div className={styles.commentMeta}>
                                                 <strong className={styles.commenterName}>{comment.commenterName}</strong>
                                                 <small className={styles.commentDate}>
