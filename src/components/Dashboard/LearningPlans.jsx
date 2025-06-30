@@ -44,10 +44,6 @@ function LearningPlans() {
     fetchMyChallenges();
   }, [missionGroups]);
 
-  useEffect(() => {
-    console.log("현재 도전 과제 목록:", challenges);
-  }, [challenges]);
-
   if (challenges.length === 0) {
     return (
       <div className={styles.learningPlans}>
@@ -72,9 +68,6 @@ function LearningPlans() {
         </select>
       </div>
       <ul>
-        {/* {plans.map((plan, index) => (
-          <LearningPlanItem key={index} {...plan} statusLabel="없음" />
-        ))} */}
         {challenges.map((challenge, index) => (
           <LearningPlanItem
             key={index}
