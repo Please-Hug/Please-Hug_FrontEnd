@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import styles from "./MissionBoard.module.scss";
 import { myChallenges, changeChallengeState } from "../../api/missionService";
+import { useNavigate } from "react-router-dom";
 
 /* 1. 컬럼 정의 */
 const COLUMNS = [
@@ -17,7 +18,13 @@ const COLUMNS = [
 function groupByState(list) {
   const grouped = {};
   COLUMNS.forEach((c) => (grouped[c.id] = []));
-  list.forEach((t) => grouped[t.progress].push(t));
+  list.forEach((t) =>
+    grouped[
+      t.progress
+        .replace("FEEDBACK_COMPLETED", "FEEDBACK_DONE")
+        .replace("REWARD_RECEIVED", "FEEDBACK_DONE")
+    ].push(t)
+  );
   return grouped;
 }
 
@@ -25,12 +32,12 @@ function MissionBoard({ groupId }) {
   const [missions, setMissions] = useState([]);
   const [columns, setColumns] = useState(groupByState([]));
   const pendingRequests = useRef(new Set());
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMissions = async () => {
       try {
         const response = await myChallenges(groupId);
-        console.log("Fetched missions:", response.data);
         const newMissions = response.data.map((mission) => ({
           ...mission,
           kId: "k" + mission.id,
@@ -52,7 +59,16 @@ function MissionBoard({ groupId }) {
   const onDragEnd = ({ source, destination }) => {
     //draggableId
     if (!destination) return; // 밖으로 놓기 → 무시
-    if (destination.droppableId === "FEEDBACK_DONE") return;
+    if (
+      destination.droppableId === "FEEDBACK_DONE" ||
+      destination.droppableId === "IN_FEEDBACK"
+    )
+      return;
+    if (
+      source.droppableId === "FEEDBACK_DONE" ||
+      source.droppableId === "IN_FEEDBACK"
+    )
+      return;
     if (
       source.droppableId === destination.droppableId &&
       source.index === destination.index
@@ -95,7 +111,6 @@ function MissionBoard({ groupId }) {
 
     try {
       await changeChallengeState(missionId, newState);
-      console.log(`미션 ${missionId} 상태 변경 완료: ${newState}`);
     } catch (error) {
       console.error("상태 변경 실패:", error);
     } finally {
@@ -126,6 +141,9 @@ function MissionBoard({ groupId }) {
                         ref={prov.innerRef}
                         {...prov.draggableProps}
                         {...prov.dragHandleProps}
+                        onClick={() => {
+                          navigate(`/mission/${task.mission.id}`);
+                        }}
                       >
                         {task.mission.name}
                       </div>

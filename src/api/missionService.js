@@ -122,3 +122,35 @@ export const submitChallengeSubmission = async (missionId, formData) => {
     throw error;
   }
 };
+
+export const getChallenge = async (missionId) => {
+  try {
+    const response = await api.get(`/api/v1/missions/${missionId}/challenges`);
+    return response.data;
+  } catch (error) {
+    console.error("챌린지 정보 가져오기 실패:", error);
+    throw error;
+  }
+};
+
+export const getReward = async (userMissionId) => {
+  try {
+    const response = await api.post(
+      `/api/v1/submissions/${userMissionId}/reward`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("보상 받기 실패:", error);
+    throw error;
+  }
+};
+
+export const getMissionFeedback = async (userMissionId) => {
+  try {
+    const response = await api.get(`/api/v1/submissions/${userMissionId}`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 피드백 가져오기 실패:", error);
+    throw error;
+  }
+};
