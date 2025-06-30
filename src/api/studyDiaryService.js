@@ -151,4 +151,15 @@ export const getMyStudyDiaries = async (page = 0, size = 10, sort = "createdAt",
     console.error("나의 글 목록 조회 실패:", error);
     throw error;
   }
+};
+
+// 최근 한달간 나의 배움일기 조회 (홈화면 조회용)
+export const getMyRecentStudyDiaries = async (page = 0, size = 20, sort = "createdAt,desc") => {
+  try {
+    const response = await api.get(`/api/v1/studydiaries/my/home?page=${page}&size=${size}&sort=${sort}`);
+    return response.data;
+  } catch (error) {
+    console.error("최근 한달간 배움일기 조회 실패:", error);
+    throw error;
+  }
 }; 
