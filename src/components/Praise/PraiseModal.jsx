@@ -5,6 +5,9 @@ import { searchUsers } from "../../api/userService";
 import { submitPraise } from "../../api/praiseService";
 import emptyUserProfile from "../../assets/images/user/empty-user-profile.svg";
 import BASE_URL from "../../api/baseUrl";
+import thanks from "../../assets/images/praise/thanks.png";
+import recognize from "../../assets/images/praise/recognize.png";
+import cheer from "../../assets/images/praise/cheer.png";
 
 function PraiseModal({ onClose }) {
   const [receiverInput, setReceiverInput] = useState("");
@@ -13,7 +16,7 @@ function PraiseModal({ onClose }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [praiseType, setPraiseType] = useState("THANKS");
   const [praiseContent, setPraiseContent] = useState("");
-  const [emojiImage, setEmojiImage] = useState("THANKS");
+  const [emojiImage, setEmojiImage] = useState(thanks);
   const [showReceiverAlert, setShowReceiverAlert] = useState(false);
   const [showContentAlert, setShowContentAlert] = useState(false);
 
@@ -86,16 +89,16 @@ function PraiseModal({ onClose }) {
 
     switch (type) {
       case "THANKS":
-        setEmojiImage("/emoji-thanks.png");
+        setEmojiImage(thanks);
         break;
       case "CHEER":
-        setEmojiImage("/emoji-cheer.png");
+        setEmojiImage(cheer);
         break;
       case "RECOGNIZE":
-        setEmojiImage("/emoji-recognize.png");
+        setEmojiImage(recognize);
         break;
       default:
-        setEmojiImage("/emoji-default.png");
+        setEmojiImage(thanks);
     }
   };
 

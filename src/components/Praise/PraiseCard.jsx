@@ -3,6 +3,8 @@ import React from "react";
 import styles from "./PraiseCard.module.css";
 import { addEmojiReaction, deleteEmojiReaction } from "../../api/praiseService";
 import { jwtDecode } from "jwt-decode";
+import BASE_URL from "../../api/baseUrl";
+import defaultImage from "../../assets/images/user/empty-user-profile.svg";
 
 const getTypeLabel = (type) => {
     switch (type) {
@@ -85,7 +87,7 @@ function PraiseCard({
         <div className={styles.receiversRow}>
             {receivers.slice(0, 3).map((r, i) => (
                 <div key={i} className={styles.receiverItem}>
-                    <img src={r.profileImage} alt="프로필" className={styles.profileImage} />
+                    <img src={r.profileImage ? BASE_URL + r.profileImage : defaultImage} alt="프로필" className={styles.profileImage} />
                     <span className={styles.receiverName}>
                         {r.name}
                     </span>

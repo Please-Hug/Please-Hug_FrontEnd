@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./RecentPraiseSenders.module.css";
 import { getRecentSenders } from "../../api/praiseService";
+import BASE_URL from "../../api/baseUrl";
+import defaultImage from "../../assets/images/user/empty-user-profile.svg";
 
 function RecentPraiseSenders() {
     const [senders, setSenders] = useState([]);
@@ -25,7 +27,7 @@ function RecentPraiseSenders() {
             {senders.map((sender, index) => (
                 <div key={index} className={styles.senderItem}>
                     <img
-                        src={sender.senderProfiles[0] || "/default-profile.png"}
+                        src={ sender.senderProfiles[0] ? BASE_URL + sender.senderProfiles[0] : defaultImage}
                         alt="프로필"
                         className={styles.profileImage}
                     />
