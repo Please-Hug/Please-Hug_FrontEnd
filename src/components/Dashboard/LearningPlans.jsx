@@ -10,7 +10,6 @@ function LearningPlans() {
     const fetchMissionGroups = async () => {
       try {
         const result = await getMyMissionGroups();
-        console.log("미션 그룹 데이터:", result.data);
         setMissionGroups(result.data);
       } catch (error) {
         console.error("미션 그룹 정보를 가져오는 데 실패했습니다:", error);
@@ -25,10 +24,6 @@ function LearningPlans() {
         const newChallenges = [];
         for (const group of missionGroups) {
           const result = await myChallenges(group.missionGroup.id);
-          console.log(
-            `그룹 ${group.missionGroup.id}의 도전 과제 데이터:`,
-            result.data
-          );
           for (const challenge of result.data) {
             if (
               challenge.progress == "REWARD_RECEIVED" ||
@@ -37,7 +32,6 @@ function LearningPlans() {
             ) {
               continue;
             }
-            console.log("도전 과제:", challenge);
             newChallenges.push(challenge);
           }
         }

@@ -15,7 +15,7 @@ function LearningPlanItem({ title, missionId, manager, statusLabel }) {
         <span>{title}</span>
         <div>
           <span>
-            <FaCodeBranch /> <span>{tasks.length}</span>
+            <FaCodeBranch /> <span>{tasks}</span>
           </span>
         </div>
         <div>
@@ -32,6 +32,7 @@ function LearningPlanItem({ title, missionId, manager, statusLabel }) {
           missionId={missionId}
           style={{ width: "100%", border: "none", padding: "0" }}
           onTaskLoaded={async (tasks) => {
+            // setTasks(tasks);
             setTasks(tasks);
           }}
         />

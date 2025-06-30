@@ -13,12 +13,12 @@ function MissionTask({ missionId, style, onTaskLoaded }) {
         const res = await getMissionTasks(missionId);
         setTasks(res.data);
         if (onTaskLoaded) {
-          onTaskLoaded(res.data);
+          onTaskLoaded(res.data.length);
         }
       }
     };
     fetchTasks();
-  }, [missionId, onTaskLoaded]);
+  }, [missionId]);
 
   const fetchMyTasks = useCallback(async () => {
     if (missionId) {
