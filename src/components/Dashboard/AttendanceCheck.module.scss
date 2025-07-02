@@ -65,4 +65,30 @@
       background-color: #3a7bbf;
     }
   }
+
+  .checkButton {
+  background-color: #409eff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #66b1ff;
+  }
+
+  &:disabled {
+    /* 내일 또 만나요 / disabled 상태 */
+    background-color: #3a7bbf;
+    cursor: default; // 커서 모양 변하지 않게 고정
+  }
+
+  /* disabled 상태에서 hover도 무시 */
+  &:disabled:hover {
+    background-color: #3a7bbf;
+  }
+}
+
 }

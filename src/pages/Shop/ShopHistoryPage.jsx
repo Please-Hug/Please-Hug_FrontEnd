@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import apiInstance from "../../api/axiosInstance.jsx";
+import styles from "./ShopHistoryPage.module.scss";
 
 function ShopHistoryPage() {
     const [orders, setOrders] = useState([]);
@@ -14,18 +15,34 @@ function ShopHistoryPage() {
 
     const fetchHistory = async () => {
         try {
-            const accessToken = localStorage.getItem("accessToken");
-
-            let url = "http://localhost:8080/api/v1/shop/history";
+            let url = "/api/v1/shop/history";
             if (startDate && endDate) {
                 url += `?startDate=${startDate}&endDate=${endDate}`;
             }
 
-            const response = await axios.get(url, {
-                headers: { Authorization: `Bearer ${accessToken}` },
-            });
+            const response = await apiInstance.get(url);
+            const orders = response.data?.data || [];
 
-            setOrders(response.data?.data || []);
+            const processedOrders = await Promise.all(
+                orders.map(async (order) => {
+                    if (!order.imageUrl) {
+                        return { ...order, imageSrc: "/default-product.png" };
+                    }
+
+                    try {
+                        const res = await apiInstance.get(order.imageUrl, {
+                            responseType: "blob",
+                        });
+                        const objectUrl = URL.createObjectURL(res.data);
+                        return { ...order, imageSrc: objectUrl };
+                    } catch (err) {
+                        console.error("이미지 로드 실패:", err);
+                        return { ...order, imageSrc: "/default-product.png" };
+                    }
+                })
+            );
+
+            setOrders(processedOrders);
         } catch (err) {
             console.error("구매 내역 요청 실패:", err);
             setError("구매 내역을 불러오지 못했습니다.");
@@ -41,134 +58,90 @@ function ShopHistoryPage() {
     };
 
     return (
-        <div style={{ padding: "2rem" }}>
+        <div className={styles.container}>
             <h1>구매 현황</h1>
 
-            {/* 버튼 + 날짜 필터 영역 */}
-            <div
-                style={{
-                    marginBottom: "1.5rem",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                }}
-            >
-                {/* 좌측: 버튼 */}
-                <div style={{ display: "flex", gap: "1rem" }}>
+            <div className={styles.filterContainer}>
+                <div className={styles.buttonGroup}>
                     <button
-                        style={{
-                            ...buttonStyle,
-                            backgroundColor: isShopPage ? "#d0f0ff" : "#f0f0f0",
-                        }}
+                        className={`${styles.button} ${isShopPage ? styles.active : ''}`}
                         onClick={() => navigate("/shop")}
                     >
                         상품 목록
                     </button>
                     <button
-                        style={{
-                            ...buttonStyle,
-                            backgroundColor: !isShopPage ? "#d0f0ff" : "#f0f0f0",
-                        }}
+                        className={`${styles.button} ${!isShopPage ? styles.active : ''}`}
                         onClick={() => navigate("/shopHistory")}
                     >
                         구매 현황
                     </button>
                 </div>
 
-                {/* 우측: 날짜 필터 */}
-                <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+                <div className={styles.dateFilter}>
                     <label>시작일:</label>
                     <input
                         type="date"
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
-                        style={inputStyle}
+                        className={styles.input}
                     />
                     <label>종료일:</label>
                     <input
                         type="date"
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
-                        style={inputStyle}
+                        className={styles.input}
                     />
-                    <button style={{ ...buttonStyle, backgroundColor: "#e0f7df" }} onClick={fetchHistory}>
+                    <button className={`${styles.button} ${styles.searchButton}`} onClick={fetchHistory}>
                         조회
                     </button>
                 </div>
             </div>
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className={styles.error}>{error}</p>}
 
             {orders.length === 0 ? (
                 <p>구매 내역이 없습니다.</p>
             ) : (
-                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <table className={styles.table}>
                     <thead>
-                    <tr style={{ backgroundColor: "#f5f5f5" }}>
-                        <th style={thStyle}>이미지</th>
-                        <th style={thStyle}>브랜드</th>
-                        <th style={thStyle}>상품명</th>
-                        <th style={thStyle}>포인트</th>
-                        <th style={thStyle}>수령자 번호</th>
-                        <th style={thStyle}>주문 시간</th>
-                        <th style={thStyle}>재발송</th>
-                    </tr>
+                        <tr>
+                            <th>이미지</th>
+                            <th>브랜드</th>
+                            <th>상품명</th>
+                            <th>포인트</th>
+                            <th>수령자 번호</th>
+                            <th>주문 시간</th>
+                            <th>재발송</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {orders.map((order, idx) => (
-                        <tr key={idx}>
-                            <td style={tdStyle}>
-                                <img
-                                    src={order.imageUrl ? `http://localhost:8080${order.imageUrl}` : "/default-product.png"}
-                                    alt={order.name}
-                                    style={{ width: "80px", height: "80px", objectFit: "cover", borderRadius: "8px" }}
-                                />
-                            </td>
-                            <td style={tdStyle}>{order.brand}</td>
-                            <td style={tdStyle}>{order.name}</td>
-                            <td style={tdStyle}>{order.price}</td>
-                            <td style={tdStyle}>{order.receiverPhoneNumber}</td>
-                            <td style={tdStyle}>{new Date(order.orderTime).toLocaleString("ko-KR")}</td>
-                            <td style={tdStyle}>
-                                <button style={buttonStyle} onClick={() => handleResend(order)}>
-                                    📦 재발송
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
+                        {orders.map((order, idx) => (
+                            <tr key={idx}>
+                                <td>
+                                    <img
+                                        src={order.imageSrc}
+                                        alt={order.name}
+                                        className={styles.productImage}
+                                    />
+                                </td>
+                                <td>{order.brand}</td>
+                                <td>{order.name}</td>
+                                <td>{order.price}</td>
+                                <td>{order.receiverPhoneNumber}</td>
+                                <td>{new Date(order.orderTime).toLocaleString("ko-KR")}</td>
+                                <td>
+                                    <button className={styles.button} onClick={() => handleResend(order)}>
+                                        📦 재발송
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             )}
         </div>
     );
 }
-
-const buttonStyle = {
-    padding: "0.5rem 1rem",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontSize: "1rem",
-    backgroundColor: "#fff",
-};
-
-const thStyle = {
-    padding: "0.75rem",
-    borderBottom: "1px solid #ddd",
-    textAlign: "left",
-};
-
-const tdStyle = {
-    padding: "0.75rem",
-    borderBottom: "1px solid #eee",
-};
-
-const inputStyle = {
-    padding: "0.4rem",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    fontSize: "1rem",
-};
 
 export default ShopHistoryPage;

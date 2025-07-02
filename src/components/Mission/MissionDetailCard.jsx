@@ -1,39 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import styles from "./MissionDetailCard.module.scss";
 import missionStateMap from "../../utils/missionStateMap";
 import missionDifficultyMap from "../../utils/missionDifficultyMap";
 import TaskItem from "./TaskItem";
 import { FaFlag } from "react-icons/fa6";
-import { getMissionTasks, getMissionMyTasks } from "../../api/missionService";
+import { useNavigate } from "react-router-dom";
+import MissionTask from "./MissionTask";
 
 function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
-  const [tasks, setTasks] = useState([]);
-  const [myTasks, setMyTasks] = useState([]);
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      if (mission) {
-        const res = await getMissionTasks(mission.id);
-        setTasks(res.data);
-      }
-    };
-    fetchTasks();
-  }, [mission]);
-
-  const fetchMyTasks = useCallback(async () => {
-    if (mission) {
-      const res = await getMissionMyTasks(mission.id);
-      const taskMap = {};
-      res.data.forEach((task) => {
-        taskMap[task.missionTaskId] = task;
-      });
-      setMyTasks(taskMap);
-    }
-  }, [mission]);
-
-  useEffect(() => {
-    fetchMyTasks();
-  }, [fetchMyTasks]);
+  const navigate = useNavigate();
 
   return (
     <div className={styles.missionDetail}>
@@ -81,22 +56,7 @@ function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
               {mission.description}
             </p>
             <h3 className={styles.missionDetailSubtasksTitle}>하위 태스크</h3>
-            <ul className={styles.missionDetailTasks}>
-              {tasks.map((item) => (
-                <TaskItem
-                  key={item.id}
-                  task={{
-                    id: item.id,
-                    status: myTasks[item.id]?.state || "NOT_STARTED",
-                    name: item.name,
-                    score: item.score,
-                  }}
-                  onStatusChange={() => {
-                    fetchMyTasks();
-                  }}
-                />
-              ))}
-            </ul>
+            <MissionTask missionId={mission.id} />
           </div>
           <div className={styles.missionDetailActions}>
             {!progress ? (
@@ -109,7 +69,12 @@ function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
                 미션 도전하기
               </span>
             ) : (
-              <button className={styles.missionDetailMoveButton}>
+              <button
+                className={styles.missionDetailMoveButton}
+                onClick={() => {
+                  navigate(`/mission/${mission.id}`);
+                }}
+              >
                 학습 계획 이동하기
               </button>
             )}

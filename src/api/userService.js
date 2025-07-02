@@ -21,3 +21,13 @@ export const searchUsers = async (keyword = "") => {
     throw error;
   } 
 };
+
+export const getCurrentUser = async () => {
+  try{
+    const response = await api.get("/api/v1/user");
+    return response.data.data;
+  } catch(error){
+    console.error("현재 로그인 유저 정보 가져오기 실패:", error);
+    throw error;
+  }
+};

@@ -10,6 +10,7 @@ import {
 import SideModal from "../../components/common/SideModal/SideModal";
 import MissionDetailCard from "../../components/Mission/MissionDetailCard";
 import TabComponent from "../../components/common/TabComponent/TabComponent";
+import useBreadcrumbStore from "../../stores/breadcrumbStore";
 
 function MissionOverviewPage() {
   const [missionGroups, setMissionGroups] = useState([]);
@@ -21,6 +22,10 @@ function MissionOverviewPage() {
   const [isSideModalOpen, setIsSideModalOpen] = useState(false);
   const [activeMission, setActiveMission] = useState(null);
   const sideModalWidth = 800;
+  const { setBreadcrumbItems } = useBreadcrumbStore();
+  useEffect(() => {
+    setBreadcrumbItems([{ label: "미션", path: "/mission" }]);
+  }, [setBreadcrumbItems]);
 
   useEffect(() => {
     const fetchMissionGroups = async () => {

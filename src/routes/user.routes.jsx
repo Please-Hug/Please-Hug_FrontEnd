@@ -1,16 +1,24 @@
 import { Navigate, Outlet } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import DashboardPage from "../pages/User/DashboardPage";
-import MissionOverviewPage from "../pages/Mission/MissionOverviewPage";
+import DashboardPage from "../pages/user/DashboardPage";
+import MissionOverviewPage from "../pages/mission/MissionOverviewPage";
 import QuestPage from "../pages/Quest/QuestPage";
-import LogoutPage from "../pages/User/LogoutPage";
+
+import StudyDiaryListPage from "../pages/studyDiary/StudyDiaryListPage";
+import StudyDiaryWritePage from "../pages/studyDiary/StudyDiaryWritePage";
+import StudyDiaryViewPage from "../pages/studyDiary/StudyDiaryViewPage";
+import StudyDiaryEditPage from "../pages/studyDiary/StudyDiaryEditPage";
+import MyStudyDiaryActivity from "../pages/studyDiary/MyStudyDiaryActivity";
+
+import LogoutPage from "../pages/user/LogoutPage";
 import PraisePage from "../pages/praise/PraisePage";
-import MyInfoPage from "../pages/User/MyInfoPage";
-import ShopPage from "../pages/shop/ShopPage";
+import MyInfoPage from "../pages/user/MyInfoPage";
+import ShopPage from "../pages/Shop/ShopPage";
 import ShopHistoryPage from "../pages/Shop/ShopHistoryPage";
 import AdminShopPage from "../pages/Shop/AdminShopPage";
-import MissionGroupPage from "../pages/Mission/MissionGroupPage";
+import MissionGroupPage from "../pages/mission/MissionGroupPage";
 import AdminQuestPage from "../pages/Quest/AdminQuestPage";
+import MissionDetailPage from "../pages/mission/MissionDetailPage";
 
 export default [
   {
@@ -28,7 +36,16 @@ export default [
       },
       {
         path: "/mission",
-        element: <MissionOverviewPage />,
+        children: [
+          {
+            index: true,
+            element: <MissionOverviewPage />,
+          },
+          {
+            path: ":missionId",
+            element: <MissionDetailPage />,
+          },
+        ],
       },
       {
         path: "/quest",
@@ -74,8 +91,30 @@ export default [
       },
       {
         path: "/adminQuest",
-        element: <AdminQuestPage />
-      }
+        element: <AdminQuestPage />,
+      },
+      // 배움일기 관련 라우트
+      {
+        path: "/study-diary",
+        element: <StudyDiaryListPage />,
+      },
+      {
+        path: "/study-diary/write",
+        element: <StudyDiaryWritePage />,
+      },
+      {
+        path: "/study-diary/:id",
+        element: <StudyDiaryViewPage />,
+      },
+      {
+        path: "/study-diary/edit/:id",
+        element: <StudyDiaryEditPage />,
+      },
+      // 나의 활동 페이지
+      {
+        path: "/my-activity",
+        element: <MyStudyDiaryActivity />,
+      },
       // { path: "/settings", element: <SettingsPage /> },
       // ... 추가 사용자 경로
     ],
