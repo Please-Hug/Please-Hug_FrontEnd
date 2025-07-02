@@ -36,6 +36,7 @@ function PraiseCard({
     type,
     currentUser,
     fetchPraises,
+    onEmojiReacted = () => {},
     onClick
 }) {
 
@@ -75,6 +76,7 @@ function PraiseCard({
             }
 
             fetchPraises();
+            onEmojiReacted();
         } catch (error) {
             console.error("이모지 처리 실패:", error);
         }

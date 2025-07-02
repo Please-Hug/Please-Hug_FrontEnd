@@ -14,13 +14,17 @@ import RecentPraiseSenders from "../../components/Praise/RecentPraiseSenders";
 
 
 function PraisePage() {
+    const today = new Date();
+    const todayStr = today.toISOString().split("T")[0];
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(),1);
+    const firstDayStr = firstDayOfMonth.toISOString().split("T")[0];
 
     const [ isModalOpen, setIsModalOpen ] = useState(false);
     const [ isDateModalOpen, setIsDateModalOpen ] = useState(false);
     const [ isDetailOpen, setIsDetailOpen ] = useState(false);
 
-    const [ startDate, setStartDate ] = useState(null);
-    const [ endDate, setEndDate ] = useState(null);
+    const [ startDate, setStartDate ] = useState(firstDayStr);
+    const [ endDate, setEndDate ] = useState(todayStr);
     const [ selectedLabel, setSelectedLabel ] = useState("");
 
     const [ praises, setPraises ] = useState([]);
@@ -38,7 +42,6 @@ function PraisePage() {
     const[ popularList, setPopularList ] = useState([]);
 
 
-
     const handleCardClick = (id) => {
         setSelectedPraiseId(id);
     };
@@ -52,14 +55,14 @@ function PraisePage() {
 
     const fetchPraises = async () => {
         try {
-            const today = new Date();
-            const todayStr = today.toISOString().split("T")[0];
+            // const today = new Date();
+            // const todayStr = today.toISOString().split("T")[0];
             
             const result = await getPraises({
                 keyword: searchKeyword,
                 me: isMe,
-                startDate: startDate || todayStr,
-                endDate: endDate || todayStr,
+                startDate,
+                endDate,
             });
             result.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
             setPraises(result);
@@ -67,6 +70,25 @@ function PraisePage() {
             console.error("칭찬 불러오기 실패:", err);
         }
     };
+
+    const fetchPopularPraises = async () => {
+        try{
+            const result = await getPopularPraises(startDate,endDate);
+            setPopularList(result);
+        } catch(error){
+            console.error("인기 칭찬 글 불러오기 실패:", error);
+        }
+    };
+
+    const handleEmojiReacted = () => {
+        fetchPraises();
+        fetchPopularPraises();
+    };
+
+    useEffect(() => {
+        fetchPraises();
+        fetchPopularPraises();
+    }, []);
     
     useEffect(() => {
         fetchPraises();
@@ -98,6 +120,7 @@ function PraisePage() {
             }
         };
         fetchPopular();
+        fetchPopularPraises();
     }, [startDate, endDate]);
 
   return (
@@ -147,6 +170,7 @@ function PraisePage() {
                             type={praise.type}
                             currentUser={currentUser}
                             fetchPraises={fetchPraises}
+                            onEmojiReacted={handleEmojiReacted}
                             onClick={() => handleCardClick(praise.id)}
                         />
                     ))}

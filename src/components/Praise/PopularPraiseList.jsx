@@ -23,36 +23,44 @@ const PopularPraiseList = ({ praises, onCardClick = () => {} }) => {
     return (
         <div className={styles.wrapper}>
             <h3 className={styles.title}>반응 좋은 칭찬 글</h3>
-            <div className={styles.list}>
-                {praises.map((praise) => (
-                    <div 
-                        key={praise.id} 
-                        className={styles.card}
-                        onClick={() => onCardClick?.(praise.id)}
-                    >
-                        <div className={`${styles.typeBadge} ${styles[praise.type.toLowerCase()]}`}>
-                            {getTypeLabel(praise.type)}
-                        </div>
 
-                        <div className={styles.senderReceiver}>
-                            <span className={styles.sender}>{praise.senderName}</span>
-                            <span className={styles.arrow}> ➤ </span>
-                            <span className={styles.receiver}>{formatReceivers(praise.receivers)}</span>
-                        </div>
+            {praises.length === 0 ? (
+                <div className={styles.emptyText}>
+                    해당 기간 동안 칭찬이 없습니다
+                </div>
+            ) : (
 
-                        <p className={styles.content}>{praise.content}</p>
+                <div className={styles.list}>
+                    {praises.map((praise) => (
+                        <div 
+                            key={praise.id} 
+                            className={styles.card}
+                            onClick={() => onCardClick?.(praise.id)}
+                        >
+                            <div className={`${styles.typeBadge} ${styles[praise.type.toLowerCase()]}`}>
+                                {getTypeLabel(praise.type)}
+                            </div>
 
-                        <div className={styles.reactionList}>
-                            {praise.emojis &&
-                                praise.emojis.map(({ emoji, count }) => (
-                                    <span key={emoji} className={styles.reaction}>
-                                        {emoji} <span className={styles.count}>{count}</span>
-                                    </span>
-                            ))}
+                            <div className={styles.senderReceiver}>
+                                <span className={styles.sender}>{praise.senderName}</span>
+                                <span className={styles.arrow}> ➤ </span>
+                                <span className={styles.receiver}>{formatReceivers(praise.receivers)}</span>
+                            </div>
+
+                            <p className={styles.content}>{praise.content}</p>
+
+                            <div className={styles.reactionList}>
+                                {praise.emojis &&
+                                    praise.emojis.map(({ emoji, count }) => (
+                                        <span key={emoji} className={styles.reaction}>
+                                            {emoji} <span className={styles.count}>{count}</span>
+                                        </span>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
