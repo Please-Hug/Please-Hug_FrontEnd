@@ -22,16 +22,52 @@
   max-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
 
 .dateInputs {
   display: flex;
   justify-content: center;
-  gap: 24px;
+  align-items: center;
+  gap: 14px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #e0e0e0;
 }
+
+.inputGroup {
+  position: relative;
+}
+
+.inputGroup input {
+  width: 190px;
+  padding: 10px 36px 10px 16px;
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+}
+
+.calendarBody {
+  display: flex;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  
+}
+
+/* 3. 왼쪽 QuickMenu 영역 */
+.quickMenuSection {
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+  border-right: 1px solid #e0e0e0;
+  padding: 16px 12px;
+}
+
+.rangeSymbol {
+  font-size: 16px;
+  color: #666;
+}
+
 
 .dateInputs input {
   padding: 10px 16px;
@@ -44,30 +80,55 @@
 
 .body {
   display: flex;
-  flex-direction: row;
-  gap: 24px;
-  margin-top: 20px;
+  margin-top: 16px;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
+.sideSection {
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+  border-right: 1px solid #e0e0e0;
+  padding: 16px;
+}
 
-/* 왼쪽 퀵 버튼 */
 .quickMenu {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-width: 120px;
-  border-right: 1px solid #e0e0e0;
-  padding-right: 16px;
+  gap: 6px;
+}
+
+.quickMenu button {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s;
 }
 
 .quickMenu button:hover {
-  background-color: #e0e0e0;
+  background-color: #f1f5ff;
+}
+
+.quickMenu button.selected {
+  background-color: #eef4ff;
+  color: #4e6ef2;
+  font-weight: 600;
 }
 
 .calendarSection {
+  padding: 16px;
   flex-grow: 1;
-  padding-left: 8px;
-  max-width: 320px; 
+}
+
+.footerDivider {
+  width: 100%;
+  margin-top: 12px;
 }
 
 .footer {
