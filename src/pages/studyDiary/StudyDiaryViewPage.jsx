@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getStudyDiary, deleteStudyDiary, createComment, deleteComment, toggleLike } from "../../api/studyDiaryService";
 import styles from "./StudyDiaryViewPage.module.scss";
+import useUserStore from "../../stores/userStore";
 
 function StudyDiaryViewPage() {
   const { id } = useParams();
@@ -11,6 +12,10 @@ function StudyDiaryViewPage() {
   const [commentContent, setCommentContent] = useState("");
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [isTogglingLike, setIsTogglingLike] = useState(false);
+  const userInfo = useUserStore((state) => state.userInfo);
+  
+  // 현재 로그인한 사용자가 글 작성자인지 확인
+  const isAuthor = diary && userInfo && userInfo.name === diary.name;
 
   useEffect(() => {
     fetchDiary();
@@ -30,7 +35,7 @@ function StudyDiaryViewPage() {
       setDiary({
         id: parseInt(id),
         userId: 1,
-        userName: "김학습",
+        name: "김학습",
         title: "React 컴포넌트 심화 학습",
         content: `오늘은 React의 컴포넌트 생명주기와 훅에 대해 깊이 학습했습니다.
 
@@ -59,13 +64,13 @@ function StudyDiaryViewPage() {
           {
             id: 1,
             content: "정말 유익한 내용이네요! 특히 useEffect 부분이 도움됐습니다.",
-            userName: "이학습",
+            name: "이학습",
             createdAt: "2024-01-15T11:30:00"
           },
           {
             id: 2,
             content: "저도 같은 문제로 고민했는데 해결 방법을 공유해주셔서 감사합니다.",
-            userName: "박개발",
+            name: "박개발",
             createdAt: "2024-01-15T14:20:00"
           }
         ],
@@ -185,20 +190,22 @@ function StudyDiaryViewPage() {
         >
           ← 배움일기 목록으로
         </button>
-        <div className={styles.actions}>
-          <button 
-            className={styles.editButton}
-            onClick={() => navigate(`/study-diary/edit/${id}`)}
-          >
-            수정
-          </button>
-          <button 
-            className={styles.deleteButton}
-            onClick={handleDelete}
-          >
-            삭제
-          </button>
-        </div>
+        {isAuthor && (
+          <div className={styles.actions}>
+            <button 
+              className={styles.editButton}
+              onClick={() => navigate(`/study-diary/edit/${id}`)}
+            >
+              수정
+            </button>
+            <button 
+              className={styles.deleteButton}
+              onClick={handleDelete}
+            >
+              삭제
+            </button>
+          </div>
+        )}
       </div>
 
       <article className={styles.article}>
@@ -206,7 +213,7 @@ function StudyDiaryViewPage() {
           <h1>{diary.title}</h1>
           <div className={styles.meta}>
             <span className={styles.author}>
-              작성자: {diary.userName}
+              작성자: {diary.name}
             </span>
             <span className={styles.date}>
               {new Date(diary.createdAt).toLocaleDateString('ko-KR')}
@@ -258,18 +265,20 @@ function StudyDiaryViewPage() {
                 <div key={comment.id} className={styles.commentItem}>
                   <div className={styles.commentHeader}>
                     <div className={styles.commentInfo}>
-                      <span className={styles.commentAuthor}>{comment.userName}</span>
+                      <span className={styles.commentAuthor}>{comment.name}</span>
                       <span className={styles.commentDate}>
                         {new Date(comment.createdAt).toLocaleDateString('ko-KR')}
                       </span>
                     </div>
-                    <button
-                      className={styles.deleteCommentButton}
-                      onClick={() => handleCommentDelete(comment.id)}
-                      title="댓글 삭제"
-                    >
-                      ✕
-                    </button>
+                    {userInfo?.name === comment.name && (
+                      <button
+                        className={styles.deleteCommentButton}
+                        onClick={() => handleCommentDelete(comment.id)}
+                        title="댓글 삭제"
+                      >
+                        ✕
+                      </button>
+                    )}
                   </div>
                   <p className={styles.commentContent}>{comment.content}</p>
                 </div>

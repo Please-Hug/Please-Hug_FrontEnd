@@ -48,7 +48,7 @@ function StudyDiaryEditPage() {
 2. **useState와 상태 관리**
    - 상태 업데이트는 비동기적으로 처리됨
    - 이전 상태를 기반으로 업데이트할 때는 함수형 업데이트 사용`,
-        userName: "김학습",
+        name: "김학습",
         createdAt: "2024-01-15T10:30:00"
       };
       
@@ -165,7 +165,7 @@ function StudyDiaryEditPage() {
       </div>
 
       <div className={styles.editInfo}>
-        <p>작성자: {originalData?.userName}</p>
+        <p>작성자: {originalData?.name}</p>
         <p>최초 작성일: {originalData?.createdAt ? new Date(originalData.createdAt).toLocaleDateString('ko-KR') : ''}</p>
       </div>
 
