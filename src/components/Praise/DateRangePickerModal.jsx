@@ -81,9 +81,15 @@ const DateRangePickerModal = ({ onApply, onClose }) => {
                 <div className={styles.calendarBody}>
                     <div className={styles.quickMenuSection}>
                         <div className={styles.quickMenu}>
-                            <button className={`${styles.quickMenuBtn} ${selectedLabel === "이번 주" ? styles.selected : ""}`} onClick={() => handleQuickRange("이번 주")}>이번 주</button>
-                            <button className={`${styles.quickMenuBtn} ${selectedLabel === "저번 주" ? styles.selected : ""}`} onClick={() => handleQuickRange("저번 주")}>저번 주</button>
-                            <button className={`${styles.quickMenuBtn} ${selectedLabel === "이번 달" ? styles.selected : ""}`} onClick={() => handleQuickRange("이번 달")}>이번 달</button>
+                            {["이번 주", "저번 주", "이번 달"].map((label) => (
+                                <button
+                                    key={label}
+                                    className={`${styles.quickMenuBtn} ${selectedLabel === label ? styles.selected : ""}`}
+                                    onClick={() => handleQuickRange(label)}
+                                >
+                                    {label}
+                                </button>
+                            ))}
                         </div>
                     </div>
 
