@@ -51,7 +51,7 @@ function StudyDiaryListPage() {
           title: "리액트 회원가입 양식 연습",
           content: "import React, { useState } from 'react'; function SignupForm() { const [formData, setFormData] = useState({ name: '', email: '', password: '' });...",
           createdAt: "2025.6.27",
-          userName: "백다희(백엔드4차)",
+          name: "백다희(백엔드4차)",
           likeNum: 2,
           commentNum: 0,
         },
@@ -60,7 +60,7 @@ function StudyDiaryListPage() {
           title: "2025.6.27 리액트 빌드 실행",
           content: "https://github.com/jhn9622/lecture/blob/main/react/2025-06-27.md",
           createdAt: "2025.6.27",
-          userName: "백다희(백엔드4차)",
+          name: "백다희(백엔드4차)",
           likeNum: 11,
           commentNum: 1,
         },
@@ -69,7 +69,7 @@ function StudyDiaryListPage() {
           title: "생성AI 4차 - 32일차·7컵차·이상탐지와 추천시스템",
           content: "오늘은 이상탐지와 추천시스템에 대해서 공부했던 것입니다. 특히 독기하여 훌륭데이터 과학이 어다니 풀어야 할 깊이있다는 이터리터의 디터인지 않...",
           createdAt: "2024.1.15",
-          userName: "김컴공(생성AI 4차)",
+          name: "김컴공(생성AI 4차)",
           likeNum: 11,
           commentNum: 4,
         },
@@ -78,7 +78,7 @@ function StudyDiaryListPage() {
           title: "[0627] PM 33컵차 이튼 정리",
           content: "재즈 관리를 위한 데이터 분석_데이터 분석 프레임워크🧓 기와에 남는 개념GAC고객 획특업 바용: 고객 한 명을 유치하는 데 총리익로는 들어가는 바용= 마케팅...",
           createdAt: "2024.6.27",
-          userName: "영예은(PM 4차)",
+          name: "영예은(PM 4차)",
           likeNum: 3,
           commentNum: 0,
         },
@@ -87,7 +87,7 @@ function StudyDiaryListPage() {
           title: "볼륨",
           content: "볼륨이란?🤔볼륨은 데이터를 저장하는 저장소이다. 볼륨은 데이터가 저장되는 위치에 따라 제거한 문융닫 수 있음~파드 내에 위치; 파드(컨테이너) 내에 데이...",
           createdAt: "2024.1.14",
-          userName: "두윤수(클라우드 4차)",
+          name: "두윤수(클라우드 4차)",
           likeNum: 1,
           commentNum: 0,
         },
@@ -96,7 +96,7 @@ function StudyDiaryListPage() {
           title: "데이터 분석 이론 기초변율 배워보시다",
           content: "6월 20차료 데이터 분석 파드 시작 기록 모디야(자료 정리)데이터 리터라시<데이터 리터라시>데이터란 새로운 정보, 추시, 이해, 로직, 관찰 ...",
           createdAt: "2024.1.14",
-          userName: "두윤수(클라우드 4차)",
+          name: "두윤수(클라우드 4차)",
           likeNum: 1,
           commentNum: 0,
         },
@@ -105,7 +105,7 @@ function StudyDiaryListPage() {
           title: "로그분석",
           content: "# main.py # 로그 파일 이들log_file = 'mission_computer_main.log'json_file = 'mission_computer_main.json'# 1. 로그 파일 읽기try: with open(log...",
           createdAt: "2024.1.13",
-          userName: "이정원(클라우드4차)",
+          name: "이정원(클라우드4차)",
           likeNum: 2,
           commentNum: 0,
         },
@@ -114,7 +114,7 @@ function StudyDiaryListPage() {
           title: "20250627 React, Javascript 연습",
           content: "노션 정리https://www.notion.so/21446bdec13280a5929eda414ffb6e0d?source=copy_link",
           createdAt: "2024.1.13",
-          userName: "이정원(클라우드4차)",
+          name: "이정원(클라우드4차)",
           likeNum: 2,
           commentNum: 0,
         }
@@ -248,10 +248,21 @@ function StudyDiaryListPage() {
       <div className={styles.diaryList}>
         {diaries.length === 0 ? (
           <div className={styles.empty}>
-            <p>아직 작성된 배움일기가 없습니다.</p>
-            <button onClick={() => navigate("/study-diary/write")}>
-              첫 번째 일기 작성하기
-            </button>
+            {isSearching ? (
+              <>
+                <p>검색 결과가 없습니다.</p>
+                <button onClick={handleSearchReset}>
+                  전체 목록 보기
+                </button>
+              </>
+            ) : (
+              <>
+                <p>아직 작성된 배움일기가 없습니다.</p>
+                <button onClick={() => navigate("/study-diary/write")}>
+                  첫 번째 일기 작성하기
+                </button>
+              </>
+            )}
           </div>
         ) : (
           diaries.map((diary) => (
@@ -272,7 +283,7 @@ function StudyDiaryListPage() {
                   <span className={styles.comments}>💬 {diary.commentNum || 0}</span>
                 </div>
                 <div className={styles.cardMeta}>
-                  <span className={styles.author}>{diary.userName}</span>
+                  <span className={styles.author}>{diary.name}</span>
                   <span className={styles.date}>{diary.createdAt}</span>
                 </div>
               </div>
