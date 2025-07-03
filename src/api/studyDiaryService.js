@@ -162,4 +162,30 @@ export const getMyRecentStudyDiaries = async (page = 0, size = 20, sort = "creat
     console.error("최근 한달간 배움일기 조회 실패:", error);
     throw error;
   }
+};
+
+// Study Diary 이미지 업로드
+export const uploadStudyDiaryImage = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    // Content-Type: multipart/form-data 는 브라우저에서 자동 설정됩니다.
+    const response = await api.post("/api/v1/images/studydiary", formData);
+    return response.data;
+  } catch (error) {
+    console.error("이미지 업로드 실패:", error);
+    throw error;
+  }
+};
+
+// 이미지 Presigned URL 조회
+export const getImagePresignedUrl = async (imageKey) => {
+  try {
+    const response = await api.get(`/api/v1/images/${encodeURIComponent(imageKey)}/url`);
+    return response.data;
+  } catch (error) {
+    console.error("이미지 URL 조회 실패:", error);
+    throw error;
+  }
 }; 
