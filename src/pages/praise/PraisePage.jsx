@@ -41,6 +41,10 @@ function PraisePage() {
 
     const[ popularList, setPopularList ] = useState([]);
 
+    const handlePraiseCreated = (newPraise) => {
+        setPraises((prev) => [newPraise, ...prev]);    // 최신 순으로 증가
+    };
+
 
     const handleCardClick = (id) => {
         setSelectedPraiseId(id);
@@ -127,7 +131,12 @@ function PraisePage() {
 
     <>    
         {/* 칭찬하기 생성 모달 */}
-        {isModalOpen && <PraiseModal onClose={() => setIsModalOpen(false)} />}
+        {isModalOpen && (
+            <PraiseModal 
+                onClose={() => setIsModalOpen(false)} 
+                onPraiseCreated={handlePraiseCreated}
+            />
+        )}
 
         {/* 날짜 달력 모달 */}
         {isDateModalOpen && (
@@ -157,23 +166,38 @@ function PraisePage() {
                 {/* 📝 칭찬 카드 목록 */}
                 <div className={styles.praiseList}>
                     {/* <PraiseCard ... /> 여러 개 들어갈 자리 */}
-                    {praises.map((praise) => (
-                        <PraiseCard
-                            key={praise.id}
-                            praiseId={praise.id}
-                            senderName={praise.senderName}
-                            receivers={praise.receivers}
-                            content={praise.content}
-                            createdAt={praise.createdAt}
-                            emojis={praise.emojis}
-                            commentCount={praise.commentCount}
-                            type={praise.type}
-                            currentUser={currentUser}
-                            fetchPraises={fetchPraises}
-                            onEmojiReacted={handleEmojiReacted}
-                            onClick={() => handleCardClick(praise.id)}
-                        />
-                    ))}
+                    {praises.length === 0 ?(
+                        <div className={styles.emptyContainer}>
+                            <div className={styles.emptyTitle}>
+                                해당 기간 동안 칭찬이 없습니다
+                            </div>
+                            <div className={styles.emptySubtitle}>
+                                먼저 칭찬을 작성해 보세요
+                            </div>
+                            <button className={styles.writeBtn} onClick={() => setIsModalOpen(true)}>
+                                동료 칭찬하기
+                            </button>
+                        </div>
+                    ) : (
+                        praises.map((praise) => (
+                            <PraiseCard
+                                key={praise.id}
+                                praise={praise}
+                                praiseId={praise.id}
+                                senderName={praise.senderName}
+                                receivers={praise.receivers}
+                                content={praise.content}
+                                createdAt={praise.createdAt}
+                                emojis={praise.emojis}
+                                commentCount={praise.commentCount}
+                                type={praise.type}
+                                currentUser={currentUser}
+                                fetchPraises={fetchPraises}
+                                onEmojiReacted={handleEmojiReacted}
+                                onClick={() => handleCardClick(praise.id)}
+                            />
+                        ))
+                    )}
 
                     {selectedPraiseId && (
                         <PraiseDetailModal
