@@ -118,7 +118,7 @@ function PraiseCard({
 
         <div className={styles.footer}>
             <div className={styles.emojiList}>
-            {emojis.map((emoji) => (
+            {emojis?.map((emoji) => (
                 <span 
                     key={emoji.emoji} 
                     className={styles.emoji}

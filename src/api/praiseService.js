@@ -11,7 +11,8 @@ export const submitPraise = async ({ receivers, praiseContent, praiseType }) => 
             type: praiseType,
         };
 
-        await api.post("/api/v1/praises", payload);
+        const response=  await api.post("/api/v1/praises", payload);
+        return response.data.data;
     
     } catch (err){
         console.error("칭찬 제출 실패:", err);
