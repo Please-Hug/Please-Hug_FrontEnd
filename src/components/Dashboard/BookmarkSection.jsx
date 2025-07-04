@@ -4,7 +4,7 @@ import {
   addBookmark,
   updateBookmark,
   removeBookmark,
-} from '../../api/bookmark';
+} from '../../api/bookmark'; // 실제 경로 맞게 수정!
 
 function BookmarkSection() {
   const [bookmarks, setBookmarks] = useState([]);
@@ -13,13 +13,13 @@ function BookmarkSection() {
   const [link, setLink] = useState('');
   const [title, setTitle] = useState('');
 
+  // 북마크 불러오기
   const loadBookmarks = async () => {
     try {
-      const res = await getBookmarks();
-      // 2. 방어적 코드
-      setBookmarks(Array.isArray(res.data) ? res.data : []);
+      const data = await getBookmarks();
+      setBookmarks(Array.isArray(data) ? data : []);
     } catch (e) {
-      setBookmarks([]); // 실패해도 배열
+      setBookmarks([]);
     }
   };
 
@@ -27,6 +27,7 @@ function BookmarkSection() {
     loadBookmarks();
   }, []);
 
+  // 모달 열기(추가)
   const openAddModal = () => {
     setEditItem(null);
     setLink('');
@@ -34,6 +35,7 @@ function BookmarkSection() {
     setModalOpen(true);
   };
 
+  // 모달 열기(수정)
   const openEditModal = (item) => {
     setEditItem(item);
     setLink(item.link);
@@ -41,6 +43,7 @@ function BookmarkSection() {
     setModalOpen(true);
   };
 
+  // 모달 닫기
   const closeModal = () => {
     setModalOpen(false);
     setEditItem(null);
@@ -48,26 +51,28 @@ function BookmarkSection() {
     setTitle('');
   };
 
+  // 폼 제출 (추가/수정)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (editItem) {
-        await updateBookmark(editItem.id, { link, title });
+        await updateBookmark(editItem.id, { title, link });
       } else {
-        await addBookmark({ link, title });
+        await addBookmark({ title, link });
       }
       closeModal();
-      loadBookmarks();
+      await loadBookmarks(); // 추가/수정 후 즉시 리스트 갱신!
     } catch (e) {
-      alert('저장에 실패했습니다.');
+      alert('저장 실패');
     }
   };
 
+  // 삭제
   const handleDelete = async (id) => {
     if (!window.confirm('삭제할까요?')) return;
     try {
       await removeBookmark(id);
-      loadBookmarks();
+      await loadBookmarks();
     } catch (e) {
       alert('삭제 실패');
     }
@@ -90,36 +95,42 @@ function BookmarkSection() {
 
       {/* 북마크 추가/수정 모달 */}
       {modalOpen && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <h4>{editItem ? '북마크 수정' : '북마크 추가'}</h4>
+        <div
+          style={{
+            position: 'fixed',
+            left: 0, top: 0, width: '100vw', height: '100vh',
+            background: 'rgba(0,0,0,0.3)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 1000,
+          }}>
+          <div style={{
+            background: '#fff', padding: 24, borderRadius: 8, minWidth: 300,
+            boxShadow: '0 2px 16px rgba(0,0,0,0.18)'
+          }}>
+            <h4 style={{ marginBottom: 12 }}>{editItem ? '북마크 수정' : '북마크 추가'}</h4>
             <form onSubmit={handleSubmit}>
-              <div>
-                <label>
-                  URL
-                  <input
-                    type="url"
-                    value={link}
-                    required
-                    onChange={(e) => setLink(e.target.value)}
-                    placeholder="https://example.com"
-                  />
-                </label>
+              <div style={{ marginBottom: 10 }}>
+                <input
+                  type="url"
+                  value={link}
+                  required
+                  onChange={(e) => setLink(e.target.value)}
+                  placeholder="https://example.com"
+                  style={{ width: '100%' }}
+                />
               </div>
-              <div>
-                <label>
-                  표시 텍스트
-                  <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="링크를 나타낼 텍스트를 작성해 주세요"
-                  />
-                </label>
+              <div style={{ marginBottom: 10 }}>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="링크를 나타낼 텍스트를 작성"
+                  style={{ width: '100%' }}
+                />
               </div>
-              <div style={{ marginTop: 12 }}>
+              <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
                 <button type="submit">{editItem ? '수정하기' : '추가하기'}</button>
-                <button type="button" onClick={closeModal} style={{ marginLeft: 8 }}>
+                <button type="button" onClick={closeModal}>
                   닫기
                 </button>
               </div>
