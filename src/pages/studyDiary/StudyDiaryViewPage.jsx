@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getStudyDiary, deleteStudyDiary, createComment, deleteComment, toggleLike } from "../../api/studyDiaryService";
+import { getStudyDiary, deleteStudyDiary, createComment, deleteComment, toggleLike, getImagePresignedUrl } from "../../api/studyDiaryService";
 import styles from "./StudyDiaryViewPage.module.scss";
 import useUserStore from "../../stores/userStore";
+import MDEditor from "@uiw/react-md-editor";
+import "@uiw/react-markdown-preview/markdown.css";
+import remarkGfm from "remark-gfm";
 
 function StudyDiaryViewPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [diary, setDiary] = useState(null);
+  const [processedContent, setProcessedContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [commentContent, setCommentContent] = useState("");
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
@@ -21,17 +25,114 @@ function StudyDiaryViewPage() {
     fetchDiary();
   }, [id]);
 
+  // 이미지 URL을 Presigned URL로 변환하는 함수
+  const processImageUrls = async (content) => {
+    if (!content) return content;
+
+    // 임시: Presigned URL 변환 비활성화 (디버깅용)
+    const USE_PRESIGNED_URL = false;
+    
+    if (!USE_PRESIGNED_URL) {
+      console.log("🚧 Presigned URL 변환 비활성화됨 - 원본 URL 사용");
+      return content;
+    }
+
+    try {
+      // S3 이미지 URL 패턴 찾기
+      const s3UrlPattern = /!\[([^\]]*)\]\((https:\/\/hugmeexp\.s3\.ap-northeast-2\.amazonaws\.com\/([^)]+))\)/g;
+      let processedContent = content;
+      const urlsToReplace = [];
+
+      console.log("🔍 원본 콘텐츠:", content);
+
+      let match;
+      while ((match = s3UrlPattern.exec(content)) !== null) {
+        const [fullMatch, altText, originalUrl, imageKey] = match;
+        console.log("🎯 매치 발견:", {
+          fullMatch,
+          altText,
+          originalUrl,
+          imageKey: imageKey
+        });
+        urlsToReplace.push({ fullMatch, altText, originalUrl, imageKey });
+      }
+
+      console.log("🖼️ 발견된 이미지 URL들:", urlsToReplace);
+
+      // 각 이미지 URL을 Presigned URL로 변환
+      for (const { fullMatch, altText, originalUrl, imageKey } of urlsToReplace) {
+        try {
+          console.log(`🔍 이미지 키로 Presigned URL 요청: ${imageKey}`);
+          const response = await getImagePresignedUrl(imageKey);
+          console.log(`📡 Presigned URL API 응답:`, response);
+          
+          if (response?.data?.presignedUrl) {
+            const newMarkdown = `![${altText}](${response.data.presignedUrl})`;
+            processedContent = processedContent.replace(fullMatch, newMarkdown);
+            console.log(`✅ URL 변환 성공: ${imageKey}`);
+            console.log(`🔗 새로운 URL: ${response.data.presignedUrl}`);
+          } else {
+            console.log(`⚠️ Presigned URL이 응답에 없음:`, response);
+          }
+        } catch (error) {
+          console.error(`❌ URL 변환 실패: ${imageKey}`, error);
+          console.error(`❌ 에러 상세:`, error.response?.status, error.response?.data);
+          console.log(`🔄 원본 URL 유지: ${originalUrl}`);
+          // 실패한 경우 원본 URL 유지 (변환하지 않음)
+        }
+      }
+
+      return processedContent;
+    } catch (error) {
+      console.error("이미지 URL 처리 중 오류:", error);
+      return content; // 오류 발생 시 원본 콘텐츠 반환
+    }
+  };
+
+  // diary가 변경될 때마다 이미지 URL 처리
+  useEffect(() => {
+    if (diary?.content) {
+      processImageUrls(diary.content).then(setProcessedContent);
+    }
+  }, [diary]);
+
   const fetchDiary = async () => {
     try {
       setLoading(true);
       const response = await getStudyDiary(id);
-      console.log("in fetchDiary", response);
-      if (response.data) {
-        setDiary(response.data);
+      console.log("📋 fetchDiary 전체 응답:", response);
+      console.log("📋 response.data:", response?.data);
+      console.log("📋 response.data 타입:", typeof response?.data);
+      
+      // API 응답 구조에 따라 데이터 추출
+      let diaryData = null;
+      if (response?.data) {
+        // 응답이 { data: {...} } 형태인 경우
+        diaryData = response.data;
+      } else if (response) {
+        // 응답이 직접 데이터인 경우
+        diaryData = response;
+      }
+      
+      console.log("📋 최종 diaryData:", diaryData);
+      
+      if (diaryData) {
+        setDiary(diaryData);
+        console.log("✅ 배움일기 조회 성공");
+      } else {
+        console.log("❌ 응답에서 데이터를 찾을 수 없음");
+        throw new Error("응답에서 데이터를 찾을 수 없습니다.");
       }
     } catch (error) {
-      console.error("배움일기 조회 실패:", error);
-      // 임시 더미 데이터 (API 명세서 구조에 맞춤)
+      console.error("❌ 배움일기 조회 실패:", error);
+      console.error("❌ 에러 상태:", error.response?.status);
+      console.error("❌ 에러 메시지:", error.message);
+      console.error("❌ 에러 응답:", error.response?.data);
+      
+      // 개발 모드에서는 더미 데이터 사용, 프로덕션에서는 에러 표시
+      if (process.env.NODE_ENV === 'development') {
+        console.log("🔧 개발 모드: 더미 데이터 사용");
+        // 임시 더미 데이터 (API 명세서 구조에 맞춤)
       setDiary({
         id: parseInt(id),
         userId: 1,
@@ -76,6 +177,11 @@ function StudyDiaryViewPage() {
         ],
         createdAt: "2024-01-15T10:30:00"
       });
+      } else {
+        // 프로덕션 모드에서는 에러 상태 표시
+        console.log("🚨 프로덕션 모드: 에러 상태 유지");
+        setDiary(null);
+      }
     } finally {
       setLoading(false);
     }
@@ -230,10 +336,12 @@ function StudyDiaryViewPage() {
           </div>
         </header>
 
-        <div className={styles.content}>
-          {diary.content.split('\n').map((line, index) => (
-            <p key={index}>{line}</p>
-          ))}
+        <div className={styles.content} data-color-mode="light">
+          <MDEditor.Markdown
+            source={processedContent || diary.content}
+            style={{ whiteSpace: "pre-wrap" }}
+            remarkPlugins={[remarkGfm]}
+          />
         </div>
         
         {/* 댓글 섹션 */}

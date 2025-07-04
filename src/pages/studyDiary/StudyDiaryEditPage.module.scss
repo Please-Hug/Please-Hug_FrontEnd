@@ -159,11 +159,11 @@
 }
 
 .submitButton {
-  background: #28a745;
+  background: #007bff;
   color: white;
   
   &:hover:not(:disabled) {
-    background: #218838;
+    background: #0056b3;
     transform: translateY(-1px);
   }
   
@@ -171,6 +171,59 @@
     background: #6c757d;
     cursor: not-allowed;
     transform: none;
+  }
+}
+
+// MDEditor 관련 스타일
+.editorActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding: 8px 0;
+}
+
+.imageUploadButton {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #218838;
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// MDEditor 커스터마이징
+:global(.w-md-editor) {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  
+  &.w-md-editor-focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+  
+  .w-md-editor-bar {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .w-md-editor-text-textarea,
+  .w-md-editor-text {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
   }
 }
 
