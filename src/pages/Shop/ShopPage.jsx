@@ -3,6 +3,8 @@ import ProductCard from "../../components/Shop/ProductCard";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./ShopPage.module.scss";
 import { getShopItems } from "../../api/shopService.js";
+import Modal from "../../components/common/Modal/Modal.jsx";
+import ProductEditForm from "../../components/Shop/ProductEditForm.jsx";
 
 function ShopPage() {
   const [products, setProducts] = useState([]);
@@ -12,6 +14,9 @@ function ShopPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const isShopPage = location.pathname === "/shop";
+
+  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+  const [selectedProductEdit, setSelectedProductEdit] = useState(null);
 
   const fetchShopItems = async () => {
     try {
@@ -62,10 +67,29 @@ function ShopPage() {
               product={product}
               userPoint={userPoint}
               onPurchaseSuccess={fetchShopItems}
+              onEdit={(product) => {
+                setSelectedProductEdit(product);
+                setIsOpenEditModal(true);
+              }}
             />
           ))
         )}
       </div>
+
+      {isOpenEditModal && (
+        <Modal
+          isOpen={isOpenEditModal}
+          onClose={() => setIsOpenEditModal(false)}
+        >
+          <ProductEditForm
+            product={selectedProductEdit}
+            onChange={() => {
+              setIsOpenEditModal(false);
+              fetchShopItems();
+            }}
+          />
+        </Modal>
+      )}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import apiInstance from "../../api/axiosInstance.js";
+import Modal from "../../components/common/Modal/Modal.jsx";
 
 function AdminShopPage() {
   const [formData, setFormData] = useState({

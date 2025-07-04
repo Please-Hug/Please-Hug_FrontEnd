@@ -6,8 +6,9 @@ import styles from "./ProductCard.module.scss";
 import GiftModal from "./GiftModal.jsx";
 import { FaGift } from "react-icons/fa6";
 import useTokenPayload from "../../stores/tokenPayloadStore.js";
+import { deleteShopItem } from "../../api/shopService.js";
 
-const ProductCard = ({ product, onPurchaseSuccess }) => {
+const ProductCard = ({ product, onPurchaseSuccess, onEdit }) => {
   const { id, name, brand, imageUrl, available, price, quantity } = product;
   const [imageSrc, setImageSrc] = useState("/default-product.png");
   const [showGiftModal, setShowGiftModal] = useState(false);
@@ -71,17 +72,32 @@ const ProductCard = ({ product, onPurchaseSuccess }) => {
     <div className={styles.productCard}>
       <img src={imageSrc} alt={name} className={styles.productImage} />
       <div className={styles.productInfo}>
-        {tokenPayload?.role === "ROLE_ADMIN" && (
+        {["ADMIN", "ROLE_ADMIN"].includes(tokenPayload?.role) && (
           <div className={styles.adminActions}>
             <button
               className={styles.editButton}
-              onClick={() => console.log("Edit product:", id)}
+              onClick={() => {
+                if (onEdit) onEdit(product);
+              }}
             >
               Edit
             </button>
             <button
               className={styles.deleteButton}
-              onClick={() => console.log("Delete product:", id)}
+              onClick={() => {
+                if (window.confirm("정말로 이 상품을 삭제하시겠습니까?")) {
+                  deleteShopItem(id)
+                    .then(() => {
+                      alert("상품이 삭제되었습니다.");
+                      window.location.reload(); // 페이지 새로고침
+                      // 추가적인 삭제 후 작업
+                    })
+                    .catch((error) => {
+                      console.error("상품 삭제 중 오류 발생:", error);
+                      alert("상품 삭제에 실패했습니다.");
+                    });
+                }
+              }}
             >
               Delete
             </button>
