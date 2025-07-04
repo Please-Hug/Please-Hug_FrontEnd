@@ -12,12 +12,14 @@ function MainLayout() {
   const setUserInfo = useUserStore((state) => state.setUserInfo);
   const setTokenPayload = useTokenPayload((state) => state.setTokenPayload);
 
-  const token = localStorage.getItem("accessToken");
-  if (token) {
-    const payload = jwtDecode(token);
-    setTokenPayload(payload);
-    console.log("Token payload set:", payload);
-  }
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      const payload = jwtDecode(token);
+      setTokenPayload(payload);
+      console.log("Token payload set:", payload);
+    }
+  }, []);
 
   const navigate = useNavigate();
   useEffect(() => {
