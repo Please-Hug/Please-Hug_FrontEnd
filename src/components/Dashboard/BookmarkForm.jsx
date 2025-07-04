@@ -41,13 +41,16 @@ function BookmarkForm({ open, onClose, onSubmit, initialData }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        if (editItem) {
-        await updateBookmark(editItem.id, { title, link });
+        if (initialData) {
+        await updateBookmark(initialData.id, { title, link });
         } else {
         await addBookmark({ title, link });
         }
-        closeModal();
-        await loadBookmarks();
+        onClose();
+        if (onSubmit) {
+          await onSubmit();
+        }
+        
     } catch {
         alert("저장 실패");
     }

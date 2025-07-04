@@ -12,7 +12,7 @@ function BookmarkList() {
       const res = await getBookmarks();
       setBookmarks(res || []); // 원래 res.data였는데 이렇게 해도 에러 안 나나
     } catch (e) {
-      console.error('북마크 로드 실패: ', error);
+      console.error('북마크 로드 실패: ', e);
       setBookmarks([]);
     }
   };
@@ -48,7 +48,7 @@ function BookmarkList() {
       setModalOpen(false);
       loadBookmarks();
     } catch (e) {
-      console.error('북마크 저장 실패: ', error);
+      console.error('북마크 저장 실패: ', e);
       alert('저장에 실패했습니다, 다시 시도해주세요.');
     }
   };

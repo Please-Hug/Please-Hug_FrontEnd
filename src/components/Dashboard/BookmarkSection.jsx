@@ -146,7 +146,7 @@ function BookmarkSection() {
               className={styles.chip}
               onContextMenu={(e) => handleChipRightClick(e, bm.id)}
               onKeyDown={(e) => {
-                if (e.KEY === 'Enter' || e.key === ' ') {
+                if (e.Key === 'Enter' || e.key === ' ') {
                     window.open(bm.link, '_blank');
                 }
               }}
