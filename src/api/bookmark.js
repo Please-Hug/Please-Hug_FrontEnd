@@ -18,7 +18,7 @@ export function getBookmarks() {
  * POST /api/v1/bookmark
  * Body: { title: string, link: string }
  */
-export function createBookmark({ title, link }) {
+export function addBookmark({ title, link }) {
   return api.post("/api/v1/bookmark", { title, link });
 }
 
@@ -35,6 +35,6 @@ export function updateBookmark(id, { title, link }) {
  * 북마크 삭제
  * DELETE /api/v1/bookmark/{id}
  */
-export function deleteBookmark(id) {
+export function removeBookmark(id) {
   return api.delete(`/api/v1/bookmark/${id}`);
 }
