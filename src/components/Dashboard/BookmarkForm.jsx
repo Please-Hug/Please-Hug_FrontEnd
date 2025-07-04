@@ -35,10 +35,10 @@ function BookmarkForm({ open, onClose, onSubmit, initialData }) {
       }
     };
     const modalElement = document.querySelector('[role="dialog"]');
-      if (modalElement) {
-       modalElement.addEventListener("keydown", handleKeyDown);
+    if (modalElement) {
+      modalElement.addEventListener("keydown", handleKeyDown);
       return () => modalElement.removeEventListener("keydown", handleKeyDown);
-      }
+    }
 
   }, [open, onClose]);
 
