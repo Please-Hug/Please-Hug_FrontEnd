@@ -34,8 +34,12 @@ function BookmarkForm({ open, onClose, onSubmit, initialData }) {
         }
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    const modalElement = document.querySelector('[role="dialog"]');
+      if (modalElement) {
+       modalElement.addEventListener("keydown", handleKeyDown);
+      return () => modalElement.removeEventListener("keydown", handleKeyDown);
+      }
+
   }, [open, onClose]);
 
   const handleSubmit = async (e) => {
