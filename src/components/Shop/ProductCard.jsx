@@ -89,7 +89,7 @@ const ProductCard = ({ product, onPurchaseSuccess, onEdit }) => {
                   deleteShopItem(id)
                     .then(() => {
                       alert("상품이 삭제되었습니다.");
-                      window.location.reload(); // 페이지 새로고침
+                      if (onPurchaseSuccess) onPurchaseSuccess(); // Refresh UI without reload
                       // 추가적인 삭제 후 작업
                     })
                     .catch((error) => {
