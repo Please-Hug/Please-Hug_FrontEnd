@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import apiInstance from "../../api/axiosInstance.jsx";
 import ProductCard from "../../components/Shop/ProductCard";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./ShopPage.module.scss";
+import { getShopItems } from "../../api/shopService.js";
 
 function ShopPage() {
   const [products, setProducts] = useState([]);
@@ -15,13 +15,11 @@ function ShopPage() {
 
   const fetchShopItems = async () => {
     try {
-      const response = await apiInstance.get("/api/v1/shop");
+      const items = await getShopItems();
+      setProducts(Array.isArray(items.data) ? items.data : []);
 
-      const items = response.data?.data;
-      setProducts(Array.isArray(items) ? items : []);
-
-      if (response.data?.userPoint != null) {
-        setUserPoint(response.data.userPoint);
+      if (items.userPoint != null) {
+        setUserPoint(items.userPoint);
       }
     } catch (err) {
       console.error("상품 목록 요청 실패:", err);

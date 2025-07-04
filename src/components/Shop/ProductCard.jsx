@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import useUserStore from "../../stores/userStore";
-import apiInstance from "../../api/axiosInstance.jsx";
+import apiInstance from "../../api/axiosInstance.js";
 import styles from "./ProductCard.module.scss";
 import GiftModal from "./GiftModal.jsx";
 import { FaGift } from "react-icons/fa6";
+import useTokenPayload from "../../stores/tokenPayloadStore.js";
 
 const ProductCard = ({ product, onPurchaseSuccess }) => {
   const { id, name, brand, imageUrl, available, price, quantity } = product;
@@ -13,6 +14,8 @@ const ProductCard = ({ product, onPurchaseSuccess }) => {
 
   const userInfo = useUserStore((state) => state.userInfo);
   const userPoint = userInfo?.point ?? 0;
+
+  const tokenPayload = useTokenPayload((state) => state.tokenPayload);
 
   useEffect(() => {
     let objectUrl;
@@ -68,6 +71,22 @@ const ProductCard = ({ product, onPurchaseSuccess }) => {
     <div className={styles.productCard}>
       <img src={imageSrc} alt={name} className={styles.productImage} />
       <div className={styles.productInfo}>
+        {tokenPayload?.role === "ROLE_ADMIN" && (
+          <div className={styles.adminActions}>
+            <button
+              className={styles.editButton}
+              onClick={() => console.log("Edit product:", id)}
+            >
+              Edit
+            </button>
+            <button
+              className={styles.deleteButton}
+              onClick={() => console.log("Delete product:", id)}
+            >
+              Delete
+            </button>
+          </div>
+        )}
         <p className={styles.brand}>{brand}</p>
         <h3 className={styles.name}>{name}</h3>
         <p className={styles.quantity}>{quantity}개 남음</p>

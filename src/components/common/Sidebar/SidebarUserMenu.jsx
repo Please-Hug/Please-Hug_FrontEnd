@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useUserStore from "../../../stores/userStore";
 import emptyUserProfile from "../../../assets/images/user/empty-user-profile.svg";
 import { FaRightFromBracket } from "react-icons/fa6";
-import api from "../../../api/axiosInstance.jsx";
+import api from "../../../api/axiosInstance.js";
 
 function SidebarUserMenu() {
   const navigate = useNavigate();
@@ -18,11 +18,11 @@ function SidebarUserMenu() {
       <ul>
         <li className={styles.userInfo}>
           <img
-              src={
-                userInfo?.profileImage
-                    ? `${api.defaults.baseURL}${userInfo.profileImage}`
-                    : emptyUserProfile
-              }
+            src={
+              userInfo?.profileImage
+                ? `${api.defaults.baseURL}${userInfo.profileImage}`
+                : emptyUserProfile
+            }
             alt="User Profile"
             className={styles.userProfileImage}
           />

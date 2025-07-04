@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import apiInstance from "../../api/axiosInstance.jsx";
+import apiInstance from "../../api/axiosInstance.js";
 import styles from "./ShopHistoryPage.module.scss";
 
 function ShopHistoryPage() {
