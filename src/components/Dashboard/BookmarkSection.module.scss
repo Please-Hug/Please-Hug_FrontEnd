@@ -1,0 +1,156 @@
+.section {
+  margin: 2rem 0;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.addBtn {
+  background: #2563eb;
+  color: #fff;
+  padding: 7px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.11);
+}
+
+.chipList {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 3px 0;
+  scrollbar-width: none;
+  ms-overflow-style: none;
+  flex: 1;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  background: #fff;
+  color: #2563eb;
+  border: 1.5px solid #d5e2fb;
+  border-radius: 20px;
+  padding: 6px 18px;
+  min-height: 32px;
+  min-width: 40px;
+  max-width: 200px;
+  font-weight: 500;
+  font-size: 15px;
+  box-shadow: 0 2px 10px rgba(55,109,223,0.07);
+  cursor: pointer;
+  transition: border 0.15s, box-shadow 0.15s, background 0.14s;
+  margin-right: 2px;
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chipLink {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 140px;
+  display: block;
+}
+
+.contextMenu {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.16);
+  min-width: 110px;
+  z-index: 2000;
+  padding: 4px 0;
+  margin-top: 4px;
+}
+
+.menuItem {
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+  transition: background 0.14s;
+  border: none;
+  background: none;
+}
+
+.modalBackdrop {
+  position: fixed;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.18);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+}
+
+.modalCard {
+  background: #fff;
+  color: #222;
+  padding: 28px;
+  border-radius: 16px;
+  min-width: 340px;
+  box-shadow: 0 8px 36px rgba(0,0,0,0.14);
+}
+
+.label {
+  display: block;
+  color: #22314d;
+  font-weight: 500;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 7px;
+  border: 1.3px solid #e4e8f1;
+  background: #f6f8fb;
+  color: #20262d;
+  font-size: 16px;
+  margin-top: 3px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.modalActionRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.modalCancelBtn {
+  background: #f1f3fa;
+  color: #222;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 8px 18px;
+  cursor: pointer;
+}
+
+.modalOkBtn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 8px 18px;
+  cursor: pointer;
+}

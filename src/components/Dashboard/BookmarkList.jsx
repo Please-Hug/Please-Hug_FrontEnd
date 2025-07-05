@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getBookmarks, addBookmark, updateBookmark, removeBookmark } from '../../api/bookmark';
+import { getBookmarks, addBookmark, updateBookmark, removeBookmark } from '../../api/bookmarkService';
 import BookmarkForm from './BookmarkForm';
 
 function BookmarkList() {
@@ -8,8 +8,13 @@ function BookmarkList() {
   const [editItem, setEditItem] = useState(null);
 
   const loadBookmarks = async () => {
-    const res = await getBookmarks();
-    setBookmarks(res.data);
+    try{
+      const res = await getBookmarks();
+      setBookmarks(res || []); // 원래 res.data였는데 이렇게 해도 에러 안 나나
+    } catch (e) {
+      console.error('북마크 로드 실패: ', e);
+      setBookmarks([]);
+    }
   };
 
   useEffect(() => {
@@ -34,13 +39,18 @@ function BookmarkList() {
   };
 
   const handleFormSubmit = async (data) => {
-    if (editItem) {
-      await updateBookmark(editItem.id, data);
-    } else {
-      await addBookmark(data);
+    try{
+      if (editItem) {
+        await updateBookmark(editItem.id, data);
+      } else {
+        await addBookmark(data);
+      }
+      setModalOpen(false);
+      loadBookmarks();
+    } catch (e) {
+      console.error('북마크 저장 실패: ', e);
+      alert('저장에 실패했습니다, 다시 시도해주세요.');
     }
-    setModalOpen(false);
-    loadBookmarks();
   };
 
   return (
