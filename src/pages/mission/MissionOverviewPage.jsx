@@ -12,9 +12,9 @@ import MissionDetailCard from "../../components/Mission/MissionDetailCard";
 import TabComponent from "../../components/common/TabComponent/TabComponent";
 import useBreadcrumbStore from "../../stores/breadcrumbStore";
 import useTokenPayload from "../../stores/tokenPayloadStore";
-import Modal from "../../components/common/Modal/Modal";
 import EditMissionGroupModal from "../../components/Mission/EditMissionGroupModal";
 import AddMissionGroupModal from "../../components/Mission/AddMissionGroupModal";
+import AddMissionModal from "../../components/Mission/AddMissionModal";
 
 function MissionOverviewPage() {
   const [missionGroups, setMissionGroups] = useState([]);
@@ -28,8 +28,14 @@ function MissionOverviewPage() {
   const sideModalWidth = 800;
   const { setBreadcrumbItems } = useBreadcrumbStore();
   const tokenPayload = useTokenPayload((state) => state.tokenPayload);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditMissionGroupModalOpen, setIsEditMissionGroupModalOpen] =
+    useState(false);
+  const [isAddMissionGroupModalOpen, setIsAddMissionGroupModalOpen] =
+    useState(false);
+
+  const [isEditMissionModalOpen, setIsEditMissionModalOpen] = useState(false);
+  const [isAddMissionModalOpen, setIsAddMissionModalOpen] = useState(false);
+
   const [editMissionGroup, setEditMissionGroup] = useState(null);
 
   useEffect(() => {
@@ -128,6 +134,9 @@ function MissionOverviewPage() {
       missionLevels.sort((a, b) => a - b);
       setMissionRows(missionRows);
       setMissionLevels(missionLevels);
+    } else {
+      setMissionRows({});
+      setMissionLevels([]);
     }
   }, [missions]);
 
@@ -144,7 +153,7 @@ function MissionOverviewPage() {
     if (tokenPayload?.role === "ROLE_ADMIN") {
       const missionGroup = item.missionGroup;
       setEditMissionGroup(missionGroup);
-      setIsEditModalOpen(true);
+      setIsEditMissionGroupModalOpen(true);
     }
   };
 
@@ -165,7 +174,15 @@ function MissionOverviewPage() {
       {tokenPayload?.role === "ROLE_ADMIN" && (
         <button
           className={styles.addMissionGroupButton}
-          onClick={() => setIsAddModalOpen(true)}
+          onClick={() => setIsAddMissionGroupModalOpen(true)}
+        >
+          추가
+        </button>
+      )}
+      {tokenPayload?.role === "ROLE_ADMIN" && (
+        <button
+          className={styles.addMissionButton}
+          onClick={() => setIsAddMissionModalOpen(true)}
         >
           추가
         </button>
@@ -221,18 +238,26 @@ function MissionOverviewPage() {
         />
       </SideModal>
       <EditMissionGroupModal
-        isOpen={isEditModalOpen}
+        isOpen={isEditMissionGroupModalOpen}
         onClose={() => {
           fetchMissionGroups();
-          setIsEditModalOpen(false);
+          setIsEditMissionGroupModalOpen(false);
         }}
         missionGroup={editMissionGroup}
       />
       <AddMissionGroupModal
-        isOpen={isAddModalOpen}
+        isOpen={isAddMissionGroupModalOpen}
         onClose={() => {
           fetchMissionGroups();
-          setIsAddModalOpen(false);
+          setIsAddMissionGroupModalOpen(false);
+        }}
+      />
+      <AddMissionModal
+        isOpen={isAddMissionModalOpen}
+        groupId={activeGroup.id}
+        onClose={() => {
+          fetchMissionGroups();
+          setIsAddMissionModalOpen(false);
         }}
       />
     </div>

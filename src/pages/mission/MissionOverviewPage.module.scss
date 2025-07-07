@@ -49,3 +49,20 @@
     background-color: #45a049;
   }
 }
+
+.addMissionButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 3px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  right: 30px;
+  top: 190px;
+  font-size: 14px;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}

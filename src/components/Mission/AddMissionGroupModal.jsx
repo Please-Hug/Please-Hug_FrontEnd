@@ -50,6 +50,7 @@ function AddMissionGroupModal({ isOpen, onClose }) {
       }}
     >
       <form>
+        <h2>미션 그룹 추가</h2>
         <label>그룹 이름:</label>
         <input
           type="text"

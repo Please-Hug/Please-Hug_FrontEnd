@@ -68,6 +68,7 @@ function EditMissionGroupModal({ isOpen, onClose, missionGroup }) {
       }}
     >
       <form>
+        <h2>미션 그룹 수정</h2>
         <label>그룹 이름:</label>
         <input
           type="text"

@@ -190,3 +190,13 @@ export const addMissionGroup = async (name, teacherUsername) => {
     throw error;
   }
 };
+
+export const addMission = async (newMission) => {
+  try {
+    const response = await api.post(`/api/v1/missions`, newMission);
+    return response.data;
+  } catch (error) {
+    console.error("미션 추가 실패:", error);
+    throw error;
+  }
+};
