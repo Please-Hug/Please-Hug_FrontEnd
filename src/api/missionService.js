@@ -154,3 +154,39 @@ export const getMissionFeedback = async (userMissionId) => {
     throw error;
   }
 };
+
+export const updateMissionGroup = async (groupId, name, teacherUsername) => {
+  try {
+    const response = await api.put(`/api/v1/mission-groups/${groupId}`, {
+      name,
+      teacherUsername,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("미션 그룹 수정 실패:", error);
+    throw error;
+  }
+};
+
+export const deleteMissionGroup = async (groupId) => {
+  try {
+    const response = await api.delete(`/api/v1/mission-groups/${groupId}`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 그룹 삭제 실패:", error);
+    throw error;
+  }
+};
+
+export const addMissionGroup = async (name, teacherUsername) => {
+  try {
+    const response = await api.post("/api/v1/mission-groups", {
+      name,
+      teacherUsername,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("미션 그룹 추가 실패:", error);
+    throw error;
+  }
+};

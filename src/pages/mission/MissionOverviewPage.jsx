@@ -11,6 +11,10 @@ import SideModal from "../../components/common/SideModal/SideModal";
 import MissionDetailCard from "../../components/Mission/MissionDetailCard";
 import TabComponent from "../../components/common/TabComponent/TabComponent";
 import useBreadcrumbStore from "../../stores/breadcrumbStore";
+import useTokenPayload from "../../stores/tokenPayloadStore";
+import Modal from "../../components/common/Modal/Modal";
+import EditMissionGroupModal from "../../components/Mission/EditMissionGroupModal";
+import AddMissionGroupModal from "../../components/Mission/AddMissionGroupModal";
 
 function MissionOverviewPage() {
   const [missionGroups, setMissionGroups] = useState([]);
@@ -23,34 +27,46 @@ function MissionOverviewPage() {
   const [activeMission, setActiveMission] = useState(null);
   const sideModalWidth = 800;
   const { setBreadcrumbItems } = useBreadcrumbStore();
+  const tokenPayload = useTokenPayload((state) => state.tokenPayload);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editMissionGroup, setEditMissionGroup] = useState(null);
+
   useEffect(() => {
     setBreadcrumbItems([{ label: "미션", path: "/mission" }]);
   }, [setBreadcrumbItems]);
 
-  useEffect(() => {
-    const fetchMissionGroups = async () => {
-      try {
-        const groups = await getMyMissionGroups();
-        const newGroups = [];
-        groups.data.forEach((group) => {
-          newGroups.push({
-            ...group,
-            name: group.missionGroup.name,
-          });
+  const fetchMissionGroups = useCallback(async () => {
+    try {
+      const groups = await getMyMissionGroups();
+      const newGroups = [];
+      groups.data.forEach((group) => {
+        newGroups.push({
+          ...group,
+          name: group.missionGroup.name,
         });
-        setMissionGroups(newGroups);
-      } catch (error) {
-        console.error("미션 그룹을 가져오는 데 실패했습니다:", error);
-      }
-    };
-
-    fetchMissionGroups();
+      });
+      setMissionGroups(newGroups);
+    } catch (error) {
+      console.error("미션 그룹을 가져오는 데 실패했습니다:", error);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchMissionGroups();
+  }, [fetchMissionGroups]);
 
   useEffect(() => {
     if (activeGroup === null && missionGroups.length > 0) {
       // 초기 활성 그룹 설정
       setActiveGroup(missionGroups[0].missionGroup);
+    } else if (activeGroup !== null) {
+      const group = missionGroups.find(
+        (g) => g.missionGroup.id === activeGroup.id
+      );
+      if (group) {
+        setActiveGroup(group.missionGroup);
+      }
     }
   }, [missionGroups, activeGroup]);
 
@@ -124,6 +140,14 @@ function MissionOverviewPage() {
     }
   };
 
+  const handleEditClick = (item) => {
+    if (tokenPayload?.role === "ROLE_ADMIN") {
+      const missionGroup = item.missionGroup;
+      setEditMissionGroup(missionGroup);
+      setIsEditModalOpen(true);
+    }
+  };
+
   if (!activeGroup) {
     return <div>로딩 중...</div>;
   }
@@ -136,7 +160,16 @@ function MissionOverviewPage() {
         onTabChange={(item) => {
           setActiveGroup(item.missionGroup);
         }}
+        onEditClick={handleEditClick}
       />
+      {tokenPayload?.role === "ROLE_ADMIN" && (
+        <button
+          className={styles.addMissionGroupButton}
+          onClick={() => setIsAddModalOpen(true)}
+        >
+          추가
+        </button>
+      )}
       <div className={styles.missionTabPage}>
         <ul className={styles.missionLevel}>
           {missionLevels.map((level, index) => (
@@ -187,6 +220,21 @@ function MissionOverviewPage() {
           onChallenge={handleChallenge}
         />
       </SideModal>
+      <EditMissionGroupModal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          fetchMissionGroups();
+          setIsEditModalOpen(false);
+        }}
+        missionGroup={editMissionGroup}
+      />
+      <AddMissionGroupModal
+        isOpen={isAddModalOpen}
+        onClose={() => {
+          fetchMissionGroups();
+          setIsAddModalOpen(false);
+        }}
+      />
     </div>
   );
 }
