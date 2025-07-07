@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getStudyDiary, updateStudyDiary } from "../../api/studyDiaryService";
+import { getStudyDiary, updateStudyDiary, uploadStudyDiaryImage } from "../../api/studyDiaryService";
+import MDEditor from "@uiw/react-md-editor";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+import remarkGfm from "remark-gfm";
 import styles from "./StudyDiaryEditPage.module.scss";
 
 function StudyDiaryEditPage() {
@@ -10,6 +14,8 @@ function StudyDiaryEditPage() {
     title: "",
     content: "",
   });
+  const fileInputRef = useRef(null);
+  const mdEditorRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [originalData, setOriginalData] = useState(null);
@@ -48,7 +54,7 @@ function StudyDiaryEditPage() {
 2. **useState와 상태 관리**
    - 상태 업데이트는 비동기적으로 처리됨
    - 이전 상태를 기반으로 업데이트할 때는 함수형 업데이트 사용`,
-        userName: "김학습",
+        name: "김학습",
         createdAt: "2024-01-15T10:30:00"
       };
       
@@ -71,15 +77,72 @@ function StudyDiaryEditPage() {
       alert("제목은 100자를 초과할 수 없습니다.");
       return;
     }
-    if (name === "content" && value.length > 5000) {
-      alert("내용은 5000자를 초과할 수 없습니다.");
-      return;
-    }
     
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleImageInputClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const res = await uploadStudyDiaryImage(file);
+      const markdownLink = res?.data?.markdownImageLink || `![${res?.data?.originalFileName}](${res?.data?.imageUrl})`;
+
+      // 현재 커서 위치에 이미지 삽입
+      insertImageAtCursor(markdownLink);
+    } catch (error) {
+      console.error("이미지 업로드 실패:", error);
+      alert("이미지 업로드에 실패했습니다.");
+    } finally {
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  // 현재 커서 위치에 이미지를 삽입하는 함수
+  const insertImageAtCursor = (markdownLink) => {
+    const editor = mdEditorRef.current?.editor;
+    
+    if (editor && editor.getCodeMirror) {
+      const cm = editor.getCodeMirror();
+      const cursor = cm.getCursor();
+      const line = cm.getLine(cursor.line);
+      
+      // 현재 줄이 비어있지 않으면 새 줄에서 시작
+      const isEmptyLine = !line || line.trim() === '';
+      const insertText = isEmptyLine ? markdownLink : `\n${markdownLink}`;
+      
+      // 현재 위치에 이미지 삽입
+      cm.replaceRange(insertText, cursor);
+      
+      // 이미지 다음 줄로 커서 이동
+      const newCursor = { 
+        line: cursor.line + (isEmptyLine ? 0 : 1), 
+        ch: markdownLink.length 
+      };
+      cm.setCursor(newCursor);
+      
+      // 에디터에 포커스
+      cm.focus();
+      
+      console.log("✅ 이미지가 커서 위치에 삽입되었습니다.");
+    } else {
+      // fallback: MDEditor ref가 없거나 CodeMirror 접근 불가능한 경우
+      console.log("⚠️ 커서 위치 접근 불가, 끝에 추가합니다.");
+      setFormData(prev => ({
+        ...prev,
+        content: prev.content ? `${prev.content}\n${markdownLink}\n` : `${markdownLink}\n`
+      }));
+    }
   };
 
   // 폼 제출 처리
@@ -165,7 +228,7 @@ function StudyDiaryEditPage() {
       </div>
 
       <div className={styles.editInfo}>
-        <p>작성자: {originalData?.userName}</p>
+        <p>작성자: {originalData?.name}</p>
         <p>최초 작성일: {originalData?.createdAt ? new Date(originalData.createdAt).toLocaleDateString('ko-KR') : ''}</p>
       </div>
 
@@ -191,21 +254,36 @@ function StudyDiaryEditPage() {
 
         <div className={styles.formGroup}>
           <label htmlFor="content">내용 *</label>
-          <textarea
-            id="content"
-            name="content"
+          <MDEditor
+            ref={mdEditorRef}
             value={formData.content}
-            onChange={handleChange}
-            placeholder="수정할 내용을 입력하세요"
-            rows={20}
-            maxLength={5000}
-            required
+            onChange={(value) =>
+              setFormData(prev => ({ ...prev, content: value || "" }))
+            }
+            height={500}
+            previewOptions={{ remarkPlugins: [remarkGfm] }}
           />
-                     <span className={`${styles.charCount} ${
-             formData.content.length > 4000 ? styles.warning : ''
-           } ${formData.content.length > 4800 ? styles.danger : ''}`}>
-             {formData.content.length}/5000자
-           </span>
+          <div className={styles.editorActions}>
+            <button
+              type="button"
+              className={styles.imageUploadButton}
+              onClick={handleImageInputClick}
+            >
+              이미지 업로드
+            </button>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleImageChange}
+            />
+            <span className={`${styles.charCount} ${
+              formData.content.length > 4000 ? styles.warning : ''
+            } ${formData.content.length > 4800 ? styles.danger : ''}`}>
+              {formData.content.length}/5000자
+            </span>
+          </div>
         </div>
 
         <div className={styles.buttonGroup}>

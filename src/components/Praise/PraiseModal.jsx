@@ -9,7 +9,7 @@ import thanks from "../../assets/images/praise/thanks.png";
 import recognize from "../../assets/images/praise/recognize.png";
 import cheer from "../../assets/images/praise/cheer.png";
 
-function PraiseModal({ onClose }) {
+function PraiseModal({ onClose, onPraiseCreated }) {
   const [receiverInput, setReceiverInput] = useState("");
   const [userList, setUserList] = useState([]);
   const [receivers, setReceivers] = useState([]);
@@ -73,11 +73,16 @@ function PraiseModal({ onClose }) {
     }
 
     try {
-      await submitPraise({
+      const response = await submitPraise({
         receivers,
         praiseContent,
         praiseType,
       });
+
+      if(onPraiseCreated){
+        onPraiseCreated(response);
+      }
+
       onClose();
     } catch (err) {
       console.error("칭찬 제출 실패:", err);

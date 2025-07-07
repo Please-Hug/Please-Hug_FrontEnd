@@ -1,75 +1,97 @@
 import { useEffect, useState } from "react";
-import apiInstance from "../../api/axiosInstance.jsx";
 import ProductCard from "../../components/Shop/ProductCard";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./ShopPage.module.scss";
+import { getShopItems } from "../../api/shopService.js";
+import Modal from "../../components/common/Modal/Modal.jsx";
+import ProductEditForm from "../../components/Shop/ProductEditForm.jsx";
 
 function ShopPage() {
-    const [products, setProducts] = useState([]);
-    const [userPoint, setUserPoint] = useState(0);
-    const [error, setError] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [userPoint, setUserPoint] = useState(0);
+  const [error, setError] = useState(null);
 
-    const navigate = useNavigate();
-    const location = useLocation();
-    const isShopPage = location.pathname === "/shop";
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isShopPage = location.pathname === "/shop";
 
-    const fetchShopItems = async () => {
-        try {
-            const response = await apiInstance.get("/api/v1/shop");
+  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+  const [selectedProductEdit, setSelectedProductEdit] = useState(null);
 
-            const items = response.data?.data;
-            setProducts(Array.isArray(items) ? items : []);
+  const fetchShopItems = async () => {
+    try {
+      const items = await getShopItems();
+      setProducts(Array.isArray(items.data) ? items.data : []);
 
-            if (response.data?.userPoint != null) {
-                setUserPoint(response.data.userPoint);
-            }
-        } catch (err) {
-            console.error("상품 목록 요청 실패:", err);
-            setError("상품을 불러오지 못했습니다.");
-        }
-    };
+      if (items.userPoint != null) {
+        setUserPoint(items.userPoint);
+      }
+    } catch (err) {
+      console.error("상품 목록 요청 실패:", err);
+      setError("상품을 불러오지 못했습니다.");
+    }
+  };
 
-    useEffect(() => {
-        fetchShopItems();
-    }, []);
+  useEffect(() => {
+    fetchShopItems();
+  }, []);
 
-    return (
-        <div className={styles.container}>
-            <h1>상점</h1>
+  return (
+    <div className={styles.container}>
+      <h2>상점</h2>
 
-            <div className={styles.buttonContainer}>
-                <button
-                    className={`${styles.button} ${isShopPage ? styles.active : ''}`}
-                    onClick={() => navigate("/shop")}
-                >
-                    상품 목록
-                </button>
-                <button
-                    className={`${styles.button} ${!isShopPage ? styles.active : ''}`}
-                    onClick={() => navigate("/shopHistory")}
-                >
-                    구매 현황
-                </button>
-            </div>
+      <div className={styles.buttonContainer}>
+        <button
+          className={`${styles.button} ${isShopPage ? styles.active : ""}`}
+          onClick={() => navigate("/shop")}
+        >
+          상품 목록
+        </button>
+        <button
+          className={`${styles.button} ${!isShopPage ? styles.active : ""}`}
+          onClick={() => navigate("/shopHistory")}
+        >
+          구매 현황
+        </button>
+      </div>
 
-            {error && <p className={styles.error}>{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
 
-            <div className={styles.productList}>
-                {products.length === 0 ? (
-                    <p>상품이 없습니다.</p>
-                ) : (
-                    products.map((product) => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                            userPoint={userPoint}
-                            onPurchaseSuccess={fetchShopItems}
-                        />
-                    ))
-                )}
-            </div>
-        </div>
-    );
+      <div className={styles.productList}>
+        {products.length === 0 ? (
+          <p>상품이 없습니다.</p>
+        ) : (
+          products.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              userPoint={userPoint}
+              onPurchaseSuccess={fetchShopItems}
+              onEdit={(product) => {
+                setSelectedProductEdit(product);
+                setIsOpenEditModal(true);
+              }}
+            />
+          ))
+        )}
+      </div>
+
+      {isOpenEditModal && (
+        <Modal
+          isOpen={isOpenEditModal}
+          onClose={() => setIsOpenEditModal(false)}
+        >
+          <ProductEditForm
+            product={selectedProductEdit}
+            onChange={() => {
+              setIsOpenEditModal(false);
+              fetchShopItems();
+            }}
+          />
+        </Modal>
+      )}
+    </div>
+  );
 }
 
 export default ShopPage;

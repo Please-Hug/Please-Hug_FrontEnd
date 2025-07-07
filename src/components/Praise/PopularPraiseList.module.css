@@ -108,3 +108,13 @@
   margin-left: 4px;
 }
 
+
+
+.emptyText {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 14px;
+  color: #999;
+}
+
+

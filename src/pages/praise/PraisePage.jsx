@@ -14,13 +14,17 @@ import RecentPraiseSenders from "../../components/Praise/RecentPraiseSenders";
 
 
 function PraisePage() {
+    const today = new Date();
+    const todayStr = today.toISOString().split("T")[0];
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(),1);
+    const firstDayStr = firstDayOfMonth.toISOString().split("T")[0];
 
     const [ isModalOpen, setIsModalOpen ] = useState(false);
     const [ isDateModalOpen, setIsDateModalOpen ] = useState(false);
     const [ isDetailOpen, setIsDetailOpen ] = useState(false);
 
-    const [ startDate, setStartDate ] = useState(null);
-    const [ endDate, setEndDate ] = useState(null);
+    const [ startDate, setStartDate ] = useState(firstDayStr);
+    const [ endDate, setEndDate ] = useState(todayStr);
     const [ selectedLabel, setSelectedLabel ] = useState("");
 
     const [ praises, setPraises ] = useState([]);
@@ -37,6 +41,9 @@ function PraisePage() {
 
     const[ popularList, setPopularList ] = useState([]);
 
+    const handlePraiseCreated = (newPraise) => {
+        setPraises((prev) => [newPraise, ...prev]);    // 최신 순으로 증가
+    };
 
 
     const handleCardClick = (id) => {
@@ -52,14 +59,14 @@ function PraisePage() {
 
     const fetchPraises = async () => {
         try {
-            const today = new Date();
-            const todayStr = today.toISOString().split("T")[0];
+            // const today = new Date();
+            // const todayStr = today.toISOString().split("T")[0];
             
             const result = await getPraises({
                 keyword: searchKeyword,
                 me: isMe,
-                startDate: startDate || todayStr,
-                endDate: endDate || todayStr,
+                startDate,
+                endDate,
             });
             result.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
             setPraises(result);
@@ -67,6 +74,25 @@ function PraisePage() {
             console.error("칭찬 불러오기 실패:", err);
         }
     };
+
+    const fetchPopularPraises = async () => {
+        try{
+            const result = await getPopularPraises(startDate,endDate);
+            setPopularList(result);
+        } catch(error){
+            console.error("인기 칭찬 글 불러오기 실패:", error);
+        }
+    };
+
+    const handleEmojiReacted = () => {
+        fetchPraises();
+        fetchPopularPraises();
+    };
+
+    useEffect(() => {
+        fetchPraises();
+        fetchPopularPraises();
+    }, []);
     
     useEffect(() => {
         fetchPraises();
@@ -98,13 +124,19 @@ function PraisePage() {
             }
         };
         fetchPopular();
+        fetchPopularPraises();
     }, [startDate, endDate]);
 
   return (
 
     <>    
         {/* 칭찬하기 생성 모달 */}
-        {isModalOpen && <PraiseModal onClose={() => setIsModalOpen(false)} />}
+        {isModalOpen && (
+            <PraiseModal 
+                onClose={() => setIsModalOpen(false)} 
+                onPraiseCreated={handlePraiseCreated}
+            />
+        )}
 
         {/* 날짜 달력 모달 */}
         {isDateModalOpen && (
@@ -134,22 +166,38 @@ function PraisePage() {
                 {/* 📝 칭찬 카드 목록 */}
                 <div className={styles.praiseList}>
                     {/* <PraiseCard ... /> 여러 개 들어갈 자리 */}
-                    {praises.map((praise) => (
-                        <PraiseCard
-                            key={praise.id}
-                            praiseId={praise.id}
-                            senderName={praise.senderName}
-                            receivers={praise.receivers}
-                            content={praise.content}
-                            createdAt={praise.createdAt}
-                            emojis={praise.emojis}
-                            commentCount={praise.commentCount}
-                            type={praise.type}
-                            currentUser={currentUser}
-                            fetchPraises={fetchPraises}
-                            onClick={() => handleCardClick(praise.id)}
-                        />
-                    ))}
+                    {praises.length === 0 ?(
+                        <div className={styles.emptyContainer}>
+                            <div className={styles.emptyTitle}>
+                                해당 기간 동안 칭찬이 없습니다
+                            </div>
+                            <div className={styles.emptySubtitle}>
+                                먼저 칭찬을 작성해 보세요
+                            </div>
+                            <button className={styles.writeBtn} onClick={() => setIsModalOpen(true)}>
+                                동료 칭찬하기
+                            </button>
+                        </div>
+                    ) : (
+                        praises.map((praise) => (
+                            <PraiseCard
+                                key={praise.id}
+                                praise={praise}
+                                praiseId={praise.id}
+                                senderName={praise.senderName}
+                                receivers={praise.receivers}
+                                content={praise.content}
+                                createdAt={praise.createdAt}
+                                emojis={praise.emojis}
+                                commentCount={praise.commentCount}
+                                type={praise.type}
+                                currentUser={currentUser}
+                                fetchPraises={fetchPraises}
+                                onEmojiReacted={handleEmojiReacted}
+                                onClick={() => handleCardClick(praise.id)}
+                            />
+                        ))
+                    )}
 
                     {selectedPraiseId && (
                         <PraiseDetailModal

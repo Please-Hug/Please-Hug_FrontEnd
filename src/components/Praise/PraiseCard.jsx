@@ -36,6 +36,7 @@ function PraiseCard({
     type,
     currentUser,
     fetchPraises,
+    onEmojiReacted = () => {},
     onClick
 }) {
 
@@ -75,6 +76,7 @@ function PraiseCard({
             }
 
             fetchPraises();
+            onEmojiReacted();
         } catch (error) {
             console.error("이모지 처리 실패:", error);
         }
@@ -116,7 +118,7 @@ function PraiseCard({
 
         <div className={styles.footer}>
             <div className={styles.emojiList}>
-            {emojis.map((emoji) => (
+            {emojis?.map((emoji) => (
                 <span 
                     key={emoji.emoji} 
                     className={styles.emoji}
