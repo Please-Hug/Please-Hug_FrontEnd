@@ -172,6 +172,138 @@
   }
 }
 
+// MDEditor 관련 스타일
+.editorActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding: 8px 0;
+}
+
+.imageUploadButton {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  
+  &:hover:not(:disabled) {
+    background: #218838;
+    transform: translateY(-1px);
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.7;
+  }
+}
+
+// MDEditor 컨테이너에 완전히 맞추기
+:global(.w-md-editor) {
+  background: white !important;
+  border: 2px solid #e9ecef !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+  height: 450px !important;
+  
+  &.w-md-editor-focus {
+    border-color: #007bff !important;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1) !important;
+  }
+}
+
+// 툴바
+:global(.w-md-editor-bar) {
+  background: #f8f9fa !important;
+  border-bottom: 1px solid #e9ecef !important;
+  border-radius: 6px 6px 0 0 !important;
+}
+
+// 콘텐츠 영역 전체
+:global(.w-md-editor-content) {
+  height: calc(100% - 40px) !important;
+  display: flex !important;
+}
+
+// 편집 영역
+:global(.w-md-editor-text) {
+  flex: 1 !important;
+  border-right: 1px solid #e9ecef !important;
+}
+
+:global(.w-md-editor-text-container) {
+  height: 100% !important;
+}
+
+:global(.w-md-editor-text-textarea) {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  padding: 16px !important;
+  height: 100% !important;
+  resize: none !important;
+}
+
+// 프리뷰 영역
+:global(.w-md-editor-preview) {
+  flex: 1 !important;
+  padding: 16px !important;
+  overflow-y: auto !important;
+}
+
+// 드래그바 숨기기
+:global(.w-md-editor-content-divider) {
+  display: none !important;
+}
+
+/* 프리뷰 영역 콘텐츠 스타일링 */
+:global(.wmde-markdown) {
+  width: 100% !important;
+  overflow-wrap: break-word !important;
+  
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 4px !important;
+  }
+  
+  pre {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    background: #f8f9fa !important;
+    border-radius: 4px !important;
+  }
+  
+  code {
+    background: #f8f9fa !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+  }
+  
+  table {
+    max-width: 100% !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+  
+  blockquote {
+    border-left: 4px solid #007bff !important;
+    padding-left: 16px !important;
+    margin-left: 0 !important;
+    color: #666 !important;
+  }
+}
+
 /* 반응형 디자인 */
 @media (max-width: 768px) {
   .container {
@@ -198,5 +330,64 @@
     .submitButton {
       width: 100%;
     }
+  }
+  
+  .editorActions {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    
+    .imageUploadButton {
+      width: 100%;
+    }
+    
+    .charCount {
+      position: static;
+      background: #f8f9fa;
+      text-align: center;
+      padding: 8px;
+      border-radius: 6px;
+    }
+  }
+  
+  // 모바일에서 MDEditor 스타일 조정
+  :global(.w-md-editor) {
+    width: 100% !important;
+    max-width: 100% !important;
+    
+    .w-md-editor-text-container {
+      min-height: 280px;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    
+    .w-md-editor-text-textarea,
+    .w-md-editor-text,
+    .w-md-editor-preview {
+      font-size: 14px !important;
+      padding: 12px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    
+    .w-md-editor-bar {
+      padding: 8px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+  }
+  
+  /* 모바일에서는 편집·프리뷰를 세로로 쌓기 */
+  :global(.w-md-editor-content) {
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  :global(.w-md-editor-text),
+  :global(.w-md-editor-preview) {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
   }
 } 

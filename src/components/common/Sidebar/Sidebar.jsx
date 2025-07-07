@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Sidebar.module.scss";
 import emptyUserProfile from "../../../assets/images/user/empty-user-profile.svg";
-import api from "../../../api/axiosInstance.jsx";
+import api from "../../../api/axiosInstance.js";
 import {
   FaLightbulb,
   FaBolt,
@@ -33,7 +33,7 @@ function getQuickMenuItems() {
 
 function getMenuItems() {
   return [
-    { icon: <FaHouse />, label: "홈"},
+    { icon: <FaHouse />, label: "홈" },
     { icon: <FaBook />, label: "배움일기", link: "/study-diary" },
     { icon: <FaThumbsUp />, label: "칭찬", link: "/praises" },
     { icon: <FaGraduationCap />, label: "미션", link: "/mission" },

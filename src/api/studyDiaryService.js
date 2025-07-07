@@ -1,9 +1,15 @@
-import api from "./axiosInstance.jsx";
+import api from "./axiosInstance.js";
 
 // 배움일기 목록 조회
-export const getStudyDiaries = async (page = 0, size = 10, sort = "createdAt") => {
+export const getStudyDiaries = async (
+  page = 0,
+  size = 10,
+  sort = "createdAt"
+) => {
   try {
-    const response = await api.get(`/api/v1/studydiaries?page=${page}&size=${size}&sort=${sort}`);
+    const response = await api.get(
+      `/api/v1/studydiaries?page=${page}&size=${size}&sort=${sort}`
+    );
     return response.data;
   } catch (error) {
     console.error("배움일기 목록 조회 실패:", error);
@@ -28,7 +34,7 @@ export const createStudyDiary = async (diaryData) => {
     // API 명세서에 맞게 title, content만 전송
     const requestData = {
       title: diaryData.title,
-      content: diaryData.content
+      content: diaryData.content,
     };
     const response = await api.post("/api/v1/studydiaries", requestData);
     return response.data;
@@ -44,7 +50,7 @@ export const updateStudyDiary = async (id, diaryData) => {
     // API 명세서에 맞게 title, content만 전송
     const requestData = {
       title: diaryData.title,
-      content: diaryData.content
+      content: diaryData.content,
     };
     const response = await api.put(`/api/v1/studydiaries/${id}`, requestData);
     return response.data;
@@ -68,7 +74,9 @@ export const deleteStudyDiary = async (id) => {
 // 배움일기 검색
 export const searchStudyDiaries = async (keyword, page = 0, size = 10) => {
   try {
-    const response = await api.get(`/api/v1/studydiaries/search?keyword=${encodeURIComponent(keyword)}&page=${page}&size=${size}`);
+    const response = await api.get(
+      `/api/v1/studydiaries/search?keyword=${encodeURIComponent(keyword)}&page=${page}&size=${size}`
+    );
     return response.data;
   } catch (error) {
     console.error("배움일기 검색 실패:", error);
@@ -77,9 +85,16 @@ export const searchStudyDiaries = async (keyword, page = 0, size = 10) => {
 };
 
 // 오늘 하루 인기 배움일기 조회
-export const getTodayPopularStudyDiaries = async (page = 0, size = 10, sort = "likeCount", direction = "DESC") => {
+export const getTodayPopularStudyDiaries = async (
+  page = 0,
+  size = 10,
+  sort = "likeCount",
+  direction = "DESC"
+) => {
   try {
-    const response = await api.get(`/api/v1/studydiaries/today/popular?page=${page}&size=${size}&sort=${sort}&direction=${direction}`);
+    const response = await api.get(
+      `/api/v1/studydiaries/today/popular?page=${page}&size=${size}&sort=${sort}&direction=${direction}`
+    );
     return response.data;
   } catch (error) {
     console.error("오늘 인기 배움일기 조회 실패:", error);
@@ -90,7 +105,10 @@ export const getTodayPopularStudyDiaries = async (page = 0, size = 10, sort = "l
 // 댓글 등록
 export const createComment = async (studyDiaryId, content) => {
   try {
-    const response = await api.post(`/api/v1/studydiaries/${studyDiaryId}/comments`, { content });
+    const response = await api.post(
+      `/api/v1/studydiaries/${studyDiaryId}/comments`,
+      { content }
+    );
     return response.data;
   } catch (error) {
     console.error("댓글 등록 실패:", error);
@@ -101,7 +119,9 @@ export const createComment = async (studyDiaryId, content) => {
 // 댓글 삭제
 export const deleteComment = async (studyDiaryId, commentId) => {
   try {
-    const response = await api.delete(`/api/v1/studydiaries/${studyDiaryId}/comments/${commentId}`);
+    const response = await api.delete(
+      `/api/v1/studydiaries/${studyDiaryId}/comments/${commentId}`
+    );
     return response.data;
   } catch (error) {
     console.error("댓글 삭제 실패:", error);
@@ -112,7 +132,9 @@ export const deleteComment = async (studyDiaryId, commentId) => {
 // 좋아요 토글
 export const toggleLike = async (studyDiaryId) => {
   try {
-    const response = await api.post(`/api/v1/studydiaries/${studyDiaryId}/like`);
+    const response = await api.post(
+      `/api/v1/studydiaries/${studyDiaryId}/like`
+    );
     return response.data;
   } catch (error) {
     console.error("좋아요 토글 실패:", error);
@@ -143,9 +165,16 @@ export const getMyWeeklyStatus = async () => {
 };
 
 // 나의 글 목록 조회
-export const getMyStudyDiaries = async (page = 0, size = 10, sort = "createdAt", direction = "DESC") => {
+export const getMyStudyDiaries = async (
+  page = 0,
+  size = 10,
+  sort = "createdAt",
+  direction = "DESC"
+) => {
   try {
-    const response = await api.get(`/api/v1/studydiaries/my/studyDiaries?page=${page}&size=${size}&sort=${sort}&direction=${direction}`);
+    const response = await api.get(
+      `/api/v1/studydiaries/my/studyDiaries?page=${page}&size=${size}&sort=${sort}&direction=${direction}`
+    );
     return response.data;
   } catch (error) {
     console.error("나의 글 목록 조회 실패:", error);
@@ -154,12 +183,45 @@ export const getMyStudyDiaries = async (page = 0, size = 10, sort = "createdAt",
 };
 
 // 최근 한달간 나의 배움일기 조회 (홈화면 조회용)
-export const getMyRecentStudyDiaries = async (page = 0, size = 20, sort = "createdAt,desc") => {
+export const getMyRecentStudyDiaries = async (
+  page = 0,
+  size = 20,
+  sort = "createdAt,desc"
+) => {
   try {
-    const response = await api.get(`/api/v1/studydiaries/my/home?page=${page}&size=${size}&sort=${sort}`);
+    const response = await api.get(
+      `/api/v1/studydiaries/my/home?page=${page}&size=${size}&sort=${sort}`
+    );
     return response.data;
   } catch (error) {
     console.error("최근 한달간 배움일기 조회 실패:", error);
     throw error;
   }
+};
+
+// Study Diary 이미지 업로드
+export const uploadStudyDiaryImage = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    // Content-Type: multipart/form-data 는 브라우저에서 자동 설정됩니다.
+    const response = await api.post("/api/v1/images/studydiary", formData);
+    return response.data;
+  } catch (error) {
+    console.error("이미지 업로드 실패:", error);
+    throw error;
+  }
+};
+
+// 이미지 Presigned URL 조회
+export const getImagePresignedUrl = async (imageKey) => {
+  try {
+    const response = await api.get(`/api/v1/images/${encodeURIComponent(imageKey)}/url`);
+    return response.data;
+  } catch (error) {
+    console.error("이미지 URL 조회 실패:", error);
+    throw error;
+  }
 }; 
+
