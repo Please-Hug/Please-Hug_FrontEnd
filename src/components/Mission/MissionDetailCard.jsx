@@ -63,9 +63,14 @@ function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
             </p>
             <div className={styles.missionDetailDescription}>
               {mission.description}
-              <span className={styles.missionTipIcon} onClick={handleTipClick}>
-                <FaClipboardQuestion />
-              </span>
+              {mission.tip && (
+                <span
+                  className={styles.missionTipIcon}
+                  onClick={handleTipClick}
+                >
+                  <FaClipboardQuestion />
+                </span>
+              )}
               {tipOpen && (
                 <div className={styles.missionTip}>
                   <h4>Hint</h4>
