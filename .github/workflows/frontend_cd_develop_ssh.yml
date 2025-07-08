@@ -34,7 +34,7 @@ jobs:
           port: 22
           script_stop: true
           script: |
-            cd /home/ec2-user/hugme/backend/Please-Hug_BackEnd
+            cd /home/ec2-user/hugme/frontend/Please-Hug_FrontEnd
             git pull origin develop
             docker-compose -f docker-compose.yml down
             docker-compose -f docker-compose.yml up -d
