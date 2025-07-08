@@ -54,7 +54,7 @@ function AddMissionGroupModal({ isOpen, onClose }) {
         <label>그룹 이름:</label>
         <input
           type="text"
-          defaultValue={newMissionGroup?.name}
+          value={newMissionGroup?.name || ""}
           onChange={(e) =>
             setNewMissionGroup({
               ...newMissionGroup,

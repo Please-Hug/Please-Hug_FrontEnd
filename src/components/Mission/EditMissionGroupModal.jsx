@@ -72,7 +72,7 @@ function EditMissionGroupModal({ isOpen, onClose, missionGroup }) {
         <label>그룹 이름:</label>
         <input
           type="text"
-          defaultValue={editMissionGroup?.name}
+          defaultValue={editMissionGroup?.name || ""}
           onChange={(e) =>
             setEditMissionGroup({
               ...editMissionGroup,
@@ -83,7 +83,7 @@ function EditMissionGroupModal({ isOpen, onClose, missionGroup }) {
         <label>강사:</label>
         {(teachers?.length || 0) > 0 && editMissionGroup?.teacher.username ? (
           <select
-            defaultValue={editMissionGroup?.teacher.username}
+            defaultValue={editMissionGroup?.teacher.username || ""}
             onChange={(e) =>
               setEditMissionGroup({
                 ...editMissionGroup,
