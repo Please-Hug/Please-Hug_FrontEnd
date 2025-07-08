@@ -25,7 +25,7 @@ function AddMissionGroupModal({ isOpen, onClose }) {
         });
       })
       .catch((error) => {
-        console.error("미션 그룹 수정 실패:", error);
+        console.error("미션 그룹 추가 실패:", error);
       });
   };
 
