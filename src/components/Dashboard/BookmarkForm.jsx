@@ -72,6 +72,7 @@ function BookmarkForm({ open, onClose, onSubmit, initialData }) {
             id="bookmark-url"
             type="url"
             value={link}
+            className={styles.urlInput}
             onChange={e => setLink(e.target.value)}
             placeholder="URL"
             required
@@ -82,6 +83,7 @@ function BookmarkForm({ open, onClose, onSubmit, initialData }) {
             id="bookmark-title"
             type="text"
             value={title}
+            className={styles.titleInput}
             onChange={e => setTitle(e.target.value)}
             placeholder="표시 텍스트"
           />

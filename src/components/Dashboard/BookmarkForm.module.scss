@@ -41,24 +41,30 @@ label {
   margin-bottom: 4px;
 }
 
-input[type="url"], input[type="text"] {
+.urlInput {
   width: 100%;
   font-size: 16px;
-  padding: 9px 13px;
-  border-radius: 7px;
-  border: 1.2px solid #e4e8f1;
-  background: #f6f8fb;
-  color: #20262d;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.urlInput:focus {
   outline: none;
-  margin-bottom: 5px;
-  box-sizing: border-box;
-  transition: border 0.14s;
+  border-color: #007bff;
 }
 
-input[type="url"]:focus,
-input[type="text"]:focus {
-  border: 1.5px solid #3b82f6;
-  background: #f1f8ff;
+.textInput {
+  width: 100%;
+  font-size: 16px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.textInput:focus {
+  outline: none;
+  border-color: #007bff;
 }
 
 button[type="submit"] {
