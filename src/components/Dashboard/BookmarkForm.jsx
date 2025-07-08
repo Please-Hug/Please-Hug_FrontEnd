@@ -63,35 +63,37 @@ function BookmarkForm({ open, onClose, onSubmit, initialData }) {
   if (!open) return null;
 
   return (
-    <div className={styles.modal}>
-      <div className={styles.modalContent} role="dialog" aria-labelledby="bookmark-form-title">
-        <h2 id="bookmark-form-title">{initialData ? '북마크 수정' : '북마크 추가'}</h2>
-        <form ref={formRef} onSubmit={handleSubmit}>
-          <label htmlFor="bookmark-url">URL</label>
-          <input
-            id="bookmark-url"
-            type="url"
-            value={link}
-            className={styles.urlInput}
-            onChange={e => setLink(e.target.value)}
-            placeholder="URL"
-            required
-            autoFocus
-          />
-          <label htmlFor="bookmark-title">표시 텍스트</label>
-          <input
-            id="bookmark-title"
-            type="text"
-            value={title}
-            className={styles.textInput}
-            onChange={e => setTitle(e.target.value)}
-            placeholder="표시 텍스트"
-          />
-          <div className={styles.modalActionRow}>
-            <button type="submit">{initialData ? "수정하기" : "추가하기"}</button>
-            <button type="button" onClick={onClose}>닫기</button>
-          </div>
-        </form>
+    <div className={styles.BookmarkForm}>
+      <div className={styles.modal}>
+        <div className={styles.modalContent} role="dialog" aria-labelledby="bookmark-form-title">
+          <h2 id="bookmark-form-title">{initialData ? '북마크 수정' : '북마크 추가'}</h2>
+          <form ref={formRef} onSubmit={handleSubmit}>
+            <label htmlFor="bookmark-url">URL</label>
+            <input
+              id="bookmark-url"
+              type="url"
+              value={link}
+              className={styles.urlInput}
+              onChange={e => setLink(e.target.value)}
+              placeholder="URL"
+              required
+              autoFocus
+            />
+            <label htmlFor="bookmark-title">표시 텍스트</label>
+            <input
+              id="bookmark-title"
+              type="text"
+              value={title}
+              className={styles.textInput}
+              onChange={e => setTitle(e.target.value)}
+              placeholder="표시 텍스트"
+            />
+            <div className={styles.modalActionRow}>
+              <button type="submit">{initialData ? "수정하기" : "추가하기"}</button>
+              <button type="button" onClick={onClose}>닫기</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

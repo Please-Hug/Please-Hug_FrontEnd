@@ -132,7 +132,8 @@ function BookmarkSection() {
   };
 
   return (
-    <section className={styles.section}>
+    <div className={styles.BookmarkSection}>
+      <section className={styles.section}>
       {/* 툴바 */}
       <div className={styles.toolbar}>
         <button className={styles.addBtn} onClick={openAddModal}>
@@ -203,10 +204,12 @@ function BookmarkSection() {
         <div className={styles.modalBackdrop} onClick={closeModal}>
             <div className={styles.modalCard} onClick={e => e.stopPropagation()}>
             <form ref={formRef} onSubmit={handleSubmit}>
-                <label>
+                <label htmlFor="bookmark-url" className={styles.label}>
                 URL
                 <input
+                    id="bookmark-url"
                     type="url"
+                    className={styles.input}
                     value={link}
                     required
                     onChange={(e) => setLink(e.target.value)}
@@ -214,24 +217,40 @@ function BookmarkSection() {
                     autoFocus
                 />
                 </label>
-                <label>
-                표시 텍스트 (선택)
+                <label htmlFor="bookmark-title" className={styles.label}>
+                표시할 텍스트 (선택)
                 <input
+                    id="bookmark-title"
                     type="text"
+                    className={styles.input}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    placeholder="링크를 나타낼 텍스트를 작성"
+                    placeholder="링크를 나타낼 텍스트를 작성해주세요"
                 />
                 </label>
                 <div>
-                <button type="button" onClick={closeModal}>닫기</button>
-                <button type="submit">{editItem ? "수정하기" : "추가하기"}</button>
+                <div className={styles.modalActionRow}>
+                  <button
+                    type="button"
+                    className={styles.modalCancelBtn}
+                    onClick={closeModal}
+                  >
+                    닫기
+                  </button>
+                  <button
+                    type="submit"
+                    className={styles.modalOkBtn}
+                  >
+                    {editItem ? "수정하기" : "추가하기"}
+                  </button>
+                </div>
                 </div>
             </form>
-            </div>
+          </div>
         </div>
         )}
-    </section>
+     </section>    
+    </div>
   );
 }
 
