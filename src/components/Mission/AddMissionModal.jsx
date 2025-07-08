@@ -14,6 +14,7 @@ function AddMissionModal({ isOpen, onClose, groupId }) {
       rewardExp: 0,
       order: 0,
       line: 0,
+      tip: "",
     };
   }, [groupId]);
 
@@ -126,6 +127,16 @@ function AddMissionModal({ isOpen, onClose, groupId }) {
             setNewMission({
               ...newMission,
               line: parseInt(e.target.value, 10) || 0,
+            })
+          }
+        />
+        <label>팁</label>
+        <textarea
+          value={newMission?.tip}
+          onChange={(e) =>
+            setNewMission({
+              ...newMission,
+              tip: e.target.value,
             })
           }
         />

@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./MissionDetailCard.module.scss";
 import missionStateMap from "../../utils/missionStateMap";
 import missionDifficultyMap from "../../utils/missionDifficultyMap";
 import TaskItem from "./TaskItem";
-import { FaFlag } from "react-icons/fa6";
+import { FaClipboardQuestion, FaFlag } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import MissionTask from "./MissionTask";
 
 function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
   const navigate = useNavigate();
+  const [tipOpen, setTipOpen] = useState(false);
+
+  useEffect(() => {
+    setTipOpen(false);
+  }, [mission]);
+
+  const handleTipClick = () => {
+    setTipOpen(!tipOpen);
+  };
 
   return (
     <div className={styles.missionDetail}>
@@ -52,9 +61,18 @@ function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
                 <strong>{mission.rewardExp}</strong>개
               </span>
             </p>
-            <p className={styles.missionDetailDescription}>
+            <div className={styles.missionDetailDescription}>
               {mission.description}
-            </p>
+              <span className={styles.missionTipIcon} onClick={handleTipClick}>
+                <FaClipboardQuestion />
+              </span>
+              {tipOpen && (
+                <div className={styles.missionTip}>
+                  <h4>Hint</h4>
+                  <p>{mission.tip || "이 미션에 대한 팁이 없습니다."}</p>
+                </div>
+              )}
+            </div>
             <h3 className={styles.missionDetailSubtasksTitle}>하위 태스크</h3>
             <MissionTask missionId={mission.id} />
           </div>
