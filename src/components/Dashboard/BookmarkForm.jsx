@@ -83,7 +83,7 @@ function BookmarkForm({ open, onClose, onSubmit, initialData }) {
             id="bookmark-title"
             type="text"
             value={title}
-            className={styles.titleInput}
+            className={styles.textInput}
             onChange={e => setTitle(e.target.value)}
             placeholder="표시 텍스트"
           />
