@@ -12,6 +12,7 @@ function MissionItem({
   isDummy = false,
   currentState = null,
   onClick = () => {},
+  onMissionEditClick = () => {},
 }) {
   let classByState = null;
 
@@ -43,7 +44,18 @@ function MissionItem({
             <FaCircleCheck />
           </span>
         )}
-        <p>{title}</p>
+        <p>
+          {title}
+          <button
+            className={styles.editButton}
+            onClick={(e) => {
+              e.stopPropagation();
+              onMissionEditClick();
+            }}
+          >
+            Edit
+          </button>
+        </p>
         <div style={{ display: "none" }}>
           <progress value={progressValue} max={maxProgress} />
           <span>

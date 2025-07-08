@@ -1,43 +1,58 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import modalStyles from "../../components/common/Modal/Modal.module.scss";
 import Modal from "../../components/common/Modal/Modal";
-import { addMission } from "../../api/missionService";
+import { editMission, deleteMission } from "../../api/missionService";
+import { getMissionDetail } from "../../api/missionService";
 
 function EditMissionModal({ isOpen, onClose, missionId }) {
-  const defaultMission = useMemo(() => {
-    return {
-      missionGroupId: 0,
-      name: "",
-      description: "",
-      difficulty: "EASY",
-      rewardPoint: 0,
-      rewardExp: 0,
-      order: 0,
-      line: 0,
-    };
-  }, []);
+  const [newMission, setNewMission] = useState(null);
 
-  const [newMission, setNewMission] = useState(defaultMission);
-
-  const handleAddMission = () => {
-    addMission(newMission)
+  const handleEditMission = () => {
+    editMission(missionId, newMission)
       .then(() => {
-        alert("미션이 추가되었습니다.");
+        alert("미션이 수정되었습니다.");
         onClose();
-        setNewMission({
-          ...defaultMission,
-        });
+        setNewMission({});
       })
       .catch((error) => {
-        console.error("미션 추가 실패:", error);
+        console.error("미션 수정 실패:", error);
       });
   };
 
+  const handleDeleteMission = () => {
+    if (window.confirm("정말로 이 미션을 삭제하시겠습니까?")) {
+      deleteMission(missionId)
+        .then(() => {
+          alert("미션이 삭제되었습니다.");
+          onClose();
+          setNewMission({});
+        })
+        .catch((error) => {
+          console.error("미션 삭제 실패:", error);
+        });
+    }
+  };
+
   useEffect(() => {
-    setNewMission({
-      ...defaultMission,
-    });
-  }, [defaultMission]);
+    if (missionId) {
+      getMissionDetail(missionId)
+        .then((res) => {
+          setNewMission({
+            ...res.data,
+            missionGroupId: res.data.missionGroup.id,
+          });
+        })
+        .catch((error) => {
+          console.error("미션 상세 조회 실패:", error);
+        });
+    } else {
+      onClose();
+    }
+  }, [missionId, isOpen]);
+
+  if (!newMission) {
+    return null;
+  }
 
   return (
     <Modal
@@ -47,7 +62,7 @@ function EditMissionModal({ isOpen, onClose, missionId }) {
       }}
     >
       <form>
-        <h2>미션 추가</h2>
+        <h2>미션 수정</h2>
         <label>이름</label>
         <input
           type="text"
@@ -131,9 +146,16 @@ function EditMissionModal({ isOpen, onClose, missionId }) {
         <button
           type="button"
           className={modalStyles.saveButton}
-          onClick={handleAddMission}
+          onClick={handleEditMission}
         >
           저장
+        </button>
+        <button
+          type="button"
+          className={modalStyles.deleteButton}
+          onClick={handleDeleteMission}
+        >
+          삭제
         </button>
       </form>
     </Modal>

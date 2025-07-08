@@ -15,6 +15,7 @@ import useTokenPayload from "../../stores/tokenPayloadStore";
 import EditMissionGroupModal from "../../components/Mission/EditMissionGroupModal";
 import AddMissionGroupModal from "../../components/Mission/AddMissionGroupModal";
 import AddMissionModal from "../../components/Mission/AddMissionModal";
+import EditMissionModal from "../../components/Mission/EditMissionModal";
 
 function MissionOverviewPage() {
   const [missionGroups, setMissionGroups] = useState([]);
@@ -217,6 +218,10 @@ function MissionOverviewPage() {
                     setActiveMission(missionRows[missionRow][missionCol]);
                     setIsSideModalOpen(true);
                   }}
+                  onMissionEditClick={() => {
+                    setActiveMission(missionRows[missionRow][missionCol]);
+                    setIsEditMissionModalOpen(true);
+                  }}
                 />
               ) : (
                 <MissionItem key={index} isDummy={true} />
@@ -258,6 +263,14 @@ function MissionOverviewPage() {
         onClose={() => {
           fetchMissionGroups();
           setIsAddMissionModalOpen(false);
+        }}
+      />
+      <EditMissionModal
+        isOpen={isEditMissionModalOpen}
+        missionId={activeMission?.id}
+        onClose={() => {
+          fetchMissionGroups();
+          setIsEditMissionModalOpen(false);
         }}
       />
     </div>

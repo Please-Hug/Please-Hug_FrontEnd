@@ -200,3 +200,26 @@ export const addMission = async (newMission) => {
     throw error;
   }
 };
+
+export const editMission = async (missionId, updatedMission) => {
+  try {
+    const response = await api.put(
+      `/api/v1/missions/${missionId}`,
+      updatedMission
+    );
+    return response.data;
+  } catch (error) {
+    console.error("미션 수정 실패:", error);
+    throw error;
+  }
+};
+
+export const deleteMission = async (missionId) => {
+  try {
+    const response = await api.delete(`/api/v1/missions/${missionId}`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 삭제 실패:", error);
+    throw error;
+  }
+};
