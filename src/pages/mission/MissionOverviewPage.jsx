@@ -11,6 +11,11 @@ import SideModal from "../../components/common/SideModal/SideModal";
 import MissionDetailCard from "../../components/Mission/MissionDetailCard";
 import TabComponent from "../../components/common/TabComponent/TabComponent";
 import useBreadcrumbStore from "../../stores/breadcrumbStore";
+import useTokenPayload from "../../stores/tokenPayloadStore";
+import EditMissionGroupModal from "../../components/Mission/EditMissionGroupModal";
+import AddMissionGroupModal from "../../components/Mission/AddMissionGroupModal";
+import AddMissionModal from "../../components/Mission/AddMissionModal";
+import EditMissionModal from "../../components/Mission/EditMissionModal";
 
 function MissionOverviewPage() {
   const [missionGroups, setMissionGroups] = useState([]);
@@ -23,34 +28,52 @@ function MissionOverviewPage() {
   const [activeMission, setActiveMission] = useState(null);
   const sideModalWidth = 800;
   const { setBreadcrumbItems } = useBreadcrumbStore();
+  const tokenPayload = useTokenPayload((state) => state.tokenPayload);
+  const [isEditMissionGroupModalOpen, setIsEditMissionGroupModalOpen] =
+    useState(false);
+  const [isAddMissionGroupModalOpen, setIsAddMissionGroupModalOpen] =
+    useState(false);
+
+  const [isEditMissionModalOpen, setIsEditMissionModalOpen] = useState(false);
+  const [isAddMissionModalOpen, setIsAddMissionModalOpen] = useState(false);
+
+  const [editMissionGroup, setEditMissionGroup] = useState(null);
+
   useEffect(() => {
     setBreadcrumbItems([{ label: "미션", path: "/mission" }]);
   }, [setBreadcrumbItems]);
 
-  useEffect(() => {
-    const fetchMissionGroups = async () => {
-      try {
-        const groups = await getMyMissionGroups();
-        const newGroups = [];
-        groups.data.forEach((group) => {
-          newGroups.push({
-            ...group,
-            name: group.missionGroup.name,
-          });
+  const fetchMissionGroups = useCallback(async () => {
+    try {
+      const groups = await getMyMissionGroups();
+      const newGroups = [];
+      groups.data.forEach((group) => {
+        newGroups.push({
+          ...group,
+          name: group.missionGroup.name,
         });
-        setMissionGroups(newGroups);
-      } catch (error) {
-        console.error("미션 그룹을 가져오는 데 실패했습니다:", error);
-      }
-    };
-
-    fetchMissionGroups();
+      });
+      setMissionGroups(newGroups);
+    } catch (error) {
+      console.error("미션 그룹을 가져오는 데 실패했습니다:", error);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchMissionGroups();
+  }, [fetchMissionGroups]);
 
   useEffect(() => {
     if (activeGroup === null && missionGroups.length > 0) {
       // 초기 활성 그룹 설정
       setActiveGroup(missionGroups[0].missionGroup);
+    } else if (activeGroup !== null) {
+      const group = missionGroups.find(
+        (g) => g.missionGroup.id === activeGroup.id
+      );
+      if (group) {
+        setActiveGroup(group.missionGroup);
+      }
     }
   }, [missionGroups, activeGroup]);
 
@@ -112,6 +135,9 @@ function MissionOverviewPage() {
       missionLevels.sort((a, b) => a - b);
       setMissionRows(missionRows);
       setMissionLevels(missionLevels);
+    } else {
+      setMissionRows({});
+      setMissionLevels([]);
     }
   }, [missions]);
 
@@ -121,6 +147,14 @@ function MissionOverviewPage() {
       await fetchMyChallenges();
     } catch (error) {
       console.error("미션 도전 실패:", error);
+    }
+  };
+
+  const handleEditClick = (item) => {
+    if (tokenPayload?.role === "ROLE_ADMIN") {
+      const missionGroup = item.missionGroup;
+      setEditMissionGroup(missionGroup);
+      setIsEditMissionGroupModalOpen(true);
     }
   };
 
@@ -136,7 +170,24 @@ function MissionOverviewPage() {
         onTabChange={(item) => {
           setActiveGroup(item.missionGroup);
         }}
+        onEditClick={handleEditClick}
       />
+      {tokenPayload?.role === "ROLE_ADMIN" && (
+        <button
+          className={styles.addMissionGroupButton}
+          onClick={() => setIsAddMissionGroupModalOpen(true)}
+        >
+          추가
+        </button>
+      )}
+      {tokenPayload?.role === "ROLE_ADMIN" && (
+        <button
+          className={styles.addMissionButton}
+          onClick={() => setIsAddMissionModalOpen(true)}
+        >
+          추가
+        </button>
+      )}
       <div className={styles.missionTabPage}>
         <ul className={styles.missionLevel}>
           {missionLevels.map((level, index) => (
@@ -167,6 +218,10 @@ function MissionOverviewPage() {
                     setActiveMission(missionRows[missionRow][missionCol]);
                     setIsSideModalOpen(true);
                   }}
+                  onMissionEditClick={() => {
+                    setActiveMission(missionRows[missionRow][missionCol]);
+                    setIsEditMissionModalOpen(true);
+                  }}
                 />
               ) : (
                 <MissionItem key={index} isDummy={true} />
@@ -187,6 +242,37 @@ function MissionOverviewPage() {
           onChallenge={handleChallenge}
         />
       </SideModal>
+      <EditMissionGroupModal
+        isOpen={isEditMissionGroupModalOpen}
+        onClose={() => {
+          fetchMissionGroups();
+          setIsEditMissionGroupModalOpen(false);
+        }}
+        missionGroup={editMissionGroup}
+      />
+      <AddMissionGroupModal
+        isOpen={isAddMissionGroupModalOpen}
+        onClose={() => {
+          fetchMissionGroups();
+          setIsAddMissionGroupModalOpen(false);
+        }}
+      />
+      <AddMissionModal
+        isOpen={isAddMissionModalOpen}
+        groupId={activeGroup.id}
+        onClose={() => {
+          fetchMissionGroups();
+          setIsAddMissionModalOpen(false);
+        }}
+      />
+      <EditMissionModal
+        isOpen={isEditMissionModalOpen}
+        missionId={activeMission?.id}
+        onClose={() => {
+          fetchMissionGroups();
+          setIsEditMissionModalOpen(false);
+        }}
+      />
     </div>
   );
 }

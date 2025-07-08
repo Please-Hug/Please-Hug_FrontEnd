@@ -25,7 +25,6 @@ function AdminShopPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const accessToken = localStorage.getItem("accessToken");
 
     const data = new FormData();
     data.append("name", formData.name);
