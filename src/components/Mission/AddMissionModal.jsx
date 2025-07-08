@@ -92,7 +92,7 @@ function AddMissionModal({ isOpen, onClose, groupId }) {
           onChange={(e) =>
             setNewMission({
               ...newMission,
-              rewardPoint: parseInt(e.target.value),
+              rewardPoint: parseInt(e.target.value, 10) || 0,
             })
           }
         />
@@ -103,7 +103,7 @@ function AddMissionModal({ isOpen, onClose, groupId }) {
           onChange={(e) =>
             setNewMission({
               ...newMission,
-              rewardExp: parseInt(e.target.value),
+              rewardExp: parseInt(e.target.value, 10) || 0,
             })
           }
         />
@@ -114,7 +114,7 @@ function AddMissionModal({ isOpen, onClose, groupId }) {
           onChange={(e) =>
             setNewMission({
               ...newMission,
-              order: parseInt(e.target.value),
+              order: parseInt(e.target.value, 10) || 0,
             })
           }
         />
@@ -125,7 +125,7 @@ function AddMissionModal({ isOpen, onClose, groupId }) {
           onChange={(e) =>
             setNewMission({
               ...newMission,
-              line: parseInt(e.target.value),
+              line: parseInt(e.target.value, 10) || 0,
             })
           }
         />

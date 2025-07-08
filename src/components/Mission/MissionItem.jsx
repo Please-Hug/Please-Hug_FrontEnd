@@ -44,18 +44,17 @@ function MissionItem({
             <FaCircleCheck />
           </span>
         )}
-        <p>
-          {title}
-          <button
-            className={styles.editButton}
-            onClick={(e) => {
-              e.stopPropagation();
-              onMissionEditClick();
-            }}
-          >
-            Edit
-          </button>
-        </p>
+        <p>{title}</p>
+        <button
+          className={styles.editButton}
+          onClick={(e) => {
+            e.stopPropagation();
+            onMissionEditClick();
+          }}
+          aria-label={`${title} 미션 편집`}
+        >
+          Edit
+        </button>
         <div style={{ display: "none" }}>
           <progress value={progressValue} max={maxProgress} />
           <span>

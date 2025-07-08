@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./TabComponent.module.scss";
 import useTokenPayload from "../../../stores/tokenPayloadStore";
 
-function TabComponent({ tabs, active, onTabChange, onEditClick }) {
+function TabComponent({ tabs, active, onTabChange, onEditClick = () => {} }) {
   const [activeTab, setActiveTab] = useState(active || tabs[0]);
   const tokenPayload = useTokenPayload((state) => state.tokenPayload);
 
@@ -36,6 +36,7 @@ function TabComponent({ tabs, active, onTabChange, onEditClick }) {
                 e.stopPropagation();
                 onEditClick(tab);
               }}
+              aria-label={`${tab.name} 편집`}
             >
               Edit
             </button>

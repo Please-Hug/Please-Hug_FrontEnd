@@ -16,6 +16,7 @@ function EditMissionModal({ isOpen, onClose, missionId }) {
       })
       .catch((error) => {
         console.error("미션 수정 실패:", error);
+        alert("미션 수정에 실패했습니다. 다시 시도해주세요.");
       });
   };
 
@@ -29,6 +30,7 @@ function EditMissionModal({ isOpen, onClose, missionId }) {
         })
         .catch((error) => {
           console.error("미션 삭제 실패:", error);
+          alert("미션 삭제에 실패했습니다. 다시 시도해주세요.");
         });
     }
   };
@@ -105,7 +107,7 @@ function EditMissionModal({ isOpen, onClose, missionId }) {
           onChange={(e) =>
             setNewMission({
               ...newMission,
-              rewardPoint: parseInt(e.target.value),
+              rewardPoint: parseInt(e.target.value, 10) || 0,
             })
           }
         />
@@ -116,7 +118,7 @@ function EditMissionModal({ isOpen, onClose, missionId }) {
           onChange={(e) =>
             setNewMission({
               ...newMission,
-              rewardExp: parseInt(e.target.value),
+              rewardExp: parseInt(e.target.value, 10) || 0,
             })
           }
         />
@@ -127,7 +129,7 @@ function EditMissionModal({ isOpen, onClose, missionId }) {
           onChange={(e) =>
             setNewMission({
               ...newMission,
-              order: parseInt(e.target.value),
+              order: parseInt(e.target.value, 10) || 0,
             })
           }
         />
@@ -138,7 +140,7 @@ function EditMissionModal({ isOpen, onClose, missionId }) {
           onChange={(e) =>
             setNewMission({
               ...newMission,
-              line: parseInt(e.target.value),
+              line: parseInt(e.target.value, 10) || 0,
             })
           }
         />
