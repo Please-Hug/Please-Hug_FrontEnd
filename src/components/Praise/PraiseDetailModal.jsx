@@ -246,7 +246,7 @@ function PraiseDetailModal({ isOpen, onClose, praiseId, currentUser, fetchPraise
                                         <div className={styles.commentEmojiList}>
                                             {comment.emojiReactions &&
                                                 Object.entries(comment.emojiReactions).map(([emoji, users]) => (
-                                                    <span key={`${emoji}-${comment.id}-${users.map(u => u.username)}`} className={styles.emoji}>
+                                                    <span key={`${emoji}-${comment.id}}`} className={styles.emoji}>
                                                         {emoji} {users.length}
                                                     </span>
                                             ))}

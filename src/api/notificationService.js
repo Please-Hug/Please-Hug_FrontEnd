@@ -43,7 +43,7 @@ export function subscribeToNotifications(onMessageCallback) {
     }
 
     const eventSource = new EventSourcePolyfill(
-        "http://localhost:8080/api/v1/notifications/subscribe",  // 백엔드에서 사용자 정보는 토큰으로 파싱
+        `${api.defaults.baseURL}/api/v1/notifications/subscribe`,  // 백엔드에서 사용자 정보는 토큰으로 파싱
         {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
