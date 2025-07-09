@@ -77,9 +77,9 @@ function StudyDiaryEditPage() {
 
   // 내용 변경 처리
   const handleContentChange = (value) => {
-    // 글자 수 제한 (API 명세: 1-1000자)
-    if (value.length > 1000) {
-      setErrors({ ...errors, content: "내용은 1000자를 초과할 수 없습니다." });
+    // 글자 수 제한 (API 명세: 1-10000자)
+    if (value.length > 10000) {
+      setErrors({ ...errors, content: "내용은 10000자를 초과할 수 없습니다." });
       return;
     }
     
@@ -118,8 +118,8 @@ function StudyDiaryEditPage() {
     
     if (!formData.content.trim()) {
       newErrors.content = "내용을 입력해주세요.";
-    } else if (formData.content.length < 1 || formData.content.length > 1000) {
-      newErrors.content = "내용은 1~1000자 사이여야 합니다.";
+    } else if (formData.content.length < 1 || formData.content.length > 10000) {
+      newErrors.content = "내용은 1~10000자 사이여야 합니다.";
     }
     
     setErrors(newErrors);
@@ -153,8 +153,7 @@ function StudyDiaryEditPage() {
       
       const requestData = {
         title: formData.title.trim(),
-        content: formData.content.trim(),
-        ...(formData.imageUrl && { imageUrl: formData.imageUrl })
+        content: formData.content.trim()
       };
       
       const response = await updateStudyDiary(id, requestData);
