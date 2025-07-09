@@ -131,3 +131,10 @@
     }
   }
 }
+
+.notificationDropdown {
+  position: absolute;
+  top: 40px; // 아이콘 아래로 약간 띄우기
+  left: 0;
+  z-index: 1000;
+}

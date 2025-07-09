@@ -22,6 +22,10 @@ import useUserStore from "../../../stores/userStore";
 import SidebarUserMenu from "./SidebarUserMenu";
 import SidebarMissionGroup from "./SidebarMissionGroup";
 import { getMyMissionGroups } from "../../../api/missionService";
+import Notification from "../SideModal/Notification.jsx";
+import PraiseDetailModal from "../../Praise/PraiseDetailModal";
+import { fetchNotifications } from "../../../api/notificationService.js";
+import { set } from "date-fns";
 
 function getQuickMenuItems() {
   return [
@@ -53,6 +57,25 @@ function Sidebar() {
   const userMenuRef = useRef(null);
   const [missionGroupItems, setMissionGroupItems] = useState([]);
 
+  // 알림 사이드모달 상태
+  const [ isNotificationOpen, setIsNotificationOpen ] = useState(false);
+  const  [notifications, setNotifications ] = useState([]);
+  const [ isFetched, setIsFetched ] = useState(false);
+  const bellRef = useRef(null);
+  const [modalInfo, setModalInfo] = useState({
+    type: null,      // "PRAISE" | "DIARY" | null
+    targetId: null,  // 해당 모달에 열어야 할 대상 ID
+  });
+
+  useEffect(() => {
+    if (isNotificationOpen && !isFetched) {
+      fetchNotifications().then((data) => {
+        setNotifications(data);
+        setIsFetched(true);
+      });
+    }
+  }, [isNotificationOpen, isFetched]);
+
   useEffect(() => {
     const fetchMissionGroups = async () => {
       try {
@@ -83,77 +106,132 @@ function Sidebar() {
   }
 
   return (
-    <div className={styles.sidebar}>
-      <div>
-        <div className={styles.sidebarHeader}>
-          <div>
-            <FaBuilding />
-            <span>EDUCATION</span>
+    <>
+      <div className={styles.sidebar}>
+        <div>
+          <div className={styles.sidebarHeader}>
+            <div>
+              <FaBuilding />
+              <span>EDUCATION</span>
+            </div>
+            <div>
+              <FaAnglesLeft />
+            </div>
           </div>
-          <div>
-            <FaAnglesLeft />
+          <div className={styles.sidebarTitle}>
+            <img src={logo} alt="Logo" />
+            <span>허그톤 비욘드호라이즌</span>
           </div>
-        </div>
-        <div className={styles.sidebarTitle}>
-          <img src={logo} alt="Logo" />
-          <span>허그톤 비욘드호라이즌</span>
-        </div>
-        <hr />
-        <div className={styles.menuList}>
-          <ul>
-            {quickMenuItems.map((item, index) => (
-              <li key={index}>
-                {item.icon}
-                <span>{item.label}</span>
-              </li>
-            ))}
-          </ul>
           <hr />
-          <ul>
-            {menuItems.map((item, index) => (
-              <li
-                key={index}
-                onClick={() => {
-                  navigate(item.link || "/");
-                }}
-              >
-                {item.icon}
-                <span>{item.label}</span>
-              </li>
-            ))}
+          <div className={styles.menuList}>
+            {/* 퀵 메뉴 클릭 이벤트 수정*/}
+            <ul>
+              {quickMenuItems.map((item, index) => (
+                <li 
+                  key={index}
+                  ref={item.label === "알림" ? bellRef : null}
+                  onClick={() => {
+                    if (item.label === "알림" ){
+                      setIsNotificationOpen(!isNotificationOpen);    // 알림 모달 열기
+                    }
+                  }}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+
+                </li>
+              ))}
+            </ul>
             <hr />
-          </ul>
-          {missionGroupItems && missionGroupItems.length > 0 && (
-            <SidebarMissionGroup missionGroupItems={missionGroupItems} />
-          )}
+            <ul>
+              {menuItems.map((item, index) => (
+                <li
+                  key={index}
+                  onClick={() => {
+                    navigate(item.link || "/");
+                  }}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </li>
+              ))}
+              <hr />
+            </ul>
+            {missionGroupItems && missionGroupItems.length > 0 && (
+              <SidebarMissionGroup missionGroupItems={missionGroupItems} />
+            )}
+          </div>
+        </div>
+        <div className={styles.userInfo}>
+          <div className={styles.userStats}>
+            <div>
+              Lv. <span>{userInfo.level}</span>
+            </div>
+            <div>
+              <span>{userInfo.point}</span>개
+            </div>
+          </div>
+          <div className={styles.userProfile} ref={userMenuRef}>
+            <div>
+              <img
+                src={
+                  userInfo?.profileImage
+                    ? `${api.defaults.baseURL}${userInfo.profileImage}`
+                    : emptyUserProfile
+                }
+                alt={userInfo?.name || "사용자 프로필"}
+                onClick={() => setUserMenuToggle(!userMenuToggle)}
+              />
+              {userMenuToggle && <SidebarUserMenu />}
+            </div>
+            <span>©hug Inc.</span>
+          </div>
         </div>
       </div>
-      <div className={styles.userInfo}>
-        <div className={styles.userStats}>
-          <div>
-            Lv. <span>{userInfo.level}</span>
-          </div>
-          <div>
-            <span>{userInfo.point}</span>개
-          </div>
+
+      {/* Notification 컴포넌트 고정 렌더링 */}
+      {isNotificationOpen && bellRef.current && (
+        <div
+          style={{
+            position: "absolute",
+            top: bellRef.current.getBoundingClientRect().top + window.scrollY,
+            left: bellRef.current.getBoundingClientRect().right + 8, // 아이콘 오른쪽에 붙이기
+            zIndex: 2000,
+          }}
+        >
+          <Notification
+            onClose={() => setIsNotificationOpen(false)}
+            onOpenModal={(type, id) => setModalInfo({ type, targetId: id })}
+            isOpen={isNotificationOpen}
+            notifications={notifications}
+            setNotifications={setNotifications}
+          />
+
         </div>
-        <div className={styles.userProfile} ref={userMenuRef}>
-          <div>
-            <img
-              src={
-                userInfo?.profileImage
-                  ? `${api.defaults.baseURL}${userInfo.profileImage}`
-                  : emptyUserProfile
-              }
-              alt={userInfo?.name || "사용자 프로필"}
-              onClick={() => setUserMenuToggle(!userMenuToggle)}
-            />
-            {userMenuToggle && <SidebarUserMenu />}
-          </div>
-          <span>©hug Inc.</span>
-        </div>
-      </div>
-    </div>
+      )}
+
+      {/* 모달 정보에 따라 모달 컴포넌트 렌더링 */}
+      {modalInfo.type === "PRAISE" && modalInfo.targetId && (
+        <PraiseDetailModal
+          isOpen
+          onClose={() => setModalInfo({ type: null, targetId: null })}
+          praiseId={modalInfo.targetId}
+          currentUser={userInfo}
+          fetchPraise={() => {}}  // 필요시 전달
+        />
+      )}
+
+      {/* 일기 상세 모달 렌더링 */}
+      {/* {modalInfo.type === "DIARY" && modalInfo.targetId && (
+        <DiaryDetailModal
+          isOpen
+          onClose={() => setModalInfo({ type: null, targetId: null })}
+          diaryId={modalInfo.targetId}
+        />
+      )} */}
+
+    </>
+    
   );
 }
 
