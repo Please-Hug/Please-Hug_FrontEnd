@@ -6,11 +6,13 @@ import TaskItem from "./TaskItem";
 import { FaClipboardQuestion, FaFlag } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import MissionTask from "./MissionTask";
+import AddTaskModal from "./AddTaskModal";
 
 function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
   const navigate = useNavigate();
   const [tipOpen, setTipOpen] = useState(false);
-
+  const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
+  const [reloadFlag, setReloadFlag] = useState(0);
   useEffect(() => {
     setTipOpen(false);
   }, [mission]);
@@ -78,8 +80,16 @@ function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
                 </div>
               )}
             </div>
-            <h3 className={styles.missionDetailSubtasksTitle}>하위 태스크</h3>
-            <MissionTask missionId={mission.id} />
+            <div className={styles.missionDetailSubtasksTitleContainer}>
+              <h3 className={styles.missionDetailSubtasksTitle}>하위 태스크</h3>
+              <button
+                className={styles.addTaskButton}
+                onClick={() => setIsAddTaskModalOpen(true)}
+              >
+                추가
+              </button>
+            </div>
+            <MissionTask missionId={mission.id} reloadFlag={reloadFlag} />
           </div>
           <div className={styles.missionDetailActions}>
             {!progress ? (
@@ -103,6 +113,16 @@ function MissionDetailCard({ mission, groupName, progress, onChallenge }) {
             )}
           </div>
         </>
+      )}
+      {isAddTaskModalOpen && (
+        <AddTaskModal
+          isOpen={isAddTaskModalOpen}
+          onClose={() => {
+            setReloadFlag(reloadFlag + 1);
+            setIsAddTaskModalOpen(false);
+          }}
+          missionId={mission.id}
+        />
       )}
     </div>
   );
