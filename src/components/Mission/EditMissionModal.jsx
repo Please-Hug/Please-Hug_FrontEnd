@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import modalStyles from "../../components/common/Modal/Modal.module.scss";
 import Modal from "../../components/common/Modal/Modal";
-import { editMission, deleteMission } from "../../api/missionService";
+import { updateMission, deleteMission } from "../../api/missionService";
 import { getMissionDetail } from "../../api/missionService";
 
 function EditMissionModal({ isOpen, onClose, missionId }) {
   const [newMission, setNewMission] = useState(null);
 
   const handleEditMission = () => {
-    editMission(missionId, newMission)
+    updateMission(missionId, newMission)
       .then(() => {
         alert("미션이 수정되었습니다.");
         onClose();

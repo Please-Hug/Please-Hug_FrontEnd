@@ -201,7 +201,7 @@ export const addMission = async (newMission) => {
   }
 };
 
-export const editMission = async (missionId, updatedMission) => {
+export const updateMission = async (missionId, updatedMission) => {
   try {
     const response = await api.put(
       `/api/v1/missions/${missionId}`,
@@ -220,6 +220,42 @@ export const deleteMission = async (missionId) => {
     return response.data;
   } catch (error) {
     console.error("미션 삭제 실패:", error);
+    throw error;
+  }
+};
+
+export const updateMissionTask = async (taskId, updatedTask) => {
+  try {
+    const response = await api.put(
+      `/api/v1/mission-tasks/${taskId}`,
+      updatedTask
+    );
+    return response.data;
+  } catch (error) {
+    console.error("미션 태스크 수정 실패:", error);
+    throw error;
+  }
+};
+
+export const deleteMissionTask = async (taskId) => {
+  try {
+    const response = await api.delete(`/api/v1/mission-tasks/${taskId}`);
+    return response.data;
+  } catch (error) {
+    console.error("미션 태스크 삭제 실패:", error);
+    throw error;
+  }
+};
+
+export const addMissionTask = async (missionId, newTask) => {
+  try {
+    const response = await api.post(
+      `/api/v1/missions/${missionId}/tasks`,
+      newTask
+    );
+    return response.data;
+  } catch (error) {
+    console.error("미션 태스크 추가 실패:", error);
     throw error;
   }
 };

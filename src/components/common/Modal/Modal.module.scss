@@ -17,6 +17,7 @@
     padding: 10px 20px;
     border-radius: 4px;
     margin: 0;
+    margin-bottom: 5px;
     cursor: pointer;
 
     &:hover {
@@ -47,6 +48,11 @@
     border: 1px solid #ccc;
     margin-bottom: 10px;
     background-color: white;
+  }
+
+  button {
+    display: block;
+    width: 100%;
   }
 }
 

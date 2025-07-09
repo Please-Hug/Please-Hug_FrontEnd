@@ -224,3 +224,19 @@
     white-space: pre-wrap;
   }
 }
+
+.missionDetailSubtasksTitleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.addTaskButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 3px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
