@@ -31,3 +31,16 @@ ul.tabList {
     }
   }
 }
+
+.editButton {
+  margin-left: 10px;
+  background-color: transparent;
+  border: none;
+  color: #70e960;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

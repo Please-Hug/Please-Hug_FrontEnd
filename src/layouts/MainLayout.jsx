@@ -17,7 +17,6 @@ function MainLayout() {
     if (token) {
       const payload = jwtDecode(token);
       setTokenPayload(payload);
-      console.log("Token payload set:", payload);
     }
   }, []);
 

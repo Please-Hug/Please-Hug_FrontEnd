@@ -1,0 +1,95 @@
+.wrapper {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 16px; /* ✅ 패딩 추가 */
+  width: 320px;
+  font-size: 14px;
+}
+
+.header {
+  display: flex;             /* ✅ 수평 정렬 */
+  justify-content: space-between;  /* 양쪽 끝으로 정렬 */
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tab {
+  flex: 1;
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.active {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+.badge {
+  background-color: #ff5a5a;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 12px;
+}
+
+.list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.card {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.content {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.time {
+  font-size: 12px;
+  color: #999;
+}
+
+.empty {
+  text-align: center;
+  padding: 24px 0;
+  color: #888;
+}
+
+.readAllButton {
+  background: white;
+  border: 1px solid #ddd;      /* ✅ 테두리 추가 */
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: #333;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.readAllButton:hover {
+  background-color: #f8f8f8;
+  border-color: #bbb;
+}

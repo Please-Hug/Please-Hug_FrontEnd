@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./MissionItem.module.scss";
 import { FaCircleCheck, FaFlag } from "react-icons/fa6";
 import missionDifficultyMap from "../../utils/missionDifficultyMap";
+import useTokenPayload from "../../stores/tokenPayloadStore";
 
 function MissionItem({
   title,
@@ -12,8 +13,10 @@ function MissionItem({
   isDummy = false,
   currentState = null,
   onClick = () => {},
+  onMissionEditClick = () => {},
 }) {
   let classByState = null;
+  const tokenPayload = useTokenPayload((state) => state.tokenPayload);
 
   if (currentState) {
     classByState = "IN_PROGRESS";
@@ -44,6 +47,18 @@ function MissionItem({
           </span>
         )}
         <p>{title}</p>
+        {tokenPayload?.role === "ROLE_ADMIN" && (
+          <button
+            className={styles.editButton}
+            onClick={(e) => {
+              e.stopPropagation();
+              onMissionEditClick();
+            }}
+            aria-label={`${title} 미션 편집`}
+          >
+            Edit
+          </button>
+        )}
         <div style={{ display: "none" }}>
           <progress value={progressValue} max={maxProgress} />
           <span>
