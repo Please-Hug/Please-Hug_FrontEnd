@@ -144,6 +144,16 @@ function EditMissionModal({ isOpen, onClose, missionId }) {
             })
           }
         />
+        <label>팁</label>
+        <textarea
+          value={newMission?.tip}
+          onChange={(e) =>
+            setNewMission({
+              ...newMission,
+              tip: e.target.value,
+            })
+          }
+        />
 
         <button
           type="button"
