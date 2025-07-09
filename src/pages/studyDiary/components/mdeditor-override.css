@@ -1,0 +1,81 @@
+/* MDEditor 텍스트 색상 강제 적용 - 모든 가능한 선택자 */
+.w-md-editor-text-pre,
+.w-md-editor-text-input,
+.w-md-editor-text textarea,
+.w-md-editor .w-md-editor-text-pre,
+.w-md-editor .w-md-editor-text-input,
+.w-md-editor .w-md-editor-text textarea,
+[data-color-mode="light"] .w-md-editor-text-pre,
+[data-color-mode="light"] .w-md-editor-text-input,
+[data-color-mode="light"] .w-md-editor-text textarea,
+[data-color-mode="light"] .w-md-editor .w-md-editor-text-pre,
+[data-color-mode="light"] .w-md-editor .w-md-editor-text-input,
+[data-color-mode="light"] .w-md-editor .w-md-editor-text textarea,
+.wmde-markdown-var .w-md-editor-text-pre,
+.wmde-markdown-var .w-md-editor-text-input,
+.wmde-markdown-var .w-md-editor-text textarea {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* 코드 하이라이팅 색상 */
+.w-md-editor .language-markdown,
+.w-md-editor .language-markdown .token,
+.w-md-editor .code-line,
+[data-color-mode="light"] .w-md-editor .language-markdown,
+[data-color-mode="light"] .w-md-editor .language-markdown .token,
+[data-color-mode="light"] .w-md-editor .code-line {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* textarea 직접 스타일 - 더 구체적인 선택자 */
+.w-md-editor-text-input,
+.w-md-editor textarea,
+.w-md-editor-text textarea,
+.w-md-editor-area textarea,
+.w-md-editor-input textarea {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* 캐럿(커서) 색상 */
+.w-md-editor textarea {
+  caret-color: #000000 !important;
+}
+
+/* wmde-markdown-color 클래스 오버라이드 */
+.wmde-markdown-color,
+.wmde-markdown-color * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* pre 태그 내부 텍스트 */
+.w-md-editor-text pre,
+.w-md-editor-text pre * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* 모든 자식 요소에도 적용 */
+.w-md-editor-text *,
+.w-md-editor-area * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* 더 강력한 오버라이드를 위한 !important 체인 */
+body .w-md-editor-text-input {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* 코드 미러 스타일 오버라이드 (MDEditor가 CodeMirror를 사용할 경우) */
+.CodeMirror,
+.CodeMirror * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}

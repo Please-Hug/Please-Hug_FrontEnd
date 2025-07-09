@@ -1,0 +1,235 @@
+.editorWrapper {
+  width: 100%;
+  
+  .editorContainer {
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+    
+    // 강제로 light 모드 적용
+    &[data-color-mode="light"] {
+      :global {
+        .w-md-editor {
+          background-color: #ffffff !important;
+          color: #000000 !important;
+        }
+        
+        .w-md-editor-text-pre,
+        .w-md-editor-text-input,
+        .w-md-editor-text textarea {
+          color: #000000 !important;
+          background-color: #ffffff !important;
+          caret-color: #000000 !important;
+        }
+        
+        // 구문 하이라이팅도 검은색으로
+        .token.title,
+        .token.bold,
+        .token.code,
+        .token.url,
+        .token.punctuation {
+          color: #000000 !important;
+        }
+        
+        .language-markdown {
+          color: #000000 !important;
+        }
+        
+        .code-line {
+          color: #000000 !important;
+        }
+      }
+    }
+    
+    :global {
+      .w-md-editor {
+        background-color: #ffffff;
+        
+        .w-md-editor-toolbar {
+          background-color: #f6f8fa;
+          border-bottom: 1px solid #e1e4e8;
+          padding: 8px;
+          
+          ul {
+            li {
+              button {
+                color: #24292e;
+                
+                &:hover {
+                  background-color: #e1e4e8;
+                }
+              }
+            }
+          }
+        }
+        
+        .w-md-editor-content {
+          background-color: #ffffff;
+        }
+        
+        .w-md-editor-preview {
+          background-color: #ffffff;
+          color: #24292e;
+          padding: 16px;
+          
+          h1, h2, h3, h4, h5, h6 {
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.25;
+          }
+          
+          h1 { font-size: 2em; }
+          h2 { font-size: 1.5em; }
+          h3 { font-size: 1.25em; }
+          
+          p {
+            margin-bottom: 16px;
+            line-height: 1.6;
+          }
+          
+          ul, ol {
+            padding-left: 2em;
+            margin-bottom: 16px;
+          }
+          
+          li {
+            margin-bottom: 4px;
+          }
+          
+          code {
+            background-color: #f6f8fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 85%;
+          }
+          
+          pre {
+            background-color: #f6f8fa;
+            padding: 16px;
+            border-radius: 6px;
+            overflow: auto;
+            margin-bottom: 16px;
+            
+            code {
+              background-color: transparent;
+              padding: 0;
+            }
+          }
+          
+          blockquote {
+            border-left: 4px solid #dfe2e5;
+            padding: 0 1em;
+            color: #6a737d;
+            margin-bottom: 16px;
+          }
+          
+          img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 16px 0;
+          }
+          
+          table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 16px;
+            
+            th, td {
+              border: 1px solid #dfe2e5;
+              padding: 6px 13px;
+            }
+            
+            th {
+              background-color: #f6f8fa;
+              font-weight: 600;
+            }
+            
+            tr:nth-child(even) {
+              background-color: #f6f8fa;
+            }
+          }
+        }
+        
+        // 텍스트 입력 영역 스타일
+        .w-md-editor-text {
+          background-color: #ffffff !important;
+          
+          .w-md-editor-text-input,
+          .w-md-editor-text-textarea,
+          textarea {
+            color: #000000 !important;
+            background-color: #ffffff !important;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            
+            &::placeholder {
+              color: #6a737d !important;
+            }
+          }
+          
+          // 코드 하이라이팅 영역
+          .w-md-editor-text-pre {
+            color: #000000 !important;
+            background-color: #ffffff !important;
+            
+            .token {
+              color: #000000 !important;
+            }
+          }
+        }
+        
+        textarea {
+          font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+          font-size: 14px;
+          line-height: 1.5;
+          color: #000000 !important;
+          background-color: #ffffff !important;
+          
+          &::placeholder {
+            color: #6a737d;
+          }
+        }
+      }
+    }
+  }
+  
+  .helperText {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #586069;
+    
+    .imageButton {
+      padding: 6px 12px;
+      background-color: #f6f8fa;
+      border: 1px solid #e1e4e8;
+      border-radius: 4px;
+      color: #24292e;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background-color: #e1e4e8;
+      }
+    }
+    
+    .charCount {
+      font-weight: 500;
+      
+      &.warning {
+        color: #f39c12;
+      }
+      
+      &.danger {
+        color: #e74c3c;
+      }
+    }
+  }
+}
