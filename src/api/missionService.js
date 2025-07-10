@@ -259,3 +259,23 @@ export const addMissionTask = async (missionId, newTask) => {
     throw error;
   }
 };
+
+export const getChallengeList = async () => {
+  try {
+    const response = await api.get("/api/v1/challenges");
+    return response.data;
+  } catch (error) {
+    console.error("챌린지 목록 가져오기 실패:", error);
+    throw error;
+  }
+};
+
+export const getChallengeDetail = async (challengeId) => {
+  try {
+    const response = await api.get(`/api/v1/challenges/${challengeId}`);
+    return response.data;
+  } catch (error) {
+    console.error("챌린지 상세 정보 가져오기 실패:", error);
+    throw error;
+  }
+};

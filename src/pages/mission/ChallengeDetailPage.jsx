@@ -1,0 +1,73 @@
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getChallengeDetail } from "../../api/missionService";
+import missionStateMap from "../../utils/missionStateMap";
+import SideModal from "../../components/common/SideModal/SideModal";
+import styles from "./ChallengeDetailPage.module.scss";
+
+function ChallengeDetailPage() {
+  const { challengeId } = useParams();
+  const navigate = useNavigate();
+  const [challenge, setChallenge] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getChallengeDetail(challengeId);
+        setChallenge(data.data || null);
+      } catch (err) {
+        setError("챌린지 정보를 불러오는 데 실패했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [challengeId]);
+
+  if (!open) {
+    navigate(-1);
+    return null;
+  }
+
+  return (
+    <SideModal isOpen={open} onClose={() => setOpen(false)} width={480}>
+      {loading ? (
+        <div className={styles.detailPage}>로딩 중...</div>
+      ) : error ? (
+        <div className={styles.detailPage} style={{ color: "red" }}>
+          {error}
+        </div>
+      ) : !challenge ? (
+        <div className={styles.detailPage}>챌린지 정보를 찾을 수 없습니다.</div>
+      ) : (
+        <div className={styles.detailPage}>
+          <h2 className={styles.title}>{challenge.mission?.name || "-"}</h2>
+          <div className={styles.infoRow}>
+            <b>미션그룹:</b> {challenge.mission?.missionGroup?.name || "-"}
+          </div>
+          <div className={styles.infoRow}>
+            <b>제출자:</b>{" "}
+            {challenge.user?.name || challenge.user?.username || "-"}
+          </div>
+          <div className={styles.infoRow}>
+            <b>상태:</b>{" "}
+            <span className={styles.status + " " + styles[challenge.progress]}>
+              {missionStateMap[challenge.progress] || challenge.progress || "-"}
+            </span>
+          </div>
+          <div className={styles.infoRow}>
+            <b>설명:</b>{" "}
+            <pre className={styles.desc}>
+              {challenge.mission?.description || "-"}
+            </pre>
+          </div>
+        </div>
+      )}
+    </SideModal>
+  );
+}
+
+export default ChallengeDetailPage;

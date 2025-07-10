@@ -1,0 +1,102 @@
+.challengeListPage {
+  padding: 18px 10px;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #222;
+}
+
+.challengeTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.challengeTable th,
+.challengeTable td {
+  padding: 8px 8px;
+}
+
+.challengeTable th:not(:nth-child(2)),
+.challengeTable td:not(:nth-child(2)) {
+  text-align: center;
+}
+
+.challengeTable th:nth-child(2),
+.challengeTable td:nth-child(2) {
+  text-align: left;
+}
+
+.challengeTable td:nth-child(2) {
+  color: #1e293b;
+  letter-spacing: -0.2px;
+}
+
+.challengeTable th {
+  background: #f1f5f9;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3b4252;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.challengeTable td {
+  font-size: 0.97rem;
+  color: #444;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.challengeTable tr:last-child td {
+  border-bottom: none;
+}
+
+.status {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 14px;
+  font-size: 0.95em;
+  font-weight: 500;
+  background: #e0e7ff;
+  color: #3730a3;
+  min-width: 60px;
+  text-align: center;
+}
+
+// 상태별 색상
+.status.NOT_STARTED {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+.status.IN_PROGRESS {
+  background: #dbeafe;
+  color: #2563eb;
+}
+.status.COMPLETED {
+  background: #dcfce7;
+  color: #16a34a;
+}
+.status.IN_FEEDBACK {
+  background: #fef9c3;
+  color: #b45309;
+}
+.status.FEEDBACK_DONE {
+  background: #f0fdf4;
+  color: #059669;
+}
+.status.ABORTED {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.emptyRow {
+  color: #aaa;
+  background: #f9fafb;
+}
