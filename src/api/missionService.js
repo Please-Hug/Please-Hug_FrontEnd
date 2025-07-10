@@ -279,3 +279,13 @@ export const getChallengeDetail = async (challengeId) => {
     throw error;
   }
 };
+
+export const getChallengeSubmissions = async (challengeId) => {
+  try {
+    const response = await api.get(`/api/v1/submissions/${challengeId}`);
+    return response.data;
+  } catch (error) {
+    console.error("챌린지 제출물 가져오기 실패:", error);
+    throw error;
+  }
+};
