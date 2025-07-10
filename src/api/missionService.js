@@ -289,3 +289,18 @@ export const getChallengeSubmissions = async (challengeId) => {
     throw error;
   }
 };
+
+export const feedbackChallengeSubmission = async (challengeId, feedback) => {
+  try {
+    const response = await api.patch(
+      `/api/v1/submissions/${challengeId}/feedback`,
+      {
+        feedback: feedback,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("챌린지 제출물 피드백 실패:", error);
+    throw error;
+  }
+};
