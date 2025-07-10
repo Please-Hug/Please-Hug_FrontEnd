@@ -32,9 +32,9 @@ function StudyDiaryWritePage() {
 
   // 내용 변경 처리
   const handleContentChange = (value) => {
-    // 글자 수 제한 (API 명세: 1-1000자)
-    if (value.length > 1000) {
-      setErrors({ ...errors, content: "내용은 1000자를 초과할 수 없습니다." });
+    // 글자 수 제한 (API 명세: 1-10000자)
+    if (value.length > 10000) {
+      setErrors({ ...errors, content: "내용은 10000자를 초과할 수 없습니다." });
       return;
     }
     
@@ -55,10 +55,11 @@ function StudyDiaryWritePage() {
     
     if (!formData.content.trim()) {
       newErrors.content = "내용을 입력해주세요.";
-    } else if (formData.content.length < 1 || formData.content.length > 1000) {
-      newErrors.content = "내용은 1~1000자 사이여야 합니다.";
+    } else if (formData.content.length < 1 || formData.content.length > 10000) {
+      newErrors.content = "내용은 1~10000자 사이여야 합니다.";
     }
     
+    console.log("Validation errors:", newErrors); // 디버깅용
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -67,7 +68,11 @@ function StudyDiaryWritePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    console.log("Form submitted!"); // 디버깅용
+    console.log("Form data:", formData); // 디버깅용
+    
     if (!validateForm()) {
+      console.log("Form validation failed"); // 디버깅용
       return;
     }
 
@@ -79,7 +84,11 @@ function StudyDiaryWritePage() {
         content: formData.content.trim()
       };
       
+      console.log("Request data:", requestData); // 디버깅용
+      
       const response = await createStudyDiary(requestData);
+      
+      console.log("Response:", response); // 디버깅용
       
       if (response?.data) {
         alert("배움일기가 성공적으로 작성되었습니다!");
@@ -181,13 +190,22 @@ function StudyDiaryWritePage() {
             취소
           </button>
           
-          <button
-            type="submit"
-            className={styles.submitButton}
-            disabled={loading || Object.keys(errors).length > 0}
-          >
-            {loading ? "작성 중..." : "작성 완료"}
-          </button>
+          <div className={styles.rightButtons}>
+            <button
+              type="button"
+              className={styles.submitButton}
+              disabled={loading}
+              onClick={(e) => {
+                console.log("Button clicked!"); // 디버깅용
+                console.log("Loading:", loading); // 디버깅용
+                console.log("Errors:", errors); // 디버깅용
+                console.log("Form data:", formData); // 디버깅용
+                handleSubmit(e);
+              }}
+            >
+              {loading ? "작성 중..." : "작성 완료"}
+            </button>
+          </div>
         </div>
       </form>
     </div>

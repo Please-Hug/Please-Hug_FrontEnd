@@ -4,6 +4,7 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import "./mdeditor-override.css"; // 텍스트 색상 오버라이드
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import { uploadStudyDiaryImage } from "../../../api/studyDiaryService";
 import styles from "./StudyDiaryEditor.module.scss";
 
@@ -106,9 +107,9 @@ const StudyDiaryEditor = forwardRef(({ value, onChange, placeholder = "내용을
             }
           }}
           previewOptions={{
-            remarkPlugins: [remarkGfm],
+            remarkPlugins: [remarkGfm, remarkBreaks],
           }}
-          toolbarHeight={40}
+          toolbarheight={40}
         />
       </div>
       
@@ -129,7 +130,7 @@ const StudyDiaryEditor = forwardRef(({ value, onChange, placeholder = "내용을
           이미지 업로드
         </button>
         <span className={styles.charCount}>
-          {value.length}/1000자
+          {value.length}/10000자
         </span>
       </div>
     </div>
