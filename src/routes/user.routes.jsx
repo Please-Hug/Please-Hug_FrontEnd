@@ -19,6 +19,7 @@ import AdminShopPage from "../pages/Shop/AdminShopPage";
 import MissionGroupPage from "../pages/mission/MissionGroupPage";
 import AdminQuestPage from "../pages/Quest/AdminQuestPage";
 import MissionDetailPage from "../pages/mission/MissionDetailPage";
+import ChallengeListPage from "../pages/Mission/ChallengeListPage";
 
 export default [
   {
@@ -44,6 +45,15 @@ export default [
           {
             path: ":missionId",
             element: <MissionDetailPage />,
+          },
+        ],
+      },
+      {
+        path: "/challenge",
+        children: [
+          {
+            index: true,
+            element: <ChallengeListPage />,
           },
         ],
       },
