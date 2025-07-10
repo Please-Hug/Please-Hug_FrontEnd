@@ -25,7 +25,7 @@ import { getMyMissionGroups } from "../../../api/missionService";
 import Notification from "../SideModal/Notification.jsx";
 import PraiseDetailModal from "../../Praise/PraiseDetailModal";
 import { fetchNotifications } from "../../../api/notificationService.js";
-import { set } from "date-fns";
+import useTokenPayload from "../../../stores/tokenPayloadStore.js";
 
 function getQuickMenuItems() {
   return [
@@ -47,9 +47,29 @@ function getMenuItems() {
   ];
 }
 
+function getLecturerMenuItems() {
+  return [
+    { icon: <FaHouse />, label: "홈" },
+    { icon: <FaBook />, label: "배움일기", link: "/study-diary" },
+    { icon: <FaThumbsUp />, label: "칭찬", link: "/praises" },
+    { icon: <FaGraduationCap />, label: "미션", link: "/mission" },
+    { icon: <FaBook />, label: "미션 제출 현황", link: "/challenge" },
+    { icon: <FaChessBoard />, label: "퀘스트", link: "/quest" },
+    { icon: <FaCartShopping />, label: "상점", link: "/shop" },
+    { icon: <FaRankingStar />, label: "랭킹" },
+  ];
+}
+
 function Sidebar() {
   const quickMenuItems = getQuickMenuItems();
-  const menuItems = getMenuItems();
+  let menuItems = getMenuItems();
+  const tokenPayload = useTokenPayload((state) => state.tokenPayload);
+
+  // 강사일 경우 메뉴 아이템 변경
+  if (tokenPayload?.role === "ROLE_LECTURER") {
+    menuItems = getLecturerMenuItems();
+  }
+
   // const missionGroupItems = getMissonGroupItems();
   const navigate = useNavigate();
   const userInfo = useUserStore((state) => state.userInfo);
@@ -58,13 +78,13 @@ function Sidebar() {
   const [missionGroupItems, setMissionGroupItems] = useState([]);
 
   // 알림 사이드모달 상태
-  const [ isNotificationOpen, setIsNotificationOpen ] = useState(false);
-  const  [notifications, setNotifications ] = useState([]);
-  const [ isFetched, setIsFetched ] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [isFetched, setIsFetched] = useState(false);
   const bellRef = useRef(null);
   const [modalInfo, setModalInfo] = useState({
-    type: null,      // "PRAISE" | "DIARY" | null
-    targetId: null,  // 해당 모달에 열어야 할 대상 ID
+    type: null, // "PRAISE" | "DIARY" | null
+    targetId: null, // 해당 모달에 열어야 할 대상 ID
   });
 
   useEffect(() => {
@@ -127,18 +147,17 @@ function Sidebar() {
             {/* 퀵 메뉴 클릭 이벤트 수정*/}
             <ul>
               {quickMenuItems.map((item, index) => (
-                <li 
+                <li
                   key={index}
                   ref={item.label === "알림" ? bellRef : null}
                   onClick={() => {
-                    if (item.label === "알림" ){
-                      setIsNotificationOpen(!isNotificationOpen);    // 알림 모달 열기
+                    if (item.label === "알림") {
+                      setIsNotificationOpen(!isNotificationOpen); // 알림 모달 열기
                     }
                   }}
                 >
                   {item.icon}
                   <span>{item.label}</span>
-
                 </li>
               ))}
             </ul>
@@ -206,7 +225,6 @@ function Sidebar() {
             notifications={notifications}
             setNotifications={setNotifications}
           />
-
         </div>
       )}
 
@@ -217,7 +235,7 @@ function Sidebar() {
           onClose={() => setModalInfo({ type: null, targetId: null })}
           praiseId={modalInfo.targetId}
           currentUser={userInfo}
-          fetchPraise={() => {}}  // 필요시 전달
+          fetchPraise={() => {}} // 필요시 전달
         />
       )}
 
@@ -229,9 +247,7 @@ function Sidebar() {
           diaryId={modalInfo.targetId}
         />
       )} */}
-
     </>
-    
   );
 }
 

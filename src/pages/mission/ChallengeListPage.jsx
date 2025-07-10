@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ChallengeDetailModal from "./ChallengeDetailModal";
+import ChallengeDetailModal from "../../components/Mission/ChallengeDetailModal";
 import styles from "./ChallengeListPage.module.scss";
 import { getChallengeList } from "../../api/missionService";
 import missionStateMap from "../../utils/missionStateMap";
@@ -20,7 +20,7 @@ function ChallengeListPage() {
         } else {
           setChallenges([]);
         }
-      } catch (err) {
+      } catch {
         setError("데이터를 불러오는 데 실패했습니다.");
       } finally {
         setLoading(false);
@@ -31,7 +31,7 @@ function ChallengeListPage() {
 
   return (
     <div className={styles.challengeListPage}>
-      <h2 className={styles.title}>미션 제출 현황</h2>
+      <h2>미션 제출 현황</h2>
       {loading ? (
         <div>로딩 중...</div>
       ) : error ? (
