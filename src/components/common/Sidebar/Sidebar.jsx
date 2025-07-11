@@ -190,13 +190,14 @@ function Sidebar() {
       </div>
 
       {/* Notification 컴포넌트 고정 렌더링 */}
-      {isNotificationOpen && bellRef.current && (
+      {bellRef.current && (
         <div
           style={{
             position: "absolute",
             top: bellRef.current.getBoundingClientRect().top + window.scrollY,
             left: bellRef.current.getBoundingClientRect().right + 8, // 아이콘 오른쪽에 붙이기
             zIndex: 2000,
+            display: isNotificationOpen ? "block" : "none",
           }}
         >
           <Notification
