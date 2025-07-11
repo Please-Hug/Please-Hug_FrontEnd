@@ -15,7 +15,7 @@ function Notification({ onClose, onOpenModal, isOpen, notifications, setNotifica
         const eventSource = subscribeToNotifications(
             (newNotification) => {
                 console.log("SSE Event ", newNotification);
-                const category = mapTypeToCategory(newNotification.type);s
+                const category = mapTypeToCategory(newNotification.type);
                 setNotifications((prev) => [
                     { ...newNotification, category, read: false },
                     ...prev,
