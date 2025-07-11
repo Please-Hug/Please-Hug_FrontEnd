@@ -76,7 +76,7 @@ export default defineConfig({
   define: {
     __BASE_URL__: JSON.stringify(
       process.env.NODE_ENV === "production"
-        ? "https://api.hugexp.xyz"
+        ? "http://api.hugexp.xyz"
         : "http://localhost:8080"
     ),
   },

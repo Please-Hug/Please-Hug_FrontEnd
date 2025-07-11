@@ -37,8 +37,7 @@ jobs:
             cd /home/ec2-user/hugme/frontend/Please-Hug_FrontEnd
             git pull origin develop
             docker-compose -f docker-compose.yml down
-            docker-compose build --no-cache
-            docker-compose -f docker-compose.yml up -d
+            docker-compose -f docker-compose.prod.yml up --build -d
 
       - name: Remove Github Actions IP From Security Group
         run: |
