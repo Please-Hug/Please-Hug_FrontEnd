@@ -17,9 +17,12 @@ const RankingPage = () => {
   const tokenPayload = useTokenPayload((state) => state.tokenPayload);
 
   useEffect(() => {
-    fetchRankings();
-    fetchCurrentUser();
-  }, []);
+    const fetchData = async () => {
+      await fetchRankings();
+      await fetchCurrentUser();
+    };
+    fetchData();
+  }, [tokenPayload]);
 
   // 사용자별 미션 그룹 정보를 표시하는 함수
   const getUserMissionGroupsText = (user) => {
