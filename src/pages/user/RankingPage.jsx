@@ -4,9 +4,9 @@ import useTokenPayload from "../../stores/tokenPayloadStore";
 import styles from "./RankingPage.module.scss";
 import BASE_URL from "../../api/baseUrl";
 import emptyUserProfile from "../../assets/images/user/empty-user-profile.svg";
-import medal1st from "../../assets/images/user/medal_1st.webp";
-import medal2nd from "../../assets/images/user/medal_2nd.webp";
-import medal3rd from "../../assets/images/user/medal_3rd.webp";
+import medal1st from "../../assets/images/user/medal_1st.png";
+import medal2nd from "../../assets/images/user/medal_2nd.png";
+import medal3rd from "../../assets/images/user/medal_3rd.png";
 
 const RankingPage = () => {
   const [rankings, setRankings] = useState([]);
