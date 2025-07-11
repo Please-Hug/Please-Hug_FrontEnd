@@ -19,7 +19,7 @@ import AdminShopPage from "../pages/Shop/AdminShopPage";
 import MissionGroupPage from "../pages/mission/MissionGroupPage";
 import AdminQuestPage from "../pages/Quest/AdminQuestPage";
 import MissionDetailPage from "../pages/mission/MissionDetailPage";
-import ChallengeListPage from "../pages/Mission/ChallengeListPage";
+import ChallengeListPage from "../pages/mission/ChallengeListPage";
 
 export default [
   {
