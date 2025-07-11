@@ -8,7 +8,7 @@ export default [
     element: <AdminLayout />,  
     children: [
       { index: true, element: <AdminUsersList /> },
-      { path: 'users/:id', element: <AdminUserDetail /> },
+      { path: 'users/:username', element: <AdminUserDetail /> },
     ],
   },
 ];
