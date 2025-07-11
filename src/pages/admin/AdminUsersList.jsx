@@ -6,12 +6,16 @@ export default function AdminUsersList() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    getUsers()
-      .then(res => {
-        console.log('API 응답:', res.data);
-        setUsers(res.data.data.content);
-      })
-      .catch(err => console.error(err));
+    const fetchUsers = async () => {
+      try {
+        const res = await getUsers();
+        setUsers(res.data.content || []);
+      } catch (err) {
+        console.error(err);
+        setUsers([]);
+      }
+    };
+    fetchUsers();
   }, []);
 
   return (

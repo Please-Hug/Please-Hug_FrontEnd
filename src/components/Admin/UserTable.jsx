@@ -27,7 +27,11 @@ export default function UserTable({ users }) {
         {users.map(user => (
           <tr key={user.id} className="border-t">
             <td className="px-4 py-2">{user.id}</td>
-            <td className="px-4 py-2">{user.username}</td>
+            <td className="px-4 py-2">
+              <Link to={`/admin/users/${user.username}`}>
+                {user.username}
+              </Link>
+            </td>
             <td className="px-4 py-2">{user.email}</td>
             <td className="px-4 py-2">{user.role}</td>
             <td className="px-4 py-2">

@@ -9,39 +9,57 @@ export default function AdminUserDetail() {
   const [form, setForm] = useState({ username: '', email: '', role: '' });
 
   useEffect(() => {
-    getUser(username)
-      .then(res => {
-        const userData = res.data.data;  
+    const fetchUser = async () => {
+      try {
+        const res = await getUser(username);
+        console.log('사용자 상세 응답:', res.data); // 구조 확인
+        
+        // 응답 구조에 따라 수정
+        const userData = res.data.data || res.data; // 실제 구조에 맞게
         setUser(userData);
         setForm({
           username: userData.username,
-          email:    userData.email,
-          role:     userData.role,
+          email: userData.email,
+          role: userData.role,
         });
-      })
-      .catch(err => console.error(err));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    if (username) { // username이 있을 때만 호출
+      fetchUser();
+    }
   }, [username]);
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSave = () => {
-    updateUser(username, form)
-      .then(() => navigate('/admin'))
-      .catch(err => console.error(err));
+  const handleSave = async () => {
+    try {
+      await updateUser(username, form);
+      navigate('/admin');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleRoleChange = e => {
+  const handleRoleChange = async e => {
     const newRole = e.target.value;
-    changeUserRole(username, newRole)
-      .then(() => setForm({ ...form, role: newRole }))
-      .catch(err => console.error(err));
+    try {
+      await changeUserRole(username, newRole);
+      setForm({ ...form, role: newRole });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      deleteUser(username)
-        .then(() => navigate('/admin'))
-        .catch(err => console.error(err));
+      try {
+        await deleteUser(username);
+        navigate('/admin');
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
