@@ -48,14 +48,16 @@ function DashboardPage() {
         name={userInfo.name}
         className={styles.dashboardGreeting}
       />
-      <DashboardMenu />
-
-      {/* — 북마크 섹션 시작 — */}
-      <div>
-        <BookmarkSection />
+      {/* 관리자 페이지 링크 */}
+      <div className="flex justify-end mb-4">
+        <Link
+          to="/admin"
+          className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >관리자 페이지</Link>
       </div>
-      {/* — 북마크 섹션 끝 — */}
-
+      {/* 관리자 끝 */}
+      <DashboardMenu />
+      <div> <BookmarkSection/></div>
       <div className={styles.dashboardContent}>
         <div className={styles.dashboardLeft}>
           <RecentLearning />
