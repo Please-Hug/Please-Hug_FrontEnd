@@ -13,7 +13,7 @@ import MyStudyDiaryActivity from "../pages/studyDiary/MyStudyDiaryActivity";
 import LogoutPage from "../pages/user/LogoutPage";
 import PraisePage from "../pages/praise/PraisePage";
 import MyInfoPage from "../pages/user/MyInfoPage";
-import RankingPage from "../pages/User/RankingPage";
+import RankingPage from "../pages/user/RankingPage";
 import ShopPage from "../pages/Shop/ShopPage";
 import ShopHistoryPage from "../pages/Shop/ShopHistoryPage";
 import AdminShopPage from "../pages/Shop/AdminShopPage";
