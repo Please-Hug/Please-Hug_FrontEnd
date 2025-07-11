@@ -12,20 +12,27 @@ function Notification({ onClose, onOpenModal, isOpen, notifications, setNotifica
 
     // sse 구독함수
     useEffect(() => {
-        const eventSource = subscribeToNotifications((newNotification) => {
-            console.log("SSE Event ", newNotification);
-            
-            const category = mapTypeToCategory(newNotification.type);
-            setNotifications((prev) => [
-                { ...newNotification, category, read: false },
-                ...prev,
-            ])
-        });
+        const eventSource = subscribeToNotifications(
+            (newNotification) => {
+                console.log("SSE Event ", newNotification);
+                const category = mapTypeToCategory(newNotification.type);
+                setNotifications((prev) => [
+                    { ...newNotification, category, read: false },
+                    ...prev,
+                ]);
+            },
+            (deletedId) => {
+                console.log("알림 삭제됨:", deletedId);
+                setNotifications((prev) => prev.filter((n) => n.id !== deletedId));
+            }
+        );
 
         return () => {
-            eventSource.close();  // 컴포넌트 언마운트 시 SSE 연결 종료
+            eventSource.close();
         };
     }, [setNotifications]);
+
+    
 
 
     // 외부 클릭 시 닫기
@@ -137,6 +144,8 @@ function Notification({ onClose, onOpenModal, isOpen, notifications, setNotifica
 }
 
 function formatTimeAgo(dateStr) {
+    if (!dateStr) return "";
+
     const diff = (new Date() - new Date(dateStr)) / 1000;
     if (diff < 60) return "방금 전";
     if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
