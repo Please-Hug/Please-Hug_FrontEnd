@@ -11,7 +11,11 @@ export default function AdminUserDetail() {
     name: '',
     description: '',
     phoneNumber: '',
-    role: ''
+    role: '',
+    level: 0,
+    currentTotalExp: 0,
+    exp: 0, 
+    point: 0
   });
 
   useEffect(() => {
@@ -34,6 +38,10 @@ export default function AdminUserDetail() {
             description: userData.description || '',
             phoneNumber: userData.phoneNumber || '',
             role: userData.role || '',
+            level: userData.level || 0,
+            currentTotalExp: userData.currentTotalExp || 0,
+            exp: userData.exp || 0,
+            point: userData.point || 0
           });
         }
       } catch (err) {
@@ -49,20 +57,59 @@ export default function AdminUserDetail() {
 
   const handleSave = async () => {
     try {
-      await updateUser(username, form);
-      navigate('/admin');
+      console.log('저장 시작');
+      console.log('username:', username);
+      console.log('form 데이터:', form);
+      
+      const response = await updateUser(username, form);
+      console.log('저장 성공:', response);
+      alert('저장되었습니다!');
     } catch (err) {
-      console.error(err);
+      console.error('저장 실패 상세:', err);
+      console.error('에러 메시지:', err.message);
+      console.error('에러 응답:', err.response);
+      
+      if (err.response) {
+        const errorMessage = err.response.data?.message || '알 수 없는 오류';
+        
+        // 전화번호 형식 에러 메시지
+        if (errorMessage.includes('phoneNumber') && errorMessage.includes('일치해야 합니다')) {
+          alert('전화번호 형식이 올바르지 않습니다. 전화번호의 양식은 010-0000-0000 입니다.');
+        } else {
+          alert(`저장 실패: ${err.response.status} - ${errorMessage}`);
+        }
+      } else {
+        alert('저장에 실패했습니다.');
+      }
     }
   };
 
-  const handleRoleChange = async e => {
+  const handleRoleChange = async (e) => {
     const newRole = e.target.value;
+    console.log('권한 변경 시도:', newRole);
+    
     try {
-      await changeUserRole(username, newRole);
+      // 권한 변경 전용 API 사용
+      const response = await changeUserRole(username, newRole);
+      console.log('권한 변경 성공:', response);
+      
+      // 폼 상태 업데이트
       setForm({ ...form, role: newRole });
+      
+      // 사용자 정보도 업데이트
+      setUser({ ...user, role: newRole });
+      
+      alert(`권한이 ${newRole}로 변경되었습니다.`);
+      
     } catch (err) {
-      console.error(err);
+      console.error('권한 변경 실패 상세:', err);
+      console.error('에러 응답:', err.response);
+      
+      if (err.response) {
+        alert(`권한 변경 실패: ${err.response.status} - ${err.response.data?.message || '알 수 없는 오류'}`);
+      } else {
+        alert('권한 변경에 실패했습니다.');
+      }
     }
   };
 
@@ -83,7 +130,7 @@ export default function AdminUserDetail() {
       {user ? (
         <div className="space-y-4">
           <div>
-            <label className="block mb-1">사용자명</label>
+            <label className="block mb-1">아이디</label>
             <input
               type="text"
               name="username"
@@ -119,6 +166,7 @@ export default function AdminUserDetail() {
               name="phoneNumber"
               value={form.phoneNumber}
               onChange={handleChange}
+              placeholder="010-0000-0000"
               className="w-full border px-3 py-2 rounded"
             />
           </div>
@@ -131,29 +179,51 @@ export default function AdminUserDetail() {
               className="w-full border px-3 py-2 rounded"
             >
               <option value="USER">USER</option>
-              <option value="LECTURE">LECTURE</option>
+              <option value="LECTURER">LECTURER</option> 
               <option value="ADMIN">ADMIN</option>
             </select>
           </div>
           
-          {/* 읽기 전용 정보 */}
           <div className="bg-gray-50 p-4 rounded">
-            <h3 className="font-semibold mb-2">추가 정보</h3>
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <h3 className="font-semibold mb-2">수치 정보</h3>
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <span className="font-medium">ID:</span> {user.id}
+                <span className="font-medium block mb-1">ID:</span> 
+                <span className="text-sm">{user.id}</span>
               </div>
               <div>
-                <span className="font-medium">레벨:</span> {user.level}
+                <span className="font-medium block mb-1">레벨:</span>
+                <span className="text-sm">{user.level}</span>
               </div>
               <div>
-                <span className="font-medium">현재 경험치:</span> {user.currentTotalExp}
+                <span className="font-medium block mb-1">현재 총 경험치:</span>
+                <span className="text-sm">{user.currentTotalExp}</span>
               </div>
               <div>
-                <span className="font-medium">다음 레벨 경험치:</span> {user.nextLevelTotalExp}
+                <span className="font-medium block mb-1">다음 레벨 경험치:</span>
+                <span className="text-sm">{user.nextLevelTotalExp}</span>
               </div>
               <div>
-                <span className="font-medium">포인트:</span> {user.point}
+                <label className="font-medium block mb-1">경험치 (강제 리셋):</label>
+                <input
+                  type="number"
+                  name="exp"
+                  value={form.exp}
+                  onChange={handleChange}
+                  className="w-full border px-2 py-1 rounded text-sm"
+                  min="0"
+                />
+              </div>
+              <div>
+                <label className="font-medium block mb-1">포인트 (강제 리셋):</label>
+                <input
+                  type="number"
+                  name="point"
+                  value={form.point}
+                  onChange={handleChange}
+                  className="w-full border px-2 py-1 rounded text-sm"
+                  min="0"
+                />
               </div>
             </div>
           </div>

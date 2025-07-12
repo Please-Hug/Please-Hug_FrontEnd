@@ -27,6 +27,8 @@ export const updateUser = async (username, data) => {
     return response.data;
   } catch (error) {
     console.error("updateUser 실패:", error);
+    console.error("에러 상태:", error.response?.status);
+    console.error("에러 데이터:", error.response?.data);
     throw error;
   }
 };
@@ -43,10 +45,12 @@ export const deleteUser = async (username) => {
 
 export const changeUserRole = async (username, role) => {
   try {
+    console.log('권한 변경 API 호출:', username, role);
     const response = await api.patch(`${BASE}/${username}/role`, { role });
+    console.log('권한 변경 API 응답:', response);
     return response.data;
   } catch (error) {
-    console.error("changeUserRole 실패:", error);
+    console.error("권한 변경 실패:", error);
     throw error;
   }
 };
