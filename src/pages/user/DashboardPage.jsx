@@ -31,31 +31,25 @@ function DashboardPage() {
       ]);
     }
   }, [setBreadcrumbItems, userInfo]);
+  
   if (!userInfo) {
     return <div>로딩중...</div>;
   }
-  // const userInfo = {
-  //   name: "정휘상(백엔드 3회차)",
-  //   course: "Hugton 알고리즘 미션 강좌",
-  //   rank: "11%",
-  //   level: 17,
-  //   currentExp: 4721,
-  //   maxExp: 6274,
-  // };
+
   return (
     <div className={styles.dashboardPage}>
       <DashboardGreeting
         name={userInfo.name}
         className={styles.dashboardGreeting}
       />
-      {/* 관리자 페이지 링크 */}
-      <div className="flex justify-end mb-4">
-        <Link
-          to="/admin"
-          className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >관리자 페이지</Link>
-      </div>
-      {/* 관리자 끝 */}
+      {userInfo.role === 'ADMIN' && (
+        <div className="flex justify-end mb-4">
+          <Link
+            to="/admin"
+            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >관리자 페이지</Link>
+        </div>
+      )}
       <DashboardMenu />
       <div> <BookmarkSection/></div>
       <div className={styles.dashboardContent}>
