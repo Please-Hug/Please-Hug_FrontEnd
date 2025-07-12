@@ -6,27 +6,41 @@ export default function AdminUserDetail() {
   const { username } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [form, setForm] = useState({ username: '', email: '', role: '' });
+  const [form, setForm] = useState({
+    username: '',
+    name: '',
+    description: '',
+    phoneNumber: '',
+    role: ''
+  });
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        console.log('사용자 상세 API 호출 시작, username:', username);
         const res = await getUser(username);
-        console.log('사용자 상세 응답:', res.data); // 구조 확인
+        console.log('사용자 상세 API 응답:', res);
+        console.log('res.data:', res.data);
         
-        // 응답 구조에 따라 수정
-        const userData = res.data.data || res.data; // 실제 구조에 맞게
-        setUser(userData);
-        setForm({
-          username: userData.username,
-          email: userData.email,
-          role: userData.role,
-        });
+        // 여러 가능한 구조 확인
+        const userData = res.data.data || res.data; // 방어적 코딩
+        console.log('userData:', userData);
+        
+        if (userData) {
+          setUser(userData);
+          setForm({
+            username: userData.username || '',
+            name: userData.name || '',
+            description: userData.description || '',
+            phoneNumber: userData.phoneNumber || '',
+            role: userData.role || '',
+          });
+        }
       } catch (err) {
-        console.error(err);
+        console.error('사용자 상세 정보 가져오기 실패:', err);
       }
     };
-    if (username) { // username이 있을 때만 호출
+    if (username) {
       fetchUser();
     }
   }, [username]);
@@ -69,7 +83,7 @@ export default function AdminUserDetail() {
       {user ? (
         <div className="space-y-4">
           <div>
-            <label className="block mb-1">이름</label>
+            <label className="block mb-1">사용자명</label>
             <input
               type="text"
               name="username"
@@ -79,11 +93,31 @@ export default function AdminUserDetail() {
             />
           </div>
           <div>
-            <label className="block mb-1">이메일</label>
+            <label className="block mb-1">이름</label>
             <input
-              type="email"
-              name="email"
-              value={form.email}
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded"
+            />
+          </div>
+          <div>
+            <label className="block mb-1">설명</label>
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded"
+              rows="3"
+            />
+          </div>
+          <div>
+            <label className="block mb-1">전화번호</label>
+            <input
+              type="text"
+              name="phoneNumber"
+              value={form.phoneNumber}
               onChange={handleChange}
               className="w-full border px-3 py-2 rounded"
             />
@@ -97,9 +131,33 @@ export default function AdminUserDetail() {
               className="w-full border px-3 py-2 rounded"
             >
               <option value="USER">USER</option>
+              <option value="LECTURE">LECTURE</option>
               <option value="ADMIN">ADMIN</option>
             </select>
           </div>
+          
+          {/* 읽기 전용 정보 */}
+          <div className="bg-gray-50 p-4 rounded">
+            <h3 className="font-semibold mb-2">추가 정보</h3>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="font-medium">ID:</span> {user.id}
+              </div>
+              <div>
+                <span className="font-medium">레벨:</span> {user.level}
+              </div>
+              <div>
+                <span className="font-medium">현재 경험치:</span> {user.currentTotalExp}
+              </div>
+              <div>
+                <span className="font-medium">다음 레벨 경험치:</span> {user.nextLevelTotalExp}
+              </div>
+              <div>
+                <span className="font-medium">포인트:</span> {user.point}
+              </div>
+            </div>
+          </div>
+
           <div className="flex space-x-2 pt-4">
             <button
               onClick={handleSave}
