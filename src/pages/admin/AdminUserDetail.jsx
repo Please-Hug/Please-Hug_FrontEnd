@@ -72,7 +72,6 @@ export default function AdminUserDetail() {
       if (err.response) {
         const errorMessage = err.response.data?.message || '알 수 없는 오류';
         
-        // 전화번호 형식 에러 메시지
         if (errorMessage.includes('phoneNumber') && errorMessage.includes('일치해야 합니다')) {
           alert('전화번호 형식이 올바르지 않습니다. 전화번호의 양식은 010-0000-0000 입니다.');
         } else {
@@ -130,14 +129,8 @@ export default function AdminUserDetail() {
       {user ? (
         <div className="space-y-4">
           <div>
-            <label className="block mb-1">아이디</label>
-            <input
-              type="text"
-              name="username"
-              value={form.username}
-              onChange={handleChange}
-              className="w-full border px-3 py-2 rounded"
-            />
+            <span className="font-medium block mb-1">아이디: </span> 
+            <span className="text-sm">{user.username}</span>
           </div>
           <div>
             <label className="block mb-1">이름</label>
@@ -187,10 +180,6 @@ export default function AdminUserDetail() {
           <div className="bg-gray-50 p-4 rounded">
             <h3 className="font-semibold mb-2">수치 정보</h3>
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <span className="font-medium block mb-1">ID:</span> 
-                <span className="text-sm">{user.id}</span>
-              </div>
               <div>
                 <span className="font-medium block mb-1">레벨:</span>
                 <span className="text-sm">{user.level}</span>
