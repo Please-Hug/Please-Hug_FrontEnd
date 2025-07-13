@@ -13,6 +13,7 @@ import useUserStore from "../../stores/userStore";
 import api from "../../api/axiosInstance";
 import useBreadcrumbStore from "../../stores/breadcrumbStore";
 import BookmarkSection from "../../components/Dashboard/BookmarkSection";
+import AdminButton from "../../components/Admin/AdminButton"; 
 
 function DashboardPage() {
   const userInfo = useUserStore((state) => state.userInfo);
@@ -40,14 +41,9 @@ function DashboardPage() {
         name={userInfo.name}
         className={styles.dashboardGreeting}
       />
-      {userInfo.role === 'ADMIN' && (
-        <div className="flex justify-end mb-4">
-          <Link
-            to="/admin"
-            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >관리자 페이지</Link>
-        </div>
-      )}
+      
+      {userInfo.role === 'ADMIN' && <AdminButton />}
+      
       <DashboardMenu />
       <div> <BookmarkSection/></div>
       <div className={styles.dashboardContent}>
