@@ -17,8 +17,20 @@ export default function AdminLayout() {
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (token) {
-      const payload = jwtDecode(token);
-      setTokenPayload(payload);
+      try {
+        const payload = jwtDecode(token);
+        // 토큰 만료 체크
+        if (payload.exp && payload.exp * 1000 < Date.now()) {
+          localStorage.clear();
+          navigate("/login", { replace: true });
+          return;
+        }
+        setTokenPayload(payload);
+      } catch (error) {
+        console.error("Invalid token:", error);
+        localStorage.clear();
+        navigate("/login", { replace: true });
+      }
     }
   }, [setTokenPayload]);
 
