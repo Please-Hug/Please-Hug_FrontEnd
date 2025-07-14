@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import apiInstance from "../../api/axiosInstance";
+import styles from './AdminQuestPage.module.scss';
 
 function AdminQuestPage() {
     const [username, setUsername] = useState("");
@@ -29,31 +30,38 @@ function AdminQuestPage() {
         }
     };
 
-    return (
-        <div>
-            <h2>🛠️ Admin 퀘스트 페이지</h2>
-
-            <div>
-                <input
-                    type="text"
-                    placeholder="username 입력"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <button onClick={handleAssignQuests} >
-                    퀘스트 할당 (assign)
-                </button>
-            </div>
-
-            <div>
-                <button onClick={handleResetQuests}>
-                    퀘스트 리셋 (매일 자정 00:00시 주기적으로 호출되는 기능)
-                </button>
-            </div>
-
-            {message && <p>{message}</p>}
+  return (
+    <div className={styles.AdminQuestPage}>
+      <h2 className={styles.title}>퀘스트 관리</h2>
+      
+      <div className={styles.content}>
+        <div className={styles.card}>
+          <h3>퀘스트 할당</h3>
+          <div className={styles.formGroup}>
+            <input
+              type="text"
+              placeholder="username 입력"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className={styles.input}
+            />
+            <button onClick={handleAssignQuests} className={styles.button}>
+              퀘스트 할당
+            </button>
+          </div>
         </div>
-    );
+
+        <div className={styles.card}>
+          <h3>퀘스트 리셋</h3>
+          <button onClick={handleResetQuests} className={styles.button}>
+            전체 퀘스트 리셋
+          </button>
+        </div>
+
+        {message && <div className={styles.message}>{message}</div>}
+      </div>
+    </div>
+  );
 }
 
 export default AdminQuestPage;
