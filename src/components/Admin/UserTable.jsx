@@ -32,7 +32,7 @@ export default function UserTable({ users }) {
             <th>프로필</th>
             <th>ID</th>
             <th>이름</th>
-            <th>이메일</th>
+            <th>아이디</th>
             <th>권한</th>
             <th>액션</th>
           </tr>
@@ -49,7 +49,7 @@ export default function UserTable({ users }) {
               </td>
               <td>{user.id}</td>
               <td>{user.name || user.username}</td>
-              <td>{user.email || '이메일 없음'}</td>
+              <td>{user.username || '아이디 없음'}</td>
               <td>
                 <span className={getRoleBadgeClass(user.role)}>
                   {user.role}
