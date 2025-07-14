@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import useUserStore from '../stores/userStore';
 import useTokenPayload from '../stores/tokenPayloadStore';
 import { getCurrentUser } from '../api/userService';
@@ -12,7 +12,6 @@ export default function AdminLayout() {
   const setUserInfo = useUserStore((state) => state.setUserInfo);
   const setTokenPayload = useTokenPayload((state) => state.setTokenPayload);
   const navigate = useNavigate();
-  const location = useLocation();
 
   // MainLayout과 동일한 사용자 정보 로딩 로직
   useEffect(() => {
@@ -65,19 +64,6 @@ export default function AdminLayout() {
     }
   }, [navigate, userInfo]);
 
-  const getBreadcrumbText = () => {
-    switch (location.pathname) {
-      case '/admin':
-        return '회원 관리';
-      case '/admin/quest':
-        return '퀘스트 관리';
-      case '/admin/shop':
-        return '상점 관리';
-      default:
-        return '회원 관리';
-    }
-  };
-
   if (!userInfo) {
     return <div className={styles.loadingMessage}>로딩 중...</div>;
   }
@@ -105,7 +91,7 @@ export default function AdminLayout() {
             </span>
             메인 대시보드
           </NavLink>
-
+          
           <NavLink
             to="/admin"
             end
@@ -151,7 +137,7 @@ export default function AdminLayout() {
           <div className={styles.breadcrumb}>
             <span>관리자</span>
             <span> / </span>
-            <span>{getBreadcrumbText()}</span>
+            <span>회원 관리</span>
           </div>
         </div>
         

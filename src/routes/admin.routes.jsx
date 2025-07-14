@@ -11,8 +11,8 @@ export default [
     children: [
       { index: true, element: <AdminUsersList /> },
       { path: 'users/:username', element: <AdminUserDetail /> },
-      { path: "/adminQuest", element: <AdminQuestPage /> },
-      { path: "/adminShop", element: <AdminShopPage /> },
+      { path: "quest", element: <AdminQuestPage /> },
+      { path: "shop", element: <AdminShopPage /> },
     ],
   },
 ];

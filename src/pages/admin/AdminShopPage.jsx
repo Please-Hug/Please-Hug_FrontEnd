@@ -5,20 +5,21 @@ import styles from './AdminShopPage.module.scss';
 function AdminShopPage() {
   const [formData, setFormData] = useState({
     name: "",
-    description: "",
-    price: "",
-    category: "",
-    imageUrl: "",
+    brand: "",
+    quantity: 0,
+    price: 0,
+    image: null,
   });
   const [deleteId, setDeleteId] = useState("");
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    const { name, value, files } = e.target;
+    if (name === "image") {
+      setFormData((prev) => ({ ...prev, image: files[0] }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -26,10 +27,10 @@ function AdminShopPage() {
 
     const data = new FormData();
     data.append("name", formData.name);
-    data.append("description", formData.description);
+    data.append("brand", formData.brand);
+    data.append("quantity", formData.quantity);
     data.append("price", formData.price);
-    data.append("category", formData.category);
-    data.append("imageUrl", formData.imageUrl);
+    data.append("image", formData.image);
 
     try {
       await apiInstance.post("/api/v1/admin/shop", data, {
@@ -38,7 +39,7 @@ function AdminShopPage() {
         },
       });
       setMessage("✅ 상품 등록 완료!");
-      setFormData({ name: "", description: "", price: "", category: "", imageUrl: "" });
+      setFormData({ name: "", brand: "", quantity: 0, price: 0, image: null });
     } catch (err) {
       console.error("상품 등록 실패:", err);
       setMessage("❌ 상품 등록 실패");
@@ -51,6 +52,10 @@ function AdminShopPage() {
       return;
     }
 
+    if (!window.confirm(`정말로 상품 ID ${deleteId}를 삭제하시겠습니까?`)) {
+      return;
+    }
+
     try {
       await apiInstance.delete(`/api/v1/admin/shop/${deleteId}`);
       setMessage(`✅ 상품 ID ${deleteId} 삭제 완료`);
@@ -59,6 +64,16 @@ function AdminShopPage() {
       console.error("상품 삭제 실패:", err);
       setMessage("❌ 상품 삭제 실패");
     }
+  };
+
+  // 메시지 타입에 따른 클래스 결정
+  const getMessageClass = () => {
+    if (message.startsWith("✅")) {
+      return `${styles.message} ${styles.success}`;
+    } else if (message.startsWith("❌")) {
+      return `${styles.message} ${styles.error}`;
+    }
+    return styles.message;
   };
 
   return (
@@ -78,40 +93,48 @@ function AdminShopPage() {
               className={styles.input}
               required
             />
-            <textarea
-              name="description"
-              placeholder="상품 설명"
-              value={formData.description}
+            <input
+              type="text"
+              name="brand"
+              placeholder="브랜드"
+              value={formData.brand}
               onChange={handleChange}
-              className={styles.textareaInput}
+              className={styles.input}
+              required
+            />
+            <input
+              type="number"
+              name="quantity"
+              placeholder="수량"
+              value={formData.quantity}
+              onChange={handleChange}
+              className={styles.input}
+              min="0"
               required
             />
             <input
               type="number"
               name="price"
-              placeholder="가격"
+              placeholder="포인트 가격"
               value={formData.price}
               onChange={handleChange}
               className={styles.input}
+              min="0"
               required
             />
-            <input
-              type="text"
-              name="category"
-              placeholder="카테고리"
-              value={formData.category}
-              onChange={handleChange}
-              className={styles.input}
-              required
-            />
-            <input
-              type="url"
-              name="imageUrl"
-              placeholder="이미지 URL"
-              value={formData.imageUrl}
-              onChange={handleChange}
-              className={styles.input}
-            />
+            <div className={styles.fileInputWrapper}>
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleChange}
+                className={styles.fileInput}
+                required
+              />
+              <label className={styles.fileLabel}>
+                {formData.image ? formData.image.name : "이미지 파일 선택"}
+              </label>
+            </div>
             <button type="submit" className={styles.button}>
               상품 등록
             </button>
@@ -130,14 +153,14 @@ function AdminShopPage() {
             />
             <button 
               onClick={handleDelete} 
-              className={`${styles.button} ${styles.deleteButton}`}
+              className={styles.deleteButton}
             >
               삭제
             </button>
           </div>
         </div>
 
-        {message && <div className={styles.message}>{message}</div>}
+        {message && <div className={getMessageClass()}>{message}</div>}
       </div>
     </div>
   );
