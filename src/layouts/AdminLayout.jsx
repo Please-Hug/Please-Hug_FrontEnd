@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import useUserStore from '../stores/userStore';
 import useTokenPayload from '../stores/tokenPayloadStore';
 import { getCurrentUser } from '../api/userService';
 import { jwtDecode } from 'jwt-decode';
 import styles from './AdminLayout.module.scss';
-import { FaUsers, FaHouse } from 'react-icons/fa6'; // 아이콘 import 추가
+import { FaUsers, FaHouse, FaListCheck, FaStore } from 'react-icons/fa6'; // 아이콘 import 추가
 
 export default function AdminLayout() {
   const userInfo = useUserStore((state) => state.userInfo);
   const setUserInfo = useUserStore((state) => state.setUserInfo);
   const setTokenPayload = useTokenPayload((state) => state.setTokenPayload);
   const navigate = useNavigate();
+  const location = useLocation();
 
   // MainLayout과 동일한 사용자 정보 로딩 로직
   useEffect(() => {
@@ -64,6 +65,19 @@ export default function AdminLayout() {
     }
   }, [navigate, userInfo]);
 
+  const getBreadcrumbText = () => {
+    switch (location.pathname) {
+      case '/admin':
+        return '회원 관리';
+      case '/admin/quest':
+        return '퀘스트 관리';
+      case '/admin/shop':
+        return '상점 관리';
+      default:
+        return '회원 관리';
+    }
+  };
+
   if (!userInfo) {
     return <div className={styles.loadingMessage}>로딩 중...</div>;
   }
@@ -81,6 +95,17 @@ export default function AdminLayout() {
         </div>
         
         <nav className={styles.nav}>
+
+          <NavLink
+            to="/dashboard"
+            className={styles.navItem}
+          >
+            <span className={styles.navIcon}>
+              <FaHouse />
+            </span>
+            메인 대시보드
+          </NavLink>
+
           <NavLink
             to="/admin"
             end
@@ -95,13 +120,27 @@ export default function AdminLayout() {
           </NavLink>
           
           <NavLink
-            to="/dashboard"
-            className={styles.navItem}
+            to="/admin/quest" 
+            className={({ isActive }) =>
+              `${styles.navItem} ${isActive ? styles.active : ''}`
+            }
           >
             <span className={styles.navIcon}>
-              <FaHouse />
+              <FaListCheck />
             </span>
-            메인 대시보드
+            퀘스트 관리
+          </NavLink>
+
+          <NavLink
+            to="/admin/shop"   // adminShop → admin/shop
+            className={({ isActive }) =>
+              `${styles.navItem} ${isActive ? styles.active : ''}`
+            }
+          >
+            <span className={styles.navIcon}>
+              <FaStore/>
+            </span>
+            상점 관리
           </NavLink>
         </nav>
       </div>
@@ -112,7 +151,7 @@ export default function AdminLayout() {
           <div className={styles.breadcrumb}>
             <span>관리자</span>
             <span> / </span>
-            <span>회원 관리</span>
+            <span>{getBreadcrumbText()}</span>
           </div>
         </div>
         
