@@ -13,12 +13,13 @@ import MyStudyDiaryActivity from "../pages/studyDiary/MyStudyDiaryActivity";
 import LogoutPage from "../pages/user/LogoutPage";
 import PraisePage from "../pages/praise/PraisePage";
 import MyInfoPage from "../pages/user/MyInfoPage";
+import RankingPage from "../pages/user/RankingPage";
 import ShopPage from "../pages/Shop/ShopPage";
 import ShopHistoryPage from "../pages/Shop/ShopHistoryPage";
-import AdminShopPage from "../pages/Shop/AdminShopPage";
+
 import MissionGroupPage from "../pages/mission/MissionGroupPage";
-import AdminQuestPage from "../pages/Quest/AdminQuestPage";
 import MissionDetailPage from "../pages/mission/MissionDetailPage";
+import ChallengeListPage from "../pages/mission/ChallengeListPage";
 
 export default [
   {
@@ -48,6 +49,15 @@ export default [
         ],
       },
       {
+        path: "/challenge",
+        children: [
+          {
+            index: true,
+            element: <ChallengeListPage />,
+          },
+        ],
+      },
+      {
         path: "/quest",
         element: <QuestPage />,
       },
@@ -65,16 +75,16 @@ export default [
         element: <MyInfoPage />,
       },
       {
+        path: "/ranking",
+        element: <RankingPage />,
+      },
+      {
         path: "/shop",
         element: <ShopPage />,
       },
       {
         path: "/shopHistory",
         element: <ShopHistoryPage />,
-      },
-      {
-        path: "/adminShop",
-        element: <AdminShopPage />,
       },
       {
         path: "/mission-group/:missionGroupId",
@@ -88,10 +98,6 @@ export default [
             element: <MissionGroupPage componentType="learning-plan" />,
           },
         ],
-      },
-      {
-        path: "/adminQuest",
-        element: <AdminQuestPage />,
       },
       // 배움일기 관련 라우트
       {

@@ -60,7 +60,7 @@ export const updateStudyDiary = async (id, diaryData) => {
   }
 };
 
-// 배움일기 삭제 (API 명세서에 없지만 필요시 구현)
+// 배움일기 삭제
 export const deleteStudyDiary = async (id) => {
   try {
     const response = await api.delete(`/api/v1/studydiaries/${id}`);
@@ -138,6 +138,22 @@ export const toggleLike = async (studyDiaryId) => {
     return response.data;
   } catch (error) {
     console.error("좋아요 토글 실패:", error);
+    throw error;
+  }
+};
+
+// 배움일기 임시 저장
+export const saveDraftStudyDiary = async (diaryData) => {
+  try {
+    const requestData = {
+      title: diaryData.title,
+      content: diaryData.content,
+      ...(diaryData.imageUrl && { imageUrl: diaryData.imageUrl })
+    };
+    const response = await api.post("/api/v1/studydiaries/draft", requestData);
+    return response.data;
+  } catch (error) {
+    console.error("배움일기 임시 저장 실패:", error);
     throw error;
   }
 };
