@@ -29,10 +29,14 @@ export default function AdminLayout() {
         setUserInfo(data);
       } catch (error) {
         console.error("Error fetching user data:", error);
+        if (error.response?.status === 401) {
+          localStorage.clear();
+          navigate("/login", { replace: true });
+        }
       }
     };
     fetchUserData();
-  }, [setUserInfo]);
+  }, [setUserInfo, navigate]);
 
   useEffect(() => {
     if (!localStorage.getItem("accessToken")) {

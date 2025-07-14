@@ -57,7 +57,12 @@
     &:hover {
       background-color: #f1f5f9;
     }
-    
+
+    &:focus-visible {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+
     &.active {
       background-color: #e2e8f0;
       color: #1e293b;
@@ -107,33 +112,5 @@
     height: 100vh;
     font-size: 16px;
     color: #6b7280;
-  }
-
-  .AdminButton {
-    display: flex;
-    justify-content: flex-start; // flex-end → flex-start로 변경
-    margin-bottom: 20px;
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      padding: 10px 16px;
-      background-color: #3b82f6;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      transition: background-color 0.2s;
-      
-      &:hover {
-        background-color: #2563eb;
-      }
-    }
-
-    .icon {
-      margin-right: 6px;
-      font-size: 14px;
-    }
   }
 }
