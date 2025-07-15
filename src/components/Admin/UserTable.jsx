@@ -47,8 +47,6 @@ export default function UserTable({ users, loading }) {
             <th>이름</th>
             <th>이메일</th>
             <th>역할</th>
-            <th>레벨</th>
-            <th>포인트</th>
             <th>관리</th>
           </tr>
         </thead>
@@ -73,8 +71,6 @@ export default function UserTable({ users, loading }) {
                   {user.role}
                 </span>
               </td>
-              <td>{user.level || 0}</td>
-              <td>{user.point || 0}</td>
               <td>
                 <Link
                   to={`/admin/users/${user.username}`}

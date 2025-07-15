@@ -15,66 +15,12 @@ export default function AdminUsersList() {
     try {
       const res = await getUsers(page);
       
-      console.log('=== 응답 구조 분석 ===');
-      console.log('res:', res);
-      console.log('res의 타입:', typeof res);
-      console.log('res.data:', res?.data);
-      console.log('res.data의 타입:', typeof res?.data);
-      console.log('res.data가 배열인가?:', Array.isArray(res?.data));
-      console.log('res.content:', res?.content);
-      console.log('res.content가 배열인가?:', Array.isArray(res?.content));
-      console.log('========================');
-      
-      let userData = [];
-      let pageInfo = { number: 0, totalPages: 1, totalElements: 0 };
-      
-      // 응답 구조 분석 및 데이터 추출
-      if (res) {
-        // 1. res.data가 배열인 경우
-        if (res.data && Array.isArray(res.data)) {
-          userData = res.data;
-          pageInfo.totalElements = userData.length;
-          console.log('✅ res.data 배열 구조로 처리:', userData.length, '개');
-        }
-        // 2. res.content가 배열인 경우 (페이징 구조)
-        else if (res.content && Array.isArray(res.content)) {
-          userData = res.content;
-          pageInfo = {
-            number: res.number || 0,
-            totalPages: res.totalPages || 1,
-            totalElements: res.totalElements || userData.length
-          };
-          console.log('✅ res.content 페이징 구조로 처리:', userData.length, '개');
-        }
-        // 3. res 자체가 배열인 경우
-        else if (Array.isArray(res)) {
-          userData = res;
-          pageInfo.totalElements = userData.length;
-          console.log('✅ res 배열 구조로 처리:', userData.length, '개');
-        }
-        // 4. res.data.content 구조인 경우
-        else if (res.data && res.data.content && Array.isArray(res.data.content)) {
-          userData = res.data.content;
-          pageInfo = {
-            number: res.data.number || 0,
-            totalPages: res.data.totalPages || 1,
-            totalElements: res.data.totalElements || userData.length
-          };
-          console.log('✅ res.data.content 페이징 구조로 처리:', userData.length, '개');
-        }
-        // 5. res.data.data 구조인 경우
-        else if (res.data && res.data.data && Array.isArray(res.data.data)) {
-          userData = res.data.data;
-          pageInfo.totalElements = userData.length;
-          console.log('✅ res.data.data 구조로 처리:', userData.length, '개');
-        }
-        else {
-          console.log('❌ 예상치 못한 응답 구조:', res);
-        }
-      }
-      
-      console.log('최종 설정될 사용자 데이터:', userData);
-      console.log('최종 설정될 페이지 정보:', pageInfo);
+      const userData = res.data.content || [];
+      const pageInfo = {
+        number: res.data.number || 0,
+        totalPages: res.data.totalPages || 1,
+        totalElements: res.data.totalElements || 0
+      };
       
       setUsers(userData);
       setCurrentPage(pageInfo.number);
